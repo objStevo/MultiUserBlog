@@ -11,21 +11,21 @@ const StyledContainer = styled.div`
 const Footer = () => {
   return (
     <StyledContainer>
-      <nav class="navbar navbar-expand-lg">
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+      <nav className="navbar navbar-expand-lg">
+        <div className="collapse navbar-collapse" id="navbarText">
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <a className="nav-link" href="#">
                 Home <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+            <li className="nav-item">
+              <a className="nav-link" href="#">
                 Features
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+            <li className="nav-item">
+              <a className="nav-link" href="#">
                 Pricing
               </a>
             </li>
