@@ -12,6 +12,8 @@ import {
 import styled from "styled-components";
 import { isAuth, signout } from "../actions/auth";
 import Router from "next/router";
+import NProgress from "nprogress";
+import ".././node_modules/nprogress/nprogress.css";
 
 // Below is a function compornent
 const StyledDiv = styled.div`
@@ -21,6 +23,10 @@ const StyledDiv = styled.div`
     font-weight: 500;
   }
 `;
+
+Router.onRouteChangeStart = url => NProgress.start();
+Router.onRouteChangeComplete = url => NProgress.done();
+Router.onRouteChangeError = url => NProgress.done();
 
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false);
