@@ -1,6 +1,9 @@
 const {check} = require('express-validator')
 
-
+/*This is an array of middleware functions that are validating the request data, and appending an errors object to the req with the results
+For signup you want to validate: name, email and password
+For signin you want to validate: email and password
+*/
 exports.userSignupValidator = [
     check('name')
     .not()

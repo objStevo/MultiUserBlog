@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -23,8 +22,8 @@ mongoose
     });
 
 // middlewares
-app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(morgan('dev')); // uses a predefined formatter named 'dev' that will highlight the log
+app.use(express.json()); // The express build it body parser
 app.use(cookieParser());
 // cors
 if (process.env.NODE_ENV === 'development') {

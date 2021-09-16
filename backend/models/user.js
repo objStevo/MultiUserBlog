@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
         default: ''
     }
 }, {timestamp: true});
-
+// Below we are using a virtual to set three different key values in the document. Instead of just one (Benefit of virtual)
 userSchema
     .virtual('password')
     .set(function(password){
