@@ -16,6 +16,7 @@ import NProgress from "nprogress";
 import ".././node_modules/nprogress/nprogress.css";
 
 // Below is a function compornent
+//Testing git
 const StyledDiv = styled.div`
   top: 0%;
   & #test {
