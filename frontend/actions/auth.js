@@ -95,7 +95,7 @@ export const authenticate = (data,next) => {
 }
 
 export const isAuth = () => {
-  if(process.browser){
+  if(typeof window !== undefined){
     const cookieChecked = getCookie('token');
     if (cookieChecked) {
       if (localStorage.getItem('user')) {

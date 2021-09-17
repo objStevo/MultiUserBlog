@@ -38,12 +38,13 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
+  /*If you only want to invoke the effect after the initial render pass it an empty array as second argument*/ 
   useEffect(() => {
     isAuth() && Router.push('/');
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();// prevents a reload of the page
     // console.table({ name, email, password, error, loading,message, showForm});
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
@@ -68,6 +69,7 @@ const SigninComponent = () => {
   };
 
   const handleChange = (name) => (e) => {
+    //Below brackets is ES2015 computed property name that gives the property the name of the string value in the parameter
     setValues({
       ...values,
       error: false,
@@ -76,8 +78,8 @@ const SigninComponent = () => {
   };
 
   const showLoading = () => loading ? <div className="alert alert-info">Loading...</div> : '';
-  const showError = () => loading ? <div className="alert alert-danger">{error}</div> : '';
-  const showMessage = () => loading ? <div className="alert alert-info">{message}</div> : '';
+  const showError = () => error ? <div className="alert alert-danger">{error}</div> : '';
+  const showMessage = () => message ? <div className="alert alert-info">{message}</div> : '';
 
   const signupForm = () => {
     return (
