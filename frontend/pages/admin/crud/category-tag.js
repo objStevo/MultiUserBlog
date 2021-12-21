@@ -2,7 +2,7 @@ import Layout from "../../../components/Layout";
 import Link from "next/link";
 import Admin from "../../../components/auth/Admin";
 import Category from "../../../components/crud/Category";
-
+import Tag from "../../../components/crud/Tag";
 
 const CategoryTag = () => {
   return (
@@ -14,10 +14,10 @@ const CategoryTag = () => {
               <h2>Manage Categories and Tags</h2>
             </div>
             <div className="col-md-6">
-              <Category/>
+              <Category />
             </div>
             <div className="col-md-6">
-                <p>tags</p>
+              <Tag />
             </div>
           </div>
         </div>

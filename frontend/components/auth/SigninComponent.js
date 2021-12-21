@@ -51,7 +51,7 @@ const SigninComponent = () => {
 
     signin(user).then(data => {
       if (data.error) {
-          console.log('error here')
+          console.log(data.error);
         setValues({ ...values, error: data.error, loading: false });
       } else {
         // Save user token to cookie
@@ -84,6 +84,7 @@ const SigninComponent = () => {
   const signupForm = () => {
     return (
       <StyledContainer>
+        <div>{email}</div>
         <div className="container">
           <div className="row justify-content-center">
             <form onSubmit={handleSubmit}>
