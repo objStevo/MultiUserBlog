@@ -168,6 +168,8 @@ exports.listAllBlogsCategoriesTags = (req, res) => {
     });
 };
 
+// Here we are populating the categories, tags, and posted by fields when retrieving a blog. 
+// Then are returning only the fields we want, excluding exerpt and photo
 exports.read = (req, res) => {
   const slug = req.params.slug.toLowerCase();
   Blog.findOne({ slug })
@@ -186,6 +188,8 @@ exports.read = (req, res) => {
       res.json(data);
     });
 };
+
+//Here we are simply removing a blog based on the slug
 
 exports.remove = (req, res) => {
   const slug = req.params.slug.toLowerCase();
