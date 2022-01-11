@@ -2,12 +2,13 @@ import fetch from 'isomorphic-fetch';
 import { API } from '../config';
 
 export const createBlog = (blog, token) => {
+console.log("🚀 ~ file: blog.js ~ line 5 ~ createBlog ~ blog", blog)
 
     return fetch(`${API}/api/blog`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}` 
         },
         body: blog
     })
@@ -18,12 +19,13 @@ export const createBlog = (blog, token) => {
 };
 
 export const listBlogsWithCategoriesAndTags = () => {
-    return fetch(`${API}/blogs-categories-tags`, {
-        method: 'GET',
+    return fetch(`${API}/api/blogs-categories-tags`, {
+        method: 'POST',
         headers: {
             Accept: 'application/json'
         }
     })
+
         .then(response => {
             return response.json();
         })

@@ -25,9 +25,9 @@ const StyledDiv = styled.div`
   }
 `;
 
-Router.onRouteChangeStart = url => NProgress.start();
-Router.onRouteChangeComplete = url => NProgress.done();
-Router.onRouteChangeError = url => NProgress.done();
+Router.onRouteChangeStart = (url) => NProgress.start();
+Router.onRouteChangeComplete = (url) => NProgress.done();
+Router.onRouteChangeError = (url) => NProgress.done();
 
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +44,13 @@ const Header = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
+            <React.Fragment>
+              <NavItem>
+                <Link href="/blogs">
+                  <NavLink>Blogs</NavLink>
+                </Link>
+              </NavItem>
+            </React.Fragment>
             {!isAuth() && (
               <React.Fragment>
                 <NavItem>
