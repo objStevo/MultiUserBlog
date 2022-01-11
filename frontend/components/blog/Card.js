@@ -4,6 +4,7 @@ import { API } from "../../config";
 import parse from "html-react-parser"
 
 const Card = ({ blog }) => {
+  
   const showBlogCategories = (blog) =>
     blog.categories.map((c, i) => (
       <Link key={i} href={`api/categories/${c.slug}`}>
