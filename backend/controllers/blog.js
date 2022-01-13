@@ -161,7 +161,7 @@ exports.listAllBlogsCategoriesTags = (req, res) => {
             });
           }
           tags = t;
-          // return all blogs categories tags
+
           res.json({ blogs, categories, tags, size: blogs.length });
         });
       });

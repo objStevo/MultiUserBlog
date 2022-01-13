@@ -42,8 +42,9 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, rout
     </Head>
   );
 
-
-  const [limit, setLimit] = useState(blogsLimit);
+    //Think of your useEffect as a mix of componentDidMount, componentDidUpdate, and componentWillUnmount, as stated in the React documentation.
+    //In other words, updating the state will rerender the component, if you would like to have some effect as a result of that rerender, than useEffect
+    const [limit, setLimit] = useState(blogsLimit);
     const [skip, setSkip] = useState(0);
     const [size, setSize] = useState(totalBlogs);
     const [loadedBlogs, setLoadedBlogs] = useState([]);
