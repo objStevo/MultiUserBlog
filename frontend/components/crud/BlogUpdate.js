@@ -23,7 +23,6 @@ const BlogUpdate = ({ router }) => {
     const { error, success, formData, title } = values;
 
     useEffect(() => {
-        setValues({ ...values, formData: new FormData() });
         initBlog();
     }, [router]);
 
@@ -33,7 +32,7 @@ const BlogUpdate = ({ router }) => {
                 if (data.error) {
                     console.log(data.error);
                 } else {
-                    setValues({ ...values, title: data.title });
+                    setValues({ ...values, formData: new FormData(), title: data.title });
                     setBody(data.body);
                 }
             });
@@ -41,7 +40,7 @@ const BlogUpdate = ({ router }) => {
     };
 
     const handleChange = name => e => {
-        // console.log(e.target.value);
+        console.log('handle changed called');
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value, formData, error: '' });
@@ -49,6 +48,8 @@ const BlogUpdate = ({ router }) => {
 
     const handleBody = e => {
         setBody(e);
+        console.log('handlebody called');
+        setValues({ ...values, formData: new FormData() }); 
         formData.set('body', e);
     };
 
