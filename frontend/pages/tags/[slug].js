@@ -8,10 +8,29 @@ import moment from 'moment';
 import Card from '../../components/blog/Card';
 import React from 'react';
 
-const Tag = ({ tag, blogs }) => {
+const Tag = ({ tag, blogs, query }) => {
+    const head = () => (
+        <Head>
+            <title>
+                {tag.name} | {APP_NAME}
+            </title>
+            <meta name="description" content={`Best shrimp articles on ${tag.name}`} />
+            <link rel="canonical" href={`${DOMAIN}/tags/${query.slug}`} />
+            <meta property="og:title" content={`${tag.name} | ${APP_NAME}`} />
+            <meta property="og:description" content={`Best shrimp information on ${tag.name}`} />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={`${DOMAIN}/tag/${query.slug}`} />
+            <meta property="og:site_name" content={`${APP_NAME}`} />
+
+            <meta property="og:image" content={`${DOMAIN}/static/images/nature.jpg`}/>
+            <meta property="og:image:secure_url" ccontent={`${DOMAIN}/static/images/nature.jpg`} />
+            <meta property="og:image:type" content="image/jpg" />
+        </Head>
+    );
     return (
         <React.Fragment>
-            <Layout>
+            {head()}
+            <Layout> 
                 <main>
                     <div className="container-fluid text-center">
                         <header>
@@ -39,7 +58,7 @@ Tag.getInitialProps = ({ query }) => {
         if (data.error) {
             console.log(data.error);
         } else {
-            return { tag: data.tag, blogs: data.blogs };
+            return { tag: data.tag, blogs: data.blogs, query };
         }
     });
 };
