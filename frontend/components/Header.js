@@ -14,9 +14,8 @@ import { isAuth, signout } from "../actions/auth";
 import Router from "next/router";
 import NProgress from "nprogress";
 import ".././node_modules/nprogress/nprogress.css";
+import Search from './blog/Search';
 
-// Below is a function compornent
-//Testing git
 const StyledDiv = styled.div`
   top: 0%;
   & #test {
@@ -91,6 +90,7 @@ const Header = (props) => {
           </Nav>
         </Collapse>
       </Navbar>
+      <Search />
     </StyledDiv>
   );
 };
