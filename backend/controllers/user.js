@@ -33,6 +33,7 @@ exports.publicProfile = (req, res) => {
                     });
                 }
                 user.photo = undefined;
+                user.hash_password = undefined;
                 res.json({
                     user,
                     blogs: data

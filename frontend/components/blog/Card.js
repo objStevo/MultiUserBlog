@@ -1,10 +1,9 @@
 import Link from "next/link";
 import moment from "moment";
 import { API } from "../../config";
-import parse from "html-react-parser"
+import parse from "html-react-parser";
 
 const Card = ({ blog }) => {
-  
   const showBlogCategories = (blog) =>
     blog.categories.map((c, i) => (
       <Link key={i} href={`/categories/${c.slug}`}>
@@ -30,8 +29,11 @@ const Card = ({ blog }) => {
       </header>
       <section>
         <p className="mark ml-1 pt-2 pb-2">
-          Written by {blog.postedBy.name} | Published{" "}
-          {moment(blog.updatedAt).fromNow()}
+          Written by{" "}
+          <Link href={`/profile/${blog.postedBy.username}`}>
+            <a>{blog.postedBy.username}</a>
+          </Link>{" "}
+          | Published {moment(blog.updatedAt).fromNow()}
         </p>
       </section>
       <section>
