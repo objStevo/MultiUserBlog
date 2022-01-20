@@ -15,7 +15,7 @@ export const userPublicProfile = username => {
 };
 
 export const getProfile = token => {
-    return fetch(`${API}/user/profile`, {
+    return fetch(`${API}/api/user/profile`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -29,12 +29,13 @@ export const getProfile = token => {
 };
 
 export const update = (token, user) => {
-    return fetch(`${API}/user/update`, {
+    return fetch(`${API}/api/user/update`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',
             Authorization: `Bearer ${token}`
-        }
+        },
+        body: user
     })
         .then(response => {
             return response.json();
