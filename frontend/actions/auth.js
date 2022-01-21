@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
-import cookie from "js-cookie"
+import cookie from "js-cookie";
 
 export const signup = (user) => {
   return fetch(`${API}/api/signup`, {
@@ -9,7 +9,7 @@ export const signup = (user) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   })
     .then((response) => {
       return response.json();
@@ -33,20 +33,20 @@ export const signin = (user) => {
 };
 
 export const signout = (next) => {
-    removeCookie('token');
-    removeLocalStorage('user');
-    next();
+  removeCookie("token");
+  removeLocalStorage("user");
+  next();
 
-    return fetch(`${API}/api/signout`,{
-      method: 'GET'
-    })
+  return fetch(`${API}/api/signout`, {
+    method: "GET",
+  })
     .then((response) => {
-      console.log('signout success');
+      console.log("signout success");
     })
     .catch((err) => {
       console.error(err);
-    })
-}
+    });
+};
 
 // set cookie
 export const setCookie = (key, value) => {
@@ -68,41 +68,52 @@ export const removeCookie = (key) => {
 
 // get cookie
 export const getCookie = (key) => {
-  if(process.browser){
+  if (process.browser) {
     return cookie.get(key);
   }
-};  
+};
 
 // localstorage
-export const setLocalStorage = (key,value) => {
+export const setLocalStorage = (key, value) => {
   if (process.browser) {
-    localStorage.setItem(key,JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   }
 };
 
 export const removeLocalStorage = (key) => {
-  if(process.browser){
+  if (process.browser) {
     localStorage.removeItem(key);
   }
 };
 
 // authenticate user by pass data to cookie and localstorage
 
-export const authenticate = (data,next) => {
-  setCookie('token',data.token);
-  setLocalStorage('user',data.user);
-  next();  
-}
+export const authenticate = (data, next) => {
+  setCookie("token", data.token);
+  setLocalStorage("user", data.user);
+  next();
+};
 
 export const isAuth = () => {
-  if(typeof window !== undefined){
-    const cookieChecked = getCookie('token');
+  if (typeof window !== undefined) {
+    const cookieChecked = getCookie("token");
     if (cookieChecked) {
-      if (localStorage.getItem('user')) {
-        return JSON.parse(localStorage.getItem('user'));
-      }else{
+      if (localStorage.getItem("user")) {
+        return JSON.parse(localStorage.getItem("user"));
+      } else {
         return false;
       }
     }
-  } 
+  }
+};
+
+export const updateUser = (user, next) => {
+  if (process.browser) {
+    if (localStorage.getItem("user")) {
+      let auth = JSON.parse(localStorage.getItem("user"));
+      auth = user;
+      localStorage.setItem("user", JSON.stringify(auth));
+      next();
+    }
+  }
 };
