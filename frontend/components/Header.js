@@ -14,7 +14,7 @@ import { isAuth, signout } from "../actions/auth";
 import Router from "next/router";
 import NProgress from "nprogress";
 import ".././node_modules/nprogress/nprogress.css";
-import Search from './blog/Search';
+import Search from "./blog/Search";
 
 const StyledDiv = styled.div`
   top: 0%;
@@ -87,6 +87,13 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
             )}
+            <NavItem>
+              <Link href="/user/crud/create">
+                <NavLink className="btn btn-primary text-light">
+                  Write a blog
+                </NavLink>
+              </Link>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
