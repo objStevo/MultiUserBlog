@@ -14,4 +14,9 @@ router.get('/blog/photo/:slug', photo);
 router.post('/blogs/related', listRelated);
 router.get('/blogs/search', listSearch);
 
+// auth user blog crud
+router.post('/user/blog', requireSignin, authMiddleware, create);
+router.delete('/user/blog/:slug', requireSignin, authMiddleware, remove);
+router.put('/user/blog/:slug', requireSignin, authMiddleware, update);
+
 module.exports = router;
