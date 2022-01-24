@@ -72,9 +72,6 @@ const CreateBlog = ({ router }) => {
 
   const publishBlog = (e) => {
     e.preventDefault();
-    formData.forEach(function (i) {
-      console.log("1");
-    });
     createBlog(formData, token).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
@@ -93,19 +90,14 @@ const CreateBlog = ({ router }) => {
   };
 
   const handleChange = (name) => (e) => {
-    // console.log(e.target.value);
-    console.log("HandleChange being called");
     const value = name === "photo" ? e.target.files[0] : e.target.value;
     formData.set(name, value);
 
-    console.log(formData.entries());
     setValues({ ...values, [name]: value, formData, error: "" });
   };
 
   const handleBody = (e) => {
-    console.log("e: ", e);
     setBody(e);
-    console.log("e after set body", e);
     formData.set("body", e);
     if (typeof window !== "undefined") {
       localStorage.setItem("blog", JSON.stringify(e));
