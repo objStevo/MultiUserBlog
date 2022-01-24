@@ -9,9 +9,12 @@ export const createBlog = (blog, token) => {
   if (isAuth() && isAuth().role === 1) {
     createBlogEndpoint = `${API}/api/blog`;
   } else if (isAuth() && isAuth().role === 0) {
-    createBlogEndpoint = `${API}/api/user/blog`;    
+    createBlogEndpoint = `${API}/api/user/blog`;
   }
-  console.log("🚀 ~ file: blog.js ~ line 13 ~ createBlog ~ createBlogEndpoint", createBlogEndpoint)
+  console.log(
+    "🚀 ~ file: blog.js ~ line 13 ~ createBlog ~ createBlogEndpoint",
+    createBlogEndpoint
+  );
 
   return fetch(`${createBlogEndpoint}`, {
     method: "POST",
@@ -102,8 +105,16 @@ export const updateBlog = (blog, token, slug) => {
     .catch((err) => console.log(err));
 };
 
-export const list = () => {
-  return fetch(`${API}/api/blogs`, {
+export const list = (username) => {
+  let listBlogsEndpoint;
+
+  if (username) {
+    listBlogsEndpoint = `${API}/api/${username}/blogs`;
+  } else {
+    listBlogsEndpoint = `${API}/api/blogs`;
+  }
+
+  return fetch(`${listBlogsEndpoint}`, {
     method: "GET",
   })
     .then((response) => {

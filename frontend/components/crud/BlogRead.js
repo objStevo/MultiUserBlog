@@ -6,7 +6,7 @@ import { list, removeBlog } from "../../actions/blog";
 import moment from "moment";
 import React from "react";
 
-const BlogRead = () => {
+const BlogRead = ({username}) => {
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState("");
   const token = getCookie("token");
@@ -16,7 +16,7 @@ const BlogRead = () => {
   }, []);
 
   const loadBlogs = () => {
-    list().then((data) => {
+    list(username).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
