@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { create, list, listAllBlogsCategoriesTags, read, remove, update, photo, listRelated, listSearch } = require('../controllers/blog');
 
-const { requireSignin, adminMiddleware } = require('../controllers/auth');
+const { requireSignin, adminMiddleware, authMiddleware } = require('../controllers/auth');
 
 router.post('/blog', requireSignin, adminMiddleware, create);
 router.get('/blogs', list);
