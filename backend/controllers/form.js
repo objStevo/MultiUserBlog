@@ -3,7 +3,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.contactForm = (req, res) => {
   const { email, name, message } = req.body;
-  // console.log(req.body);
+  console.log(req.body);
 
   const emailData = {
     to: process.env.EMAIL_TO,
