@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { userPublicProfile } from "../../actions/user";
 import { API, DOMAIN, APP_NAME } from "../../config";
 import moment from "moment";
+import ContactForm from '../../components/form/ContactForm';
 import React from "react";
 
 const UserProfile = ({ user, blogs, query }) => {
@@ -98,7 +99,7 @@ const UserProfile = ({ user, blogs, query }) => {
                     Message {user.name}
                   </h5>
                   <br />
-                  <p>contact form</p>
+                  <ContactForm authorEmail={user.email} />
                 </div>
               </div>
             </div>
