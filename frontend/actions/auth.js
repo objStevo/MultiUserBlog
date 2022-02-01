@@ -1,20 +1,20 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
 import cookie from "js-cookie";
-import Router from 'next/router';
+import Router from "next/router";
 
-export const handleResponse = response => {
+export const handleResponse = (response) => {
   if (response.status === 401) {
-      signout(() => {
-          Router.push({
-              pathname: '/signin',
-              query: {
-                  message: 'Your session is expired. Please signin'
-              }
-          });
+    signout(() => {
+      Router.push({
+        pathname: "/signin",
+        query: {
+          message: "Your session is expired. Please signin",
+        },
       });
+    });
   }
-  return ({error: 'Token expired'});
+  return { error: "Token expired" };
 };
 
 export const signup = (user) => {
@@ -131,4 +131,34 @@ export const updateUser = (user, next) => {
       next();
     }
   }
+};
+
+export const forgotPassword = (email) => {
+  return fetch(`${API}/api/forgot-password`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(email),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const resetPassword = (resetInfo) => {
+  return fetch(`${API}/api/reset-password`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resetInfo),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { authenticate, isAuth, signin } from "../../actions/auth";
-import Router from "next/router"
+import Router from "next/router";
+import Link from 'next/link';
 
 const StyledContainer = styled.div`
   background-color: #f9f6f2;
@@ -38,30 +39,30 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
-  /*If you only want to invoke the effect after the initial render pass it an empty array as second argument*/ 
+  /*If you only want to invoke the effect after the initial render pass it an empty array as second argument*/
   useEffect(() => {
-    isAuth() && Router.push('/');
+    isAuth() && Router.push("/");
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault();// prevents a reload of the page
+    e.preventDefault(); // prevents a reload of the page
     // console.table({ name, email, password, error, loading,message, showForm});
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
 
-    signin(user).then(data => {
+    signin(user).then((data) => {
       if (data.error) {
-          console.log(data.error);
+        console.log(data.error);
         setValues({ ...values, error: data.error, loading: false });
       } else {
         // Save user token to cookie
         // Save user info to localStorage
         // authenticate user
-        authenticate(data,() => {
-          if (isAuth() && isAuth().role===1) {
-            Router.push('/admin');
-          }else{
-            Router.push('/user');
+        authenticate(data, () => {
+          if (isAuth() && isAuth().role === 1) {
+            Router.push("/admin");
+          } else {
+            Router.push("/user");
           }
         });
       }
@@ -77,9 +78,12 @@ const SigninComponent = () => {
     });
   };
 
-  const showLoading = () => loading ? <div className="alert alert-info">Loading...</div> : '';
-  const showError = () => error ? <div className="alert alert-danger">{error}</div> : '';
-  const showMessage = () => message ? <div className="alert alert-info">{message}</div> : '';
+  const showLoading = () =>
+    loading ? <div className="alert alert-info">Loading...</div> : "";
+  const showError = () =>
+    error ? <div className="alert alert-danger">{error}</div> : "";
+  const showMessage = () =>
+    message ? <div className="alert alert-info">{message}</div> : "";
 
   const signupForm = () => {
     return (
@@ -130,12 +134,18 @@ const SigninComponent = () => {
     );
   };
 
-  return <React.Fragment>
-    {showError()}
-    {showLoading()}
-    {showMessage()}
-    {signupForm()}  
-    </React.Fragment>;
+  return (
+    <React.Fragment>
+      {showError()}
+      {showLoading()}
+      {showMessage()}
+      {signupForm()}
+      <br />
+      <Link href="/auth/password/forgot">
+        <a className="btn btn-outline-danger btn-sm">Forgot password</a>
+      </Link>
+    </React.Fragment>
+  );
 };
 
 export default SigninComponent;
