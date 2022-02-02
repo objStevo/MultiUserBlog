@@ -7,7 +7,8 @@ const {
   requireSignin,
   forgotPassword,
   resetPassword,
-  preSignup
+  preSignup,
+  googleLogin
 } = require("../controllers/auth");
 
 //validators
@@ -19,7 +20,7 @@ const {
   resetPasswordValidator
 } = require("../validators/auth");
 
-router.post('/pre-signup', userSignupValidator, runValidation, preSignup);
+router.post("/pre-signup", userSignupValidator, runValidation, preSignup);
 router.post("/signup", userSignupValidator, runValidation, signup);
 // router.post('/signup', signup); enable when you fix the email flow
 router.post("/signin", userSigninValidator, runValidation, signin);
@@ -36,5 +37,7 @@ router.put(
   runValidation,
   resetPassword
 );
+// google login
+router.post("/google-login", googleLogin);
 
 module.exports = router;
