@@ -78,6 +78,45 @@ exports.signup = (req, res) => {
   });
 };
 
+//New signup through email flow with json web token instead of email password in req
+// exports.signup = (req, res) => {
+//   const token = req.body.token;
+//   if (token) {
+//     jwt.verify(
+//       token,
+//       process.env.JWT_ACCOUNT_ACTIVATION,
+//       function (err, decoded) {
+//         if (err) {
+//           return res.status(401).json({
+//             error: "Expired link. Signup again",
+//           });
+//         }
+
+//         const { name, email, password } = jwt.decode(token);
+
+//         let username = shortId.generate();
+//         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+//         const user = new User({ name, email, password, profile, username });
+//         user.save((err, user) => {
+//           if (err) {
+//             return res.status(401).json({
+//               error: errorHandler(err),
+//             });
+//           }
+//           return res.json({
+//             message: "Singup success! Please signin",
+//           });
+//         });
+//       }
+//     );
+//   } else {
+//     return res.json({
+//       message: "Something went wrong. Try again",
+//     });
+//   }
+// };
+
 exports.signin = (req, res) => {
   const { email, password } = req.body;
   // check if user exist
