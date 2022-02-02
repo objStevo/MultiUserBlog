@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { signup, isAuth } from "../../actions/auth";
+import { signup, isAuth, preSignup } from "../../actions/auth";
 import Router from "next/router";
 import { useState, useEffect } from "react";
 
@@ -42,14 +42,14 @@ const SignupComponent = () => {
   useEffect(() => {
     isAuth() && Router.push(`/`);
   }, []);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.table({ name, email, password, error, loading,message, showForm});
     setValues({ ...values, loading: true, error: false });
     const user = { name, email, password };
 
-    signup(user).then((data) => {
+    preSignup(user).then((data) => {
       console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
