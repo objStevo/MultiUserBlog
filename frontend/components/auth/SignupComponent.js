@@ -49,7 +49,7 @@ const SignupComponent = () => {
     setValues({ ...values, loading: true, error: false });
     const user = { name, email, password };
     // When we are ready to handle the email functionality, we change this to preSignup(user).then((data)=>{...
-    signup(user).then((data) => {
+    preSignup(user).then((data) => {
       console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });

@@ -6,8 +6,8 @@ exports.contactForm = (req, res) => {
   console.log(req.body);
 
   const emailData = {
-    to: process.env.EMAIL_TO,
-    from: email,
+    to: process.env.EMAIL_ADMIN,
+    from: process.env.EMAIL_ADMIN,
     subject: `Contact form - ${process.env.APP_NAME}`,
     text: `Email received from contact from \n Sender name: ${name} \n Sender email: ${email} \n Sender message: ${message}`,
     html: `
@@ -32,11 +32,11 @@ exports.contactBlogAuthorForm = (req, res) => {
   const { authorEmail, email, name, message } = req.body;
   // console.log(req.body);
 
-  let maillist = [authorEmail, process.env.EMAIL_TO];
+  let maillist = [authorEmail, process.env.EMAIL_ADMIN];
 
   const emailData = {
     to: maillist,
-    from: email,
+    from: process.env.EMAIL_ADMIN,
     subject: `Someone messaged you from ${process.env.APP_NAME}`,
     text: `Email received from contact from \n Sender name: ${name} \n Sender email: ${email} \n Sender message: ${message}`,
     html: `

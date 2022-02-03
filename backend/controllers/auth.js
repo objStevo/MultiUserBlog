@@ -25,7 +25,7 @@ exports.preSignup = (req, res) => {
     );
 
     const emailData = {
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_ADMIN,
       to: email,
       subject: `Account activation link`,
       html: `
@@ -45,78 +45,78 @@ exports.preSignup = (req, res) => {
   });
 };
 
-exports.signup = (req, res) => {
-  User.findOne({
-    email: req.body.email,
-  }).exec((err, user) => {
-    if (user) {
-      return res.status(400).json({
-        error: "Email is taken",
-      });
-    }
-
-    const { name, email, password } = req.body;
-    let username = shortId.generate();
-    let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-
-    let newUser = new User({
-      name,
-      email,
-      password,
-      profile,
-      username,
-    });
-    newUser.save((err, success) => {
-      if (err) {
-        return res.status(400).json({
-          error: err,
-        });
-      }
-      res.json({
-        message: "Success",
-      });
-    });
-  });
-};
-
-//New signup through email flow with json web token instead of email password in req
 // exports.signup = (req, res) => {
-//   const token = req.body.token;
-//   if (token) {
-//     jwt.verify(
-//       token,
-//       process.env.JWT_ACCOUNT_ACTIVATION,
-//       function (err, decoded) {
-//         if (err) {
-//           return res.status(401).json({
-//             error: "Expired link. Signup again",
-//           });
-//         }
+//   User.findOne({
+//     email: req.body.email,
+//   }).exec((err, user) => {
+//     if (user) {
+//       return res.status(400).json({
+//         error: "Email is taken",
+//       });
+//     }
 
-//         const { name, email, password } = jwt.decode(token);
+//     const { name, email, password } = req.body;
+//     let username = shortId.generate();
+//     let profile = `${process.env.CLIENT_URL}/profile/${username}`;
 
-//         let username = shortId.generate();
-//         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-
-//         const user = new User({ name, email, password, profile, username });
-//         user.save((err, user) => {
-//           if (err) {
-//             return res.status(401).json({
-//               error: errorHandler(err),
-//             });
-//           }
-//           return res.json({
-//             message: "Singup success! Please signin",
-//           });
+//     let newUser = new User({
+//       name,
+//       email,
+//       password,
+//       profile,
+//       username,
+//     });
+//     newUser.save((err, success) => {
+//       if (err) {
+//         return res.status(400).json({
+//           error: err,
 //         });
 //       }
-//     );
-//   } else {
-//     return res.json({
-//       message: "Something went wrong. Try again",
+//       res.json({
+//         message: "Success",
+//       });
 //     });
-//   }
+//   });
 // };
+
+//New signup through email flow with json web token instead of email password in req
+exports.signup = (req, res) => {
+  const token = req.body.token;
+  if (token) {
+    jwt.verify(
+      token,
+      process.env.JWT_ACCOUNT_ACTIVATION,
+      function (err, decoded) {
+        if (err) {
+          return res.status(401).json({
+            error: "Expired link. Signup again",
+          });
+        }
+
+        const { name, email, password } = jwt.decode(token);
+
+        let username = shortId.generate();
+        let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+        const user = new User({ name, email, password, profile, username });
+        user.save((err, user) => {
+          if (err) {
+            return res.status(401).json({
+              error: errorHandler(err),
+            });
+          }
+          return res.json({
+            message: "Signup success! Please signin",
+          });
+        });
+      }
+    );
+  } else {
+    return res.json({
+      message: "Something went wrong. Try again",
+    });
+  }
+};
 
 exports.signin = (req, res) => {
   const { email, password } = req.body;
@@ -229,7 +229,7 @@ exports.forgotPassword = (req, res) => {
 
     // email
     const emailData = {
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_ADMIN,
       to: email,
       subject: `Password reset link`,
       html: `
