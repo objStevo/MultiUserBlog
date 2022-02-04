@@ -13,7 +13,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.preSignup = (req, res) => {
   const { name, email, password } = req.body;
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (user) {
+    if (user || err) {
       return res.status(400).json({
         error: "Email is taken",
       });
@@ -21,7 +21,7 @@ exports.preSignup = (req, res) => {
     const token = jwt.sign(
       { name, email, password },
       process.env.JWT_ACCOUNT_ACTIVATION,
-      { expiresIn: "10m" }
+      { expiresIn: "20m" }
     );
 
     const emailData = {
@@ -300,6 +300,7 @@ exports.resetPassword = (req, res) => {
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 exports.googleLogin = (req, res) => {
   const idToken = req.body.tokenId;
+  console.log('Here is the idToken from the request: ', idToken);
   client
     .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
     .then((response) => {
@@ -319,7 +320,7 @@ exports.googleLogin = (req, res) => {
               user: { _id, email, name, role, username },
             });
           } else {
-            let username = shortid.generate();
+            let username = shortId.generate();
             let profile = `${process.env.CLIENT_URL}/profile/${username}`;
             let password = jti;
             user = new User({ name, email, profile, username, password });
