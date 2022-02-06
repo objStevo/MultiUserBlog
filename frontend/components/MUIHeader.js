@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import CreateIcon from "@mui/icons-material/Create";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -26,18 +27,6 @@ import Button from "@mui/material/Button";
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
 Router.onRouteChangeError = (url) => NProgress.done();
-
-const Navbar = styled("div")(({ theme }) => ({
-  //   padding: theme.spacing(0, 2),
-  //   height: "100%",
-  //   position: "absolute",
-  //   pointerEvents: "none",
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  backgroundColor: "#1A1A40",
-  color: 'white'
-}));
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -88,7 +77,7 @@ export default function PrimarySearchAppBar() {
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log("Handle Profile Menu Open");
+    console.log(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -124,8 +113,38 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {isAuth() && isAuth().role === 0 && (
+        <MenuItem onClick={handleMenuClose}>
+          <Link href="/user">My Dashboard</Link>
+        </MenuItem>
+      )}
+      {isAuth() && isAuth().role === 1 && (
+        <MenuItem onClick={handleMenuClose}>
+          <Link href="/admin">Admin Dashboard</Link>
+        </MenuItem>
+      )}
+      <MenuItem onClick={handleMenuClose}>
+        <Link href="/blogs">Blogs</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href="contact">Contact</Link>
+      </MenuItem>
+      {!isAuth() && (
+        <React.Fragment>
+          <hr />
+          <MenuItem onClick={handleMenuClose}>
+            <Link href="/signin">Log In</Link>
+          </MenuItem>
+        </React.Fragment>
+      )}
+      {isAuth() && (
+        <React.Fragment>
+          <hr />
+          <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+            <Link href="/signup">Signout</Link>
+          </MenuItem>
+        </React.Fragment>
+      )}
     </Menu>
   );
 
@@ -146,6 +165,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      {!isAuth && <p>Blogs</p>}
       <MenuItem>
         <IconButton
           size="large"
@@ -156,7 +176,7 @@ export default function PrimarySearchAppBar() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Notificationsss</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -175,7 +195,13 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Navbar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#1A1A40",
+          color: "white",
+        }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -194,12 +220,12 @@ export default function PrimarySearchAppBar() {
           >
             {APP_NAME}
           </Typography>
-          <Search>
+          <Search sx={{ mt: 1 / 2, mb: 1 / 2 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Search Articles…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
@@ -209,16 +235,39 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
             >
-              <ArticleIcon />
+              <Link href="/user/crud/blog">
+                <CreateIcon />
+              </Link>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
+            >
+              <Link href="/blogs">
+                <ArticleIcon />
+              </Link>
             </IconButton>
             {!isAuth() && (
               <React.Fragment>
-                <Button color="inherit" size="small" variant="outlined">
+                <Button
+                  sx={{ pt: 1 / 2, pb: 1 / 2, mr: 1 }}
+                  color="inherit"
+                  size="small"
+                  variant="outlined"
+                >
                   <Link href="/signin">Log In</Link>
                 </Button>
-                <Button color="inherit" size="small" variant="contained">
-                  <Link href="/signin">Sign Up</Link>
+                <Button
+                  sx={{ pt: 1 / 2, pb: 1 / 2 }}
+                  color="inherit"
+                  size="small"
+                  variant="contained"
+                >
+                  <Link href="/signup">Sign Up</Link>
                 </Button>
               </React.Fragment>
             )}
@@ -230,6 +279,7 @@ export default function PrimarySearchAppBar() {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
             >
               <AccountCircle />
             </IconButton>
@@ -247,7 +297,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </Box>
         </Toolbar>
-      </Navbar>
+      </AppBar>
       {renderMobileMenu}
       {renderMenu}
     </Box>

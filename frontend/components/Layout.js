@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
       {/* <Header /> */}
       <MUIHeader/>
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </React.Fragment>
   );
 };
