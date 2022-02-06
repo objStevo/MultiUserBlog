@@ -199,10 +199,10 @@ export default function PrimarySearchAppBar() {
         position="static"
         sx={{
           backgroundColor: "#1A1A40",
-          color: "white",
+          color: "white"
         }}
       >
-        <Toolbar>
+        <Toolbar variant="dense">
           <IconButton
             size="large"
             edge="start"
