@@ -1,32 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { authenticate, isAuth, signin } from "../../actions/auth";
 import Router from "next/router";
 import Link from 'next/link';
 import LoginGoogle from './LoginGoogle';
 
-const StyledContainer = styled.div`
-  background-color: #f9f6f2;
-  padding: 27vh 0 27vh 0;
-  & h4 {
-    color: #3A2E39;
-    margin-top:0.5rem;
-  }
-  & .icon-row {
-    padding-bottom 5%;
-  }
-`;
-
-const StyledButton = styled.button`
-  background-color: #57886c;
-  font-weight: 500;
-  border-color: #57886c;
-  :hover {
-    color: #57886c;
-    background-color: white;
-    border-color: #57886c;
-  }
-`;
 const SigninComponent = () => {
   const [values, setValues] = useState({
     name: "Ryan",
@@ -88,7 +65,7 @@ const SigninComponent = () => {
 
   const signupForm = () => {
     return (
-      <StyledContainer>
+      <React.Fragment>
         <div>{email}</div>
         <div className="container">
           <div className="row justify-content-center">
@@ -124,14 +101,14 @@ const SigninComponent = () => {
               </div>
 
               <div>
-                <StyledButton className="btn btn-primary btn-block">
+                <button className="btn btn-primary btn-block">
                   Signin
-                </StyledButton>
+                </button>
               </div>
             </form>
           </div>
         </div>
-      </StyledContainer>
+      </React.Fragment>
     );
   };
 

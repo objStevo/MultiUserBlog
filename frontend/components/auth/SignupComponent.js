@@ -1,31 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { signup, isAuth, preSignup } from "../../actions/auth";
 import Router from "next/router";
 import { useState, useEffect } from "react";
 
-const StyledContainer = styled.div`
-  background-color: #f9f6f2;
-  padding: 27vh 0 27vh 0;
-  & h4 {
-    color: #3A2E39;
-    margin-top:0.5rem;
-  }
-  & .icon-row {
-    padding-bottom 5%;
-  }
-`;
-
-const StyledButton = styled.button`
-  background-color: #57886c;
-  font-weight: 500;
-  border-color: #57886c;
-  :hover {
-    color: #57886c;
-    background-color: white;
-    border-color: #57886c;
-  }
-`;
 const SignupComponent = () => {
   const [values, setValues] = useState({
     name: "Ryan",
@@ -85,7 +62,7 @@ const SignupComponent = () => {
 
   const signupForm = () => {
     return (
-      <StyledContainer>
+      <React.Fragment>
         <div className="container">
           <div className="row justify-content-center">
             <form onSubmit={handleSubmit}>
@@ -140,14 +117,14 @@ const SignupComponent = () => {
               </div>
 
               <div>
-                <StyledButton className="btn btn-primary btn-block">
+                <button className="btn btn-primary btn-block">
                   Signup
-                </StyledButton>
+                </button>
               </div>
             </form>
           </div>
         </div>
-      </StyledContainer>
+      </React.Fragment>
     );
   };
 

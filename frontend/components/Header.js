@@ -9,20 +9,11 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import styled from "styled-components";
 import { isAuth, signout } from "../actions/auth";
 import Router from "next/router";
 import NProgress from "nprogress";
 import ".././node_modules/nprogress/nprogress.css";
 import Search from "./blog/Search";
-
-const StyledDiv = styled.div`
-  top: 0%;
-  & #test {
-    background-color: #f9f6f2 !important;
-    font-weight: 500;
-  }
-`;
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
@@ -33,7 +24,7 @@ const Header = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <StyledDiv>
+    <React.Fragment>
       <Navbar id="test" color="light" light expand="md">
         <Link href="/">
           <NavLink className="font-weight-bold" href="">
@@ -104,7 +95,7 @@ const Header = (props) => {
         </Collapse>
       </Navbar>
       <Search />
-    </StyledDiv>
+    </React.Fragment>
   );
 };
 export default Header;
