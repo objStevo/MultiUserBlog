@@ -108,7 +108,7 @@ const Search = () => {
 
         <div className="col-md-4">
           <button className="btn btn-block btn-outline-primary" type="submit">
-            Search
+            Searches
           </button>
         </div>
       </div>
