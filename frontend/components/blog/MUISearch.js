@@ -125,16 +125,16 @@ const Search = () => {
     </form>;
   };
 
-  //   return (
-  //     <div className="container-fluid">
-  //       <div className="pt-3 pb-5">{searchForm()}</div>
-  //       {searched && (
-  //         <div style={{ marginTop: "-120px", marginBottom: "-80px" }}>
-  //           {searchedBlogs(results)}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
+    return (
+      <div className="container-fluid">
+        <div className="pt-3 pb-5">{searchForm()}</div>
+        {searched && (
+          <div style={{ marginTop: "-120px", marginBottom: "-80px" }}>
+            {searchedBlogs(results)}
+          </div>
+        )}
+      </div>
+    );
   return (
     <MUISearch sx={{ mt: 1 / 2, mb: 1 / 2 }}>
       <MUISearchIconWrapper>
