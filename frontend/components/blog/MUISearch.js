@@ -1,9 +1,10 @@
 import Link from "next/link";
-import parse from "html-react-parser";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { listSearch } from "../../actions/blog";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import { styled, alpha } from "@mui/material/styles";
+import { Box, List, ListItem, ListItemText, Divider } from "@mui/material/Box";
 
 const MUISearch = styled("div")(({ theme }) => ({
   position: "relative",
@@ -94,53 +95,50 @@ const Search = () => {
     );
   };
 
-  const searchForm = () => (
-    <form onSubmit={searchSubmit}>
-      <div className="row">
-        <div className="col-md-8">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Search blogs"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="col-md-4">
-          <button className="btn btn-block btn-outline-primary" type="submit">
-            Searches
-          </button>
-        </div>
-      </div>
-    </form>
-  );
-
-  const muiSearchForm = () => {
-    <form onSubmit={searchSubmit}>
-          <MUIStyledInputBase
-            placeholder="Search Articles…"
-            inputProps={{ "aria-label": "search" }}
-            onChange={handleChange}
-          />
-    </form>;
+  const muiSearchedBlogs = (results = []) => {
+    return (
+      <React.Fragment>
+        <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+          <List>
+            <ListItem>{message && <ListItemText primary={message} />}</ListItem>
+          </List>
+          <Divider />
+          <nav aria-label="search results">
+            <List>
+              {results.map((blog, i) => {
+                <ListItem>
+                  <ListItemButton href={`/blogs/${blog.slug}`}>
+                    <ListItemText primary={blog.title} />
+                  </ListItemButton>
+                </ListItem>;
+              })}
+            </List>
+          </nav>
+        </Box>
+      </React.Fragment>
+    );
   };
 
+  const muiSearchForm = () => {
     return (
-      <div className="container-fluid">
-        <div className="pt-3 pb-5">{searchForm()}</div>
-        {searched && (
-          <div style={{ marginTop: "-120px", marginBottom: "-80px" }}>
-            {searchedBlogs(results)}
-          </div>
-        )}
-      </div>
+      <form onSubmit={searchSubmit}>
+        <MUIStyledInputBase
+          placeholder="Search Articles…"
+          inputProps={{ "aria-label": "search" }}
+          onChange={handleChange}
+        />
+      </form>
     );
+  };
+
   return (
     <MUISearch sx={{ mt: 1 / 2, mb: 1 / 2 }}>
       <MUISearchIconWrapper>
         <SearchIcon />
       </MUISearchIconWrapper>
       {muiSearchForm()}
+      {searched && muiSearchedBlogs()}
+      {/* {searched && <div style={{ marginTop: '-120px', marginBottom: '-80px' }}>{searchedBlogs(results)}</div>} */}
     </MUISearch>
   );
 };

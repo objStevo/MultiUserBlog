@@ -4,18 +4,15 @@ import React from "react";
 import { isAuth, signout } from "../actions/auth";
 import Link from "next/link";
 // MUI Imports
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -23,50 +20,12 @@ import ArticleIcon from "@mui/icons-material/Article";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
+import Search from "./blog/MUISearch";
+import Divider from '@mui/material/Divider';
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
 Router.onRouteChangeError = (url) => NProgress.done();
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -131,7 +90,7 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       {!isAuth() && (
         <React.Fragment>
-          <hr />
+          <Divider />
           <MenuItem onClick={handleMenuClose}>
             <Link href="/signin">Log In</Link>
           </MenuItem>
@@ -139,7 +98,7 @@ export default function PrimarySearchAppBar() {
       )}
       {isAuth() && (
         <React.Fragment>
-          <hr />
+          <Divider />
           <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
             <Link href="/signup">Signout</Link>
           </MenuItem>
@@ -199,7 +158,7 @@ export default function PrimarySearchAppBar() {
         position="static"
         sx={{
           backgroundColor: "#1A1A40",
-          color: "white"
+          color: "white",
         }}
       >
         <Toolbar variant="dense">
@@ -220,15 +179,7 @@ export default function PrimarySearchAppBar() {
           >
             {APP_NAME}
           </Typography>
-          <Search sx={{ mt: 1 / 2, mb: 1 / 2 }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search Articles…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          <Search />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
