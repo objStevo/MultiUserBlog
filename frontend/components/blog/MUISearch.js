@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { listSearch } from "../../actions/blog";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
@@ -65,14 +65,20 @@ const Search = () => {
 
   const { search, results, searched, message, anchorEl } = values;
 
+  useEffect(() => {
+    console.log(search, results, searched, message, anchorEl);
+  });
+
   const searchSubmit = (e) => {
     e.preventDefault();
+    const searchEl = e.currentTarget;
     listSearch({ search }).then((data) => {
-      setValues({
+
+        setValues({
         ...values,
         results: data,
         searched: true,
-        anchorEl: e.currentTarget,
+        anchorEl: searchEl,
         message: `${data.length} blogs found`,
       });
     });
@@ -104,9 +110,7 @@ const Search = () => {
         <Divider />
         <nav aria-label="search results">
           <List>
-            {console.log(results)}
             {results.map((blog, i) => {
-              console.log(blog.slug);
               return (
                 <ListItem key={i}>
                   <ListItemButton href={`/blogs/${blog.slug}`}>
@@ -124,9 +128,9 @@ const Search = () => {
   const muiOverlay = (results = []) => {
     return (
       <Popover
-        open={Boolean(message)}
+        open={searched}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={handleChange}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -142,9 +146,7 @@ const Search = () => {
             <Divider />
             <nav aria-label="search results">
               <List>
-                {console.log(results)}
                 {results.map((blog, i) => {
-                  console.log(blog.slug);
                   return (
                     <ListItem key={i}>
                       <ListItemButton href={`/blogs/${blog.slug}`}>
@@ -179,7 +181,7 @@ const Search = () => {
         <SearchIcon />
       </MUISearchIconWrapper>
       {muiSearchForm()}
-      {searched && muiOverlay(results)}
+      {muiOverlay(results)}
     </MUISearch>
   );
 };
