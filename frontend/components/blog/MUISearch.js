@@ -4,7 +4,16 @@ import { listSearch } from "../../actions/blog";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
-import { Box, List, ListItem, ListItemText, Divider, ListItemButton } from "@mui/material/Box";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const MUISearch = styled("div")(({ theme }) => ({
   position: "relative",
@@ -36,7 +45,6 @@ const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -52,9 +60,10 @@ const Search = () => {
     results: [],
     searched: false,
     message: "",
+    anchorEl: null,
   });
 
-  const { search, results, searched, message } = values;
+  const { search, results, searched, message, anchorEl } = values;
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +72,7 @@ const Search = () => {
         ...values,
         results: data,
         searched: true,
+        anchorEl: e.currentTarget,
         message: `${data.length} blogs found`,
       });
     });
@@ -73,49 +83,81 @@ const Search = () => {
       ...values,
       search: e.target.value,
       searched: false,
+      anchorEl: null,
       results: [],
     });
   };
 
-  const searchedBlogs = (results = []) => {
-    return (
-      <div className="jumbotron bg-white">
-        {message && <p className="pt-4 text-muted font-italic">{message}</p>}
-
-        {results.map((blog, i) => {
-          return (
-            <div key={i}>
-              <Link href={`/blogs/${blog.slug}`}>
-                <a className="text-primary">{blog.title}</a>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
-    );
+  const handleClose = () => {
+    setValues({
+      ...values,
+      anchorEl: null,
+    });
   };
 
   const muiSearchedBlogs = (results = []) => {
     return (
-      <React.Fragment>
-        <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <Box color="inherit" sx={{ width: "100%", maxWidth: 360 }}>
+        <List>
+          <ListItem>{message && <ListItemText primary={message} />}</ListItem>
+        </List>
+        <Divider />
+        <nav aria-label="search results">
           <List>
-            <ListItem>{message && (<ListItemText primary={message} />)}</ListItem>
-          </List>
-          <Divider />
-          <nav aria-label="search results">
-            <List>
-              {results.map((blog, i) => {
-                <ListItem>
+            {console.log(results)}
+            {results.map((blog, i) => {
+              console.log(blog.slug);
+              return (
+                <ListItem key={i}>
                   <ListItemButton href={`/blogs/${blog.slug}`}>
                     <ListItemText primary={blog.title} />
                   </ListItemButton>
-                </ListItem>;
-              })}
+                </ListItem>
+              );
+            })}
+          </List>
+        </nav>
+      </Box>
+    );
+  };
+
+  const muiOverlay = (results = []) => {
+    return (
+      <Popover
+        open={Boolean(message)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Typography sx={{ p: 2 }}>
+          <Box color="inherit" sx={{ width: "100%", maxWidth: 360 }}>
+            <List>
+              <ListItem>
+                {message && <ListItemText primary={message} />}
+              </ListItem>
             </List>
-          </nav>
-        </Box>
-      </React.Fragment>
+            <Divider />
+            <nav aria-label="search results">
+              <List>
+                {console.log(results)}
+                {results.map((blog, i) => {
+                  console.log(blog.slug);
+                  return (
+                    <ListItem key={i}>
+                      <ListItemButton href={`/blogs/${blog.slug}`}>
+                        <ListItemText primary={blog.title} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </nav>
+          </Box>
+        </Typography>
+      </Popover>
     );
   };
 
@@ -137,12 +179,9 @@ const Search = () => {
         <SearchIcon />
       </MUISearchIconWrapper>
       {muiSearchForm()}
-      {searched && muiSearchedBlogs(results)}
-      {/* {searched && <div style={{ marginTop: '-120px', marginBottom: '-80px' }}>{searchedBlogs(results)}</div>} */}
+      {searched && muiOverlay(results)}
     </MUISearch>
   );
 };
 
 export default Search;
-
-
