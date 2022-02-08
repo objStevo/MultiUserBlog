@@ -4,7 +4,7 @@ import { listSearch } from "../../actions/blog";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
-import { Box, List, ListItem, ListItemText, Divider } from "@mui/material/Box";
+import { Box, List, ListItem, ListItemText, Divider, ListItemButton } from "@mui/material/Box";
 
 const MUISearch = styled("div")(({ theme }) => ({
   position: "relative",
@@ -100,7 +100,7 @@ const Search = () => {
       <React.Fragment>
         <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
           <List>
-            <ListItem>{message && <ListItemText primary={message} />}</ListItem>
+            <ListItem>{message && (<ListItemText primary={message} />)}</ListItem>
           </List>
           <Divider />
           <nav aria-label="search results">
@@ -137,10 +137,12 @@ const Search = () => {
         <SearchIcon />
       </MUISearchIconWrapper>
       {muiSearchForm()}
-      {searched && muiSearchedBlogs()}
+      {searched && muiSearchedBlogs(results)}
       {/* {searched && <div style={{ marginTop: '-120px', marginBottom: '-80px' }}>{searchedBlogs(results)}</div>} */}
     </MUISearch>
   );
 };
 
 export default Search;
+
+
