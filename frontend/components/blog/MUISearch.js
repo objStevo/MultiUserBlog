@@ -8,12 +8,11 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import ArticleIcon from "@mui/icons-material/Article";
 
 const MUISearch = styled("div")(({ theme }) => ({
   position: "relative",
@@ -43,6 +42,10 @@ const MUISearchIconWrapper = styled("div")(({ theme }) => ({
 
 const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "white",
+  ".Mui-focused": {
+    border: "10px",
+    borderColor: "red",
+  },
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -50,6 +53,23 @@ const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
+    },
+  },
+}));
+
+const MUIStyledPopover = styled(Popover)(({ theme }) => ({
+  color: "red",
+  ".MuiTypography-root": {
+    fontSize: "0.9rem",
+  },
+  "& .MuiPopover-paper": {
+    padding: 0,
+    width: "74%",
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "22.5ch",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "23.5ch",
     },
   },
 }));
@@ -64,10 +84,6 @@ const Search = () => {
   });
 
   const { search, results, searched, message, anchorEl } = values;
-
-  useEffect(() => {
-    console.log(search, results, searched, message, anchorEl);
-  });
 
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -99,9 +115,9 @@ const Search = () => {
     });
   };
 
-  const muiOverlay = (results = []) => {
+  const searchResults = (results = []) => {
     return (
-      <Popover
+      <MUIStyledPopover
         open={searched}
         anchorEl={anchorEl}
         onClose={handleOverlayClose}
@@ -109,9 +125,12 @@ const Search = () => {
           vertical: "bottom",
           horizontal: "left",
         }}
+        PaperProps={{
+          sx: { bgcolor: "#3b3b44", color: "white" },
+        }}
       >
-        <Typography sx={{ p: 2 }}>
-          <Box color="inherit" sx={{ width: "100%", maxWidth: 360 }}>
+        <Typography sx={{ fontSize: ".4rem" }}>
+          <Box color="inherit">
             {message && (
               <List>
                 <ListItem>
@@ -119,32 +138,43 @@ const Search = () => {
                 </ListItem>
               </List>
             )}
-            <nav aria-label="search results">
-              <List>
-                {results.map((blog, i) => {
-                  return (
-                    <ListItem key={i}>
-                      <ListItemButton href={`/blogs/${blog.slug}`}>
-                        <ListItemText primary={blog.title} />
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                })}
-              </List>
-            </nav>
+            {!message && (
+              <nav aria-label="search results">
+                <List>
+                  {results.map((blog, i) => {
+                    return (
+                      <React.Fragment>
+                        <ListItem key={i}>
+                          <ListItemButton sx={{ p: 0 }}>
+                            <ArticleIcon sx={{ mr: 1 }} />
+                            <Link href={`/blogs/${blog.slug}`}>
+                              <ListItemText
+                                primary={blog.title}
+                                sx={{ fontSize: ".4rem" }}
+                              />
+                            </Link>
+                          </ListItemButton>
+                        </ListItem>
+                      </React.Fragment>
+                    );
+                  })}
+                </List>
+              </nav>
+            )}
           </Box>
         </Typography>
-      </Popover>
+      </MUIStyledPopover>
     );
   };
 
-  const muiSearchForm = () => {
+  const searchForm = () => {
     return (
       <form onSubmit={searchSubmit}>
         <MUIStyledInputBase
           placeholder="Search Articles…"
           inputProps={{ "aria-label": "search" }}
           onChange={handleFormChange}
+          focused={{ borderColor: "primary.main" }}
         />
       </form>
     );
@@ -153,10 +183,10 @@ const Search = () => {
   return (
     <MUISearch>
       <MUISearchIconWrapper>
-        <SearchIcon sx={{ color: "white" }}/>
+        <SearchIcon sx={{ color: "white" }} />
       </MUISearchIconWrapper>
-      {muiSearchForm()}
-      {muiOverlay(results)}
+      {searchForm()}
+      {searchResults(results)}
     </MUISearch>
   );
 };
