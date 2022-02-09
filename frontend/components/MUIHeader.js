@@ -34,23 +34,19 @@ export default function PrimarySearchAppBar() {
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-    console.log("Handle mobile menu close");
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    console.log("Handle Menu Close");
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-    console.log("handle mobile menu open");
   };
 
   const menuId = "primary-search-account-menu";
@@ -58,7 +54,7 @@ export default function PrimarySearchAppBar() {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -69,20 +65,24 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      variant="dense"
+      PaperProps={{
+        sx: { bgcolor: "#3b3b44", color: "white" },
+      }}
     >
       {isAuth() && isAuth().role === 0 && (
-        <MenuItem onClick={handleMenuClose}>
-          <Link href="/user">My Dashboard</Link>
-        </MenuItem>
+        <Link href="/user">
+          <MenuItem>My Dashboard</MenuItem>
+        </Link>
       )}
       {isAuth() && isAuth().role === 1 && (
-        <MenuItem onClick={handleMenuClose}>
-          <Link href="/admin">Admin Dashboard</Link>
-        </MenuItem>
+        <Link href="/admin">
+          <MenuItem>Admin Dashboard</MenuItem>
+        </Link>
       )}
-      <MenuItem onClick={handleMenuClose}>
-        <Link href="/blogs">Blogs</Link>
-      </MenuItem>
+      <Link href="/blogs">
+        <MenuItem>Blogs</MenuItem>
+      </Link>
       <MenuItem onClick={handleMenuClose}>
         <Link href="contact">Contact</Link>
       </MenuItem>
@@ -211,7 +211,7 @@ export default function PrimarySearchAppBar() {
                   variant="contained"
                 >
                   <Link href="/signup">
-                    <Typography variant="string" >Sign Up</Typography>
+                    <Typography variant="string">Sign Up</Typography>
                   </Link>
                 </Button>
               </React.Fragment>

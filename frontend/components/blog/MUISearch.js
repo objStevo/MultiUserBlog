@@ -58,11 +58,12 @@ const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const MUIStyledPopover = styled(Popover)(({ theme }) => ({
-  color: "red",
   ".MuiTypography-root": {
     fontSize: "0.9rem",
   },
   "& .MuiPopover-paper": {
+    backgroundColor: "#3b3b44", 
+    color: "white",
     padding: 0,
     width: "74%",
     [theme.breakpoints.between("sm", "md")]: {
@@ -124,9 +125,6 @@ const Search = () => {
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
-        }}
-        PaperProps={{
-          sx: { bgcolor: "#3b3b44", color: "white" },
         }}
       >
         <Typography sx={{ fontSize: ".4rem" }}>
