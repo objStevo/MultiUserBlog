@@ -3,25 +3,23 @@ import Router from "next/router";
 import React from "react";
 import { isAuth, signout } from "../actions/auth";
 import Link from "next/link";
-// MUI Imports
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import ArticleIcon from "@mui/icons-material/Article";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Search from "./blog/MUISearch";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
+import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
+import Typography from "@mui/material/Typography";
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
@@ -157,7 +155,7 @@ export default function PrimarySearchAppBar() {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#1A1A40",
+          backgroundColor: "#26262c",
           color: "white",
         }}
       >
@@ -165,20 +163,13 @@ export default function PrimarySearchAppBar() {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
+            aria-label="Desk"
+            sx={{ mr: 0, color: "#FA58B6" }}
           >
-            <MenuIcon />
+            <Link href="/">
+              <DesktopWindowsIcon />
+            </Link>
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            {APP_NAME}
-          </Typography>
           <Search />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -205,20 +196,23 @@ export default function PrimarySearchAppBar() {
             {!isAuth() && (
               <React.Fragment>
                 <Button
-                  sx={{ pt: 1 / 2, pb: 1 / 2, mr: 1 }}
-                  color="inherit"
+                  sx={{ pt: 1 / 2, pb: 1 / 2, mr: 1, bgcolor: "#53535f" }}
                   size="small"
-                  variant="outlined"
+                  variant="contained"
                 >
-                  <Link href="/signin">Log In</Link>
+                  <Link href="/signin">
+                    <Typography variant="string">Log In</Typography>
+                  </Link>
                 </Button>
                 <Button
-                  sx={{ pt: 1 / 2, pb: 1 / 2 }}
+                  sx={{ pt: 1 / 2, pb: 1 / 2, bgcolor: "#FA58B6" }}
                   color="inherit"
                   size="small"
                   variant="contained"
                 >
-                  <Link href="/signup">Sign Up</Link>
+                  <Link href="/signup">
+                    <Typography variant="string" >Sign Up</Typography>
+                  </Link>
                 </Button>
               </React.Fragment>
             )}
@@ -254,3 +248,13 @@ export default function PrimarySearchAppBar() {
     </Box>
   );
 }
+
+// --color-hinted-grey-1: #0e0e10;
+// --color-hinted-grey-2: #18181b;
+// --color-hinted-grey-3: #1f1f23;
+// --color-hinted-grey-4: #26262c;
+// --color-hinted-grey-5: #323239;
+// --color-hinted-grey-6: #3b3b44;
+// --color-hinted-grey-7: #53535f;
+// --color-hinted-grey-8: #848494;
+// --color-hinted-grey-9: #adadb8;

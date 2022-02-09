@@ -26,7 +26,7 @@ const MUISearch = styled("div")(({ theme }) => ({
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(1),
     width: "auto",
   },
 }));
@@ -42,7 +42,7 @@ const MUISearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: "white",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -73,56 +73,30 @@ const Search = () => {
     e.preventDefault();
     const searchEl = e.currentTarget;
     listSearch({ search }).then((data) => {
-
-        setValues({
+      setValues({
         ...values,
         results: data,
         searched: true,
         anchorEl: searchEl,
-        message: `${data.length} blogs found`,
+        message: data.length === 0 ? `${data.length} blogs found` : "",
       });
     });
   };
 
-  const handleChange = (e) => {
+  const handleFormChange = (e) => {
     setValues({
       ...values,
       search: e.target.value,
-      searched: false,
-      anchorEl: null,
       results: [],
     });
   };
 
-  const handleClose = () => {
+  const handleOverlayClose = (e) => {
     setValues({
       ...values,
+      searched: false,
       anchorEl: null,
     });
-  };
-
-  const muiSearchedBlogs = (results = []) => {
-    return (
-      <Box color="inherit" sx={{ width: "100%", maxWidth: 360 }}>
-        <List>
-          <ListItem>{message && <ListItemText primary={message} />}</ListItem>
-        </List>
-        <Divider />
-        <nav aria-label="search results">
-          <List>
-            {results.map((blog, i) => {
-              return (
-                <ListItem key={i}>
-                  <ListItemButton href={`/blogs/${blog.slug}`}>
-                    <ListItemText primary={blog.title} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </List>
-        </nav>
-      </Box>
-    );
   };
 
   const muiOverlay = (results = []) => {
@@ -130,7 +104,7 @@ const Search = () => {
       <Popover
         open={searched}
         anchorEl={anchorEl}
-        onClose={handleChange}
+        onClose={handleOverlayClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -138,12 +112,13 @@ const Search = () => {
       >
         <Typography sx={{ p: 2 }}>
           <Box color="inherit" sx={{ width: "100%", maxWidth: 360 }}>
-            <List>
-              <ListItem>
-                {message && <ListItemText primary={message} />}
-              </ListItem>
-            </List>
-            <Divider />
+            {message && (
+              <List>
+                <ListItem>
+                  <ListItemText primary={message} />
+                </ListItem>
+              </List>
+            )}
             <nav aria-label="search results">
               <List>
                 {results.map((blog, i) => {
@@ -169,16 +144,16 @@ const Search = () => {
         <MUIStyledInputBase
           placeholder="Search Articles…"
           inputProps={{ "aria-label": "search" }}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </form>
     );
   };
 
   return (
-    <MUISearch sx={{ mt: 1 / 2, mb: 1 / 2 }}>
+    <MUISearch>
       <MUISearchIconWrapper>
-        <SearchIcon />
+        <SearchIcon sx={{ color: "white" }}/>
       </MUISearchIconWrapper>
       {muiSearchForm()}
       {muiOverlay(results)}
