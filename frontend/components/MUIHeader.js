@@ -22,6 +22,8 @@ import Divider from "@mui/material/Divider";
 import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
 import Typography from "@mui/material/Typography";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
@@ -73,23 +75,29 @@ export default function PrimarySearchAppBar() {
     >
       {isAuth() && isAuth().role === 0 && (
         <Link href="/user">
-          <MenuItem>My Dashboard</MenuItem>
+          <MenuItem>
+            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
+            Dashboard
+          </MenuItem>
         </Link>
       )}
       {isAuth() && isAuth().role === 1 && (
         <Link href="/admin">
-          <MenuItem>Admin Dashboard</MenuItem>
+          <MenuItem>
+            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
+            Dashboard
+          </MenuItem>
         </Link>
       )}
       <Link href="/blogs">
         <MenuItem>
-          <ArticleIcon sx={{ mr: 2, width: 1/5 }} />
+          <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
           Blogs
         </MenuItem>
       </Link>
       <Link href="/contact">
         <MenuItem>
-          <ContactMailIcon sx={{ mr: 2, width: 1/5 }} />
+          <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
           Contact
         </MenuItem>
       </Link>
@@ -98,7 +106,7 @@ export default function PrimarySearchAppBar() {
           <Divider />
           <Link href="/signin">
             <MenuItem>
-              <LoginIcon sx={{ mr: 2, width: 1/5 }} />
+              <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
               Log In
             </MenuItem>
           </Link>
@@ -107,9 +115,12 @@ export default function PrimarySearchAppBar() {
       {isAuth() && (
         <React.Fragment>
           <Divider />
-          <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
-            <Link href="/signup">Signout</Link>
-          </MenuItem>
+          <Link href="/signin">
+            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+              <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log Out
+            </MenuItem>
+          </Link>
         </React.Fragment>
       )}
     </Menu>
@@ -120,7 +131,7 @@ export default function PrimarySearchAppBar() {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={mobileMenuId}
@@ -132,31 +143,46 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {!isAuth && <p>Blogs</p>}
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificationsss</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Link href="/user/crud/blog">
+        <MenuItem>
+          <CreateIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Write
+        </MenuItem>
+      </Link>
+      <Link href="/blogs">
+        <MenuItem>
+          <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Blogs
+        </MenuItem>
+      </Link>
+      <Link href="/contact">
+        <MenuItem>
+          <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Contact
+        </MenuItem>
+      </Link>
+      {!isAuth() && (
+        <React.Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem>
+              <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log In
+            </MenuItem>
+          </Link>
+        </React.Fragment>
+      )}
+      {isAuth() && (
+        <React.Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+              <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log Out
+            </MenuItem>
+          </Link>
+        </React.Fragment>
+      )}
     </Menu>
   );
 
@@ -170,24 +196,25 @@ export default function PrimarySearchAppBar() {
         }}
       >
         <Toolbar variant="dense">
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="Desk"
-            sx={{ mr: 0, color: "#FA58B6" }}
-          >
-            <Link href="/">
-              <DesktopWindowsIcon />
-            </Link>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ ml: 2, display: { xs: "none", md: "flex" } }}
+          <Link href="/">
+            <IconButton
+              size="large"
+              edge="start"
+              aria-label="Desk"
+              sx={{ mr: 0, color: "#FA58B6" }}
             >
-              {APP_NAME}
-            </Typography>
-          </IconButton>
+              <DesktopWindowsIcon />
+
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ ml: 2, display: { xs: "none", md: "flex" } }}
+              >
+                {APP_NAME}
+              </Typography>
+            </IconButton>
+          </Link>
           <Search />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
