@@ -13,6 +13,7 @@ import Menu from "@mui/material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ArticleIcon from "@mui/icons-material/Article";
+import LoginIcon from "@mui/icons-material/Login";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
@@ -20,6 +21,7 @@ import Search from "./blog/MUISearch";
 import Divider from "@mui/material/Divider";
 import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
 import Typography from "@mui/material/Typography";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 
 Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
@@ -65,7 +67,6 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-      variant="dense"
       PaperProps={{
         sx: { bgcolor: "#3b3b44", color: "white" },
       }}
@@ -81,17 +82,26 @@ export default function PrimarySearchAppBar() {
         </Link>
       )}
       <Link href="/blogs">
-        <MenuItem>Blogs</MenuItem>
+        <MenuItem>
+          <ArticleIcon sx={{ mr: 2, width: 1/5 }} />
+          Blogs
+        </MenuItem>
       </Link>
-      <MenuItem onClick={handleMenuClose}>
-        <Link href="contact">Contact</Link>
-      </MenuItem>
+      <Link href="/contact">
+        <MenuItem>
+          <ContactMailIcon sx={{ mr: 2, width: 1/5 }} />
+          Contact
+        </MenuItem>
+      </Link>
       {!isAuth() && (
         <React.Fragment>
           <Divider />
-          <MenuItem onClick={handleMenuClose}>
-            <Link href="/signin">Log In</Link>
-          </MenuItem>
+          <Link href="/signin">
+            <MenuItem>
+              <LoginIcon sx={{ mr: 2, width: 1/5 }} />
+              Log In
+            </MenuItem>
+          </Link>
         </React.Fragment>
       )}
       {isAuth() && (
@@ -169,6 +179,14 @@ export default function PrimarySearchAppBar() {
             <Link href="/">
               <DesktopWindowsIcon />
             </Link>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ ml: 2, display: { xs: "none", md: "flex" } }}
+            >
+              {APP_NAME}
+            </Typography>
           </IconButton>
           <Search />
           <Box sx={{ flexGrow: 1 }} />
