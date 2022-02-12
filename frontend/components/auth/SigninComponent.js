@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { authenticate, isAuth, signin } from "../../actions/auth";
 import Router from "next/router";
-import Link from 'next/link';
-import LoginGoogle from './LoginGoogle';
+import Link from "next/link";
+import LoginGoogle from "./LoginGoogle";
 
 const SigninComponent = () => {
   const [values, setValues] = useState({
     name: "Ryan",
-    email: "ryan@gmail.com",
-    password: "rrrrrr",
+    email: "hschalco@gmail.com",
+    password: "",
     error: "",
     loading: false,
     message: "",
@@ -17,14 +17,12 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
-  /*If you only want to invoke the effect after the initial render pass it an empty array as second argument*/
   useEffect(() => {
     isAuth() && Router.push("/");
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevents a reload of the page
-    // console.table({ name, email, password, error, loading,message, showForm});
+    e.preventDefault(); 
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
 
@@ -66,20 +64,9 @@ const SigninComponent = () => {
   const signupForm = () => {
     return (
       <React.Fragment>
-        <div>{email}</div>
         <div className="container">
           <div className="row justify-content-center">
             <form onSubmit={handleSubmit}>
-              <div className="row justify-content-start icon-row">
-                <div className="col-1">
-                  {" "}
-                  <img src="./userp32.png" alt="account image"></img>
-                </div>
-                <div className="col-6">
-                  <h4>Login</h4>
-                </div>
-              </div>
-
               <div className="form-group">
                 <input
                   value={email}
@@ -101,9 +88,7 @@ const SigninComponent = () => {
               </div>
 
               <div>
-                <button className="btn btn-primary btn-block">
-                  Signin
-                </button>
+                <button className="btn btn-primary btn-block">Signin</button>
               </div>
             </form>
           </div>
