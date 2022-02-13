@@ -146,20 +146,25 @@ export default function MuiSigninComponent() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 1 }}
             >
               Sign In
             </Button>
+            <LoginGoogle />
             <Grid container>
               <Grid item xs>
-                <MuiLink href="#" variant="body2">
-                  Forgot password?
-                </MuiLink>
+              <Link href="/auth/password/forgot">
+                  <MuiLink variant="body2">
+                    {"Forgot password?"}
+                  </MuiLink>
+                </Link>
               </Grid>
               <Grid item>
-                <MuiLink href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </MuiLink>
+                <Link href="/signup">
+                  <MuiLink variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </MuiLink>
+                </Link>
               </Grid>
             </Grid>
           </Box>
