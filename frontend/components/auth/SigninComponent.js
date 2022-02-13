@@ -23,8 +23,7 @@ const SigninComponent = () => {
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevents a reload of the page
-    // console.table({ name, email, password, error, loading,message, showForm});
+    e.preventDefault(); 
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
 

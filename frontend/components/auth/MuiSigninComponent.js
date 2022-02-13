@@ -5,13 +5,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import MuiLink from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import { useState, useEffect } from "react";
+import { authenticate, isAuth, signin } from "../../actions/auth";
+import Router from "next/router";
+import Link from "next/link";
+import LoginGoogle from "./LoginGoogle";
 
 function Copyright(props) {
   return (
@@ -22,25 +28,70 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <MuiLink color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </MuiLink>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#1f253d",
+      dark: "#142a8a",
+    },
+    secondary: {
+      main: "#f50057",
+    },
+  },
+});
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+export default function MuiSigninComponent() {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    error: "",
+    loading: false,
+    message: "",
+    showForm: true,
+  });
+
+  const { email, password, error, loading, message, showForm } = values;
+
+  useEffect(() => {
+    isAuth() && Router.push("/");
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setValues({ ...values, loading: true, error: false });
+    const user = { email, password };
+
+    signin(user).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error, loading: false });
+      } else {
+        authenticate(data, () => {
+          if (isAuth() && isAuth().role === 1) {
+            Router.push("/admin");
+          } else {
+            Router.push("/user");
+          }
+        });
+      }
+    });
+  };
+
+  const handleChange = (name) => (e) => {
+    setValues({
+      ...values,
+      error: false,
+      [name]: e.target.value,
     });
   };
 
@@ -77,6 +128,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange("email")}
+              type="email"
             />
             <TextField
               margin="normal"
@@ -87,10 +140,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={handleChange("password")}
             />
             <Button
               type="submit"
@@ -102,14 +152,14 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <MuiLink href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </MuiLink>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <MuiLink href="#" variant="body2">
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </MuiLink>
               </Grid>
             </Grid>
           </Box>
