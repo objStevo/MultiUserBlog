@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import MuiLink from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,12 +11,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { useState, useEffect } from "react";
 import { authenticate, isAuth, signin } from "../../actions/auth";
 import Router from "next/router";
 import Link from "next/link";
 import LoginGoogle from "./LoginGoogle";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 function Copyright(props) {
   return (
@@ -28,10 +28,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <MuiLink color="inherit" href="https://mui.com/">
-        Your Website
-      </MuiLink>{" "}
-      {new Date().getFullYear()}
+      <MuiLink color="inherit">Hernan Tech</MuiLink> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -74,6 +71,8 @@ export default function MuiSigninComponent() {
 
     signin(user).then((data) => {
       if (data.error) {
+        console.log("There was an error with signin api:", data.error);
+        console.log("values: ", values);
         setValues({ ...values, error: data.error, loading: false });
       } else {
         authenticate(data, () => {
@@ -93,6 +92,36 @@ export default function MuiSigninComponent() {
       error: false,
       [name]: e.target.value,
     });
+  };
+
+  const showLoading = () => {
+    if (loading) {
+      return (
+        <Alert fullWidth severity="info">
+          <AlertTitle>Loading...</AlertTitle>
+        </Alert>
+      );
+    }
+  };
+
+  const showError = () => {
+    if (error) {
+      return (
+        <Alert fullWidth severity="error">
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      );
+    }
+  };
+
+  const showMessage = () => {
+    if (message) {
+      return (
+        <Alert fullWidth severity="warning">
+          <AlertTitle>{message}</AlertTitle>
+        </Alert>
+      );
+    }
   };
 
   return (
@@ -119,6 +148,9 @@ export default function MuiSigninComponent() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {showLoading()}
+            {showMessage()}
+            {showError()}
             <TextField
               margin="normal"
               required
@@ -153,10 +185,8 @@ export default function MuiSigninComponent() {
             <LoginGoogle />
             <Grid container>
               <Grid item xs>
-              <Link href="/auth/password/forgot">
-                  <MuiLink variant="body2">
-                    {"Forgot password?"}
-                  </MuiLink>
+                <Link href="/auth/password/forgot">
+                  <MuiLink variant="body2">{"Forgot password?"}</MuiLink>
                 </Link>
               </Grid>
               <Grid item>
