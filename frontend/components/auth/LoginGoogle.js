@@ -4,10 +4,11 @@ import Router from "next/router";
 import GoogleLogin from "react-google-login";
 import { loginWithGoogle, authenticate, isAuth } from "../../actions/auth";
 import { GOOGLE_CLIENT_ID } from "../../config";
+import Button from "@mui/material/Button";
 
 const LoginGoogle = () => {
   const handleGooglesError = (err) => {
-    console.log('Google error');
+    console.log("Google error");
     console.error(err);
   };
   const responseGoogle = (response) => {
@@ -34,10 +35,22 @@ const LoginGoogle = () => {
     <div className="pb-3">
       <GoogleLogin
         clientId={`${GOOGLE_CLIENT_ID}`}
-        buttonText="Login with Google"
+        buttonText="Sign In with Google"
         onSuccess={responseGoogle}
         onFailure={handleGooglesError}
         theme="dark"
+        render={(renderProps) => (
+          <Button
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{mb: 2, bgcolor:"white", color: "#1f253d" }}
+          >
+            Sign In with Google
+          </Button>
+        )}
       />
     </div>
   );
