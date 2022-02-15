@@ -1,12 +1,11 @@
 import Layout from '../components/Layout'
-import Link from 'next/link'
 import SignupComponent from '../components/auth/SignupComponent'
-
+import MuiSignupComponent from '../components/auth/MuiSignupComponent'
 
 const Signup = () => {
     return (
         <Layout>
-            <SignupComponent/>
+            <MuiSignupComponent/>
         </Layout>
     );
 };
