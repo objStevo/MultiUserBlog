@@ -137,12 +137,12 @@ export default function MuiSignupComponent() {
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{ mt: 2 }}
           >
             {showLoading()}
             {showMessage()}
             {showError()}
-            <Grid container spacing={2}>
+            <Grid sx={{ mt: 1 }} container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
