@@ -7,6 +7,13 @@ import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
 import Card from "../../components/blog/Card";
 import { API, DOMAIN, APP_NAME } from "../../config";
 import React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Typography } from "@mui/material";
+import Divider from "@mui/material/Divider";
 
 const Blogs = ({
   blogs,
@@ -92,19 +99,45 @@ const Blogs = ({
   };
 
   const showAllCategories = () => {
-    return categories.map((c, i) => (
-      <Link href={`/categories/${c.slug}`} key={i}>
-        <a className="btn btn-primary mr-1 ml-1 mt-3">{c.name}</a>
-      </Link>
-    ));
+    return (
+      <Box sx={{ minWidth: 120, mr:1}}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Categories"
+          >
+            {categories.map((c, i) => (
+              <Link href={`/categories/${c.slug}`}>
+                <MenuItem>{c.name}</MenuItem>
+              </Link>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    );
   };
 
   const showAllTags = () => {
-    return tags.map((t, i) => (
-      <Link href={`/tags/${t.slug}`} key={i}>
-        <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
-      </Link>
-    ));
+    return (
+      <Box sx={{ minWidth: 120}}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Tags</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Categories"
+          >
+            {tags.map((t, i) => (
+              <Link href={`/tags/${t.slug}`}>
+                <MenuItem>{t.name}</MenuItem>
+              </Link>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    );
   };
 
   const showLoadedBlogs = () => {
@@ -122,19 +155,12 @@ const Blogs = ({
         <main>
           <div className="container-fluid">
             <header>
-              <div className="col-md-12 pt-3">
-                <h1 className="display-4 font-weight-bold text-center">
-                  Programming blogs and tutorials
-                </h1>
-              </div>
-              <section>
-                <div className="pb-5 text-center">
+                <Box sx={{display:"flex", mt:5, mb: 2}}>
                   {showAllCategories()}
-                  <br />
                   {showAllTags()}
-                </div>
-              </section>
+                </Box>
             </header>
+            <Divider/>
           </div>
           <div className="container-fluid">{showAllBlogs()}</div>
           <div className="container-fluid">{showLoadedBlogs()}</div>
