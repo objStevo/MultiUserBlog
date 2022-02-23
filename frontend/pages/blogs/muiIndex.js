@@ -155,7 +155,7 @@ const Blogs = ({
         <main>
           <div className="container-fluid">
             <header>
-                <Box sx={{display:"flex", mt:5, mb: 2}}>
+                <Box sx={{display:"flex", mt:2, mb: 2}}>
                   {showAllCategories()}
                   {showAllTags()}
                 </Box>
