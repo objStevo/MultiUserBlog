@@ -4,7 +4,7 @@ import { withRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-import Card from "../../components/blog/Card";
+// import Card from "../../components/blog/Card";
 import { API, DOMAIN, APP_NAME } from "../../config";
 import React from "react";
 import Box from "@mui/material/Box";
@@ -12,8 +12,78 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Typography } from "@mui/material";
+import { CardActionArea, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { styled } from "@mui/material/styles";
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import moment from "moment";
+import parse from "html-react-parser";
+import Card from '@mui/material/Card';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+const ShowPosts = (props) => {
+  const { blog } = props;
+
+  const showPostCategories = (categories) =>
+    categories.map((c, i) => (
+      <Link key={i} href={`/categories/${c.slug}`}>
+        <a className="btn btn-primary mr-1 ml-1 mt-3">{c.name}</a>
+      </Link>
+    ));
+
+  const showPostTags = (tags) =>
+    tags.map((t, i) => (
+      <Link key={i} href={`/tags/${t.slug}`}>
+        <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
+      </Link>
+    ));
+console.log(props);
+  return (
+    <Grid item xs={12}>
+      <Link href={`/blogs/${blog.slug}`}>
+        <CardActionArea component="a">
+          <Card sx={{ display: "flex" }}>
+            <CardMedia
+              component="img"
+              sx={{ width: 160, display: { xs: "none", sm: "block" } }}
+              src={`${API}/api/blog/photo/${blog.slug}`}
+              alt={blog.title}
+            />
+            <CardContent sx={{ flex: 1 }}>
+              <Typography component="h2" variant="h5">
+                {blog.title}
+              </Typography>
+              <Typography variant="subtitle1" color="text.secondary">
+                {`By ${blog.postedBy.username} · ${moment(
+                  blog.updatedAt
+                ).fromNow()}`}
+              </Typography>
+              <Typography variant="subtitle1" paragraph>
+                {parse(blog.excerpt)}
+              </Typography>
+              {/* {blog.categories.array.forEach((category, i) => {
+                <Item key={i}>{category.name}</Item>;
+              })}
+              {blog.tags.array.forEach((tag, i) => {
+                <Item key={i}>{tag.name}</Item>;
+              })} */}
+            </CardContent>
+          </Card>
+        </CardActionArea>
+      </Link>
+    </Grid>
+  );
+};
 
 const Blogs = ({
   blogs,
@@ -88,11 +158,10 @@ const Blogs = ({
 
   const showAllBlogs = () => {
     return blogs.map((blog, i) => {
-      // ()
       return (
         <article key={i}>
-          <Card blog={blog} />
-          <hr />
+          {/* <Card blog={blog} /> */}
+          <ShowPosts blog={blog}/>
         </article>
       );
     });
@@ -100,7 +169,7 @@ const Blogs = ({
 
   const showAllCategories = () => {
     return (
-      <Box sx={{ minWidth: 120, mr:1}}>
+      <Box sx={{ minWidth: 120, mr: 1 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Categories</InputLabel>
           <Select
@@ -121,7 +190,7 @@ const Blogs = ({
 
   const showAllTags = () => {
     return (
-      <Box sx={{ minWidth: 120}}>
+      <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Tags</InputLabel>
           <Select
@@ -143,7 +212,7 @@ const Blogs = ({
   const showLoadedBlogs = () => {
     return loadedBlogs.map((blog, i) => (
       <article key={i}>
-        <Card blog={blog} />
+        <ShowPosts blog={blog}/>
       </article>
     ));
   };
@@ -155,12 +224,12 @@ const Blogs = ({
         <main>
           <div className="container-fluid">
             <header>
-                <Box sx={{display:"flex", mt:2, mb: 2}}>
-                  {showAllCategories()}
-                  {showAllTags()}
-                </Box>
+              <Box sx={{ display: "flex", mt: 2, mb: 2 }}>
+                {showAllCategories()}
+                {showAllTags()}
+              </Box>
             </header>
-            <Divider/>
+            <Divider />
           </div>
           <div className="container-fluid">{showAllBlogs()}</div>
           <div className="container-fluid">{showLoadedBlogs()}</div>
