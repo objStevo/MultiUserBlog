@@ -4,7 +4,6 @@ import { withRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-// import Card from "../../components/blog/Card";
 import { API, DOMAIN, APP_NAME } from "../../config";
 import React from "react";
 import Box from "@mui/material/Box";
@@ -26,9 +25,9 @@ import Card from "@mui/material/Card";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
-  padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
+  padding: theme.spacing(1),
+  color: theme.palette.text.secondary
 }));
 
 const ShowPosts = (props) => {
@@ -72,14 +71,14 @@ const ShowPosts = (props) => {
                 {parse(blog.excerpt)}
               </Typography>
               {(blog.categories.length || blog.tags.length) && (
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                   {blog.categories.map((category, i) => (
-                    <Grid item xs={1}>
+                    <Grid item xs="auto">
                       <Item>{category.name}</Item>
                     </Grid>
                   ))}
                   {blog.tags.map((taga, i) => (
-                    <Grid item xs={1}>
+                    <Grid item xs="auto">
                       <Item>{taga.name}</Item>
                     </Grid>
                   ))}
