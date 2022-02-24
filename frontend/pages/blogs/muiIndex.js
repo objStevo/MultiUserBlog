@@ -15,13 +15,13 @@ import Select from "@mui/material/Select";
 import { CardActionArea, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { styled } from "@mui/material/styles";
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
 import moment from "moment";
 import parse from "html-react-parser";
-import Card from '@mui/material/Card';
+import Card from "@mui/material/Card";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -47,7 +47,7 @@ const ShowPosts = (props) => {
         <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
       </Link>
     ));
-console.log(props);
+  console.log(props);
   return (
     <Grid item xs={12}>
       <Link href={`/blogs/${blog.slug}`}>
@@ -71,12 +71,20 @@ console.log(props);
               <Typography variant="subtitle1" paragraph>
                 {parse(blog.excerpt)}
               </Typography>
-              {/* {blog.categories.array.forEach((category, i) => {
-                <Item key={i}>{category.name}</Item>;
-              })}
-              {blog.tags.array.forEach((tag, i) => {
-                <Item key={i}>{tag.name}</Item>;
-              })} */}
+              {(blog.categories.length || blog.tags.length) && (
+                <Grid container spacing={2}>
+                  {blog.categories.map((category, i) => (
+                    <Grid item xs={1}>
+                      <Item>{category.name}</Item>
+                    </Grid>
+                  ))}
+                  {blog.tags.map((taga, i) => (
+                    <Grid item xs={1}>
+                      <Item>{taga.name}</Item>
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
             </CardContent>
           </Card>
         </CardActionArea>
@@ -161,7 +169,7 @@ const Blogs = ({
       return (
         <article key={i}>
           {/* <Card blog={blog} /> */}
-          <ShowPosts blog={blog}/>
+          <ShowPosts blog={blog} />
         </article>
       );
     });
@@ -212,7 +220,7 @@ const Blogs = ({
   const showLoadedBlogs = () => {
     return loadedBlogs.map((blog, i) => (
       <article key={i}>
-        <ShowPosts blog={blog}/>
+        <ShowPosts blog={blog} />
       </article>
     ));
   };
