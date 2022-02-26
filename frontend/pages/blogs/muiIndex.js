@@ -46,7 +46,6 @@ const ShowPosts = (props) => {
         <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
       </Link>
     ));
-  console.log(props);
   return (
     <Grid item xs={12}>
       <Link href={`/blogs/${blog.slug}`}>
