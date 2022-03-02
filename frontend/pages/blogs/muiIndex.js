@@ -20,37 +20,25 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import moment from "moment";
 import parse from "html-react-parser";
-import Card from "@mui/material/Card";
+import Card from "@mui/material/Card"; 
+import Button from '@mui/material/Button';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   textAlign: "center",
   padding: theme.spacing(1),
-  color: theme.palette.text.secondary
+  color: theme.palette.text.secondary,
 }));
 
-const ShowPosts = (props) => {
+const Post = (props) => {
   const { blog } = props;
 
-  const showPostCategories = (categories) =>
-    categories.map((c, i) => (
-      <Link key={i} href={`/categories/${c.slug}`}>
-        <a className="btn btn-primary mr-1 ml-1 mt-3">{c.name}</a>
-      </Link>
-    ));
-
-  const showPostTags = (tags) =>
-    tags.map((t, i) => (
-      <Link key={i} href={`/tags/${t.slug}`}>
-        <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
-      </Link>
-    ));
   return (
     <Grid item xs={12}>
       <Link href={`/blogs/${blog.slug}`}>
-        <CardActionArea component="a">
-          <Card sx={{ display: "flex" }}>
+        <CardActionArea>
+          <Card variant="" sx={{ display: "flex" }}>
             <CardMedia
               component="img"
               sx={{ width: 160, display: { xs: "none", sm: "block" } }}
@@ -76,9 +64,9 @@ const ShowPosts = (props) => {
                       <Item>{category.name}</Item>
                     </Grid>
                   ))}
-                  {blog.tags.map((taga, i) => (
+                  {blog.tags.map((tag, i) => (
                     <Grid item xs="auto">
-                      <Item>{taga.name}</Item>
+                      <Item>{tag.name}</Item>
                     </Grid>
                   ))}
                 </Grid>
@@ -155,21 +143,16 @@ const Blogs = ({
     return (
       size > 0 &&
       size >= limit && (
-        <button onClick={loadMore} className="btn btn-outline-primary btn-lg">
-          Load more
-        </button>
+        <Button onClick={loadMore} variant="text">
+          More
+        </Button>
       )
     );
   };
 
   const showAllBlogs = () => {
     return blogs.map((blog, i) => {
-      return (
-        <article key={i}>
-          {/* <Card blog={blog} /> */}
-          <ShowPosts blog={blog} />
-        </article>
-      );
+      return <Post key={i} blog={blog} />;
     });
   };
 
@@ -216,11 +199,7 @@ const Blogs = ({
   };
 
   const showLoadedBlogs = () => {
-    return loadedBlogs.map((blog, i) => (
-      <article key={i}>
-        <ShowPosts blog={blog} />
-      </article>
-    ));
+    return loadedBlogs.map((blog, i) => <Post key={i} blog={blog} />);
   };
 
   return (
@@ -235,10 +214,13 @@ const Blogs = ({
                 {showAllTags()}
               </Box>
             </header>
-            <Divider />
           </div>
-          <div className="container-fluid">{showAllBlogs()}</div>
-          <div className="container-fluid">{showLoadedBlogs()}</div>
+          <Grid container rowSpacing={1}>
+            {showAllBlogs()}
+          </Grid>
+          <Grid container rowSpacing={1}>
+            {showLoadedBlogs()}
+          </Grid>
           <div className="text-center pt-5 pb-5">{loadMoreButton()}</div>
         </main>
       </Layout>
