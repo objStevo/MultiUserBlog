@@ -1,6 +1,7 @@
 import Layout from "../../../components/Layout";
 import Private from "../../../components/auth/Private";
 import BlogCreate from "../../../components/crud/BlogCreate";
+import MuiBlogCreate from "../../../components/crud/MuiBlogCreate";
 import Link from "next/link";
 
 const CreateBlog = () => {
@@ -13,7 +14,7 @@ const CreateBlog = () => {
               <h2>Create a new blog</h2>
             </div>
             <div className="col-md-12">
-              <BlogCreate />
+              <MuiBlogCreate />
             </div>
           </div>
         </div>

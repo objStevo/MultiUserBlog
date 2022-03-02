@@ -10,8 +10,9 @@ import { createBlog } from "../../actions/blog";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "../../node_modules/react-quill/dist/quill.snow.css";
 import { QuillFormats, QuillModules } from "../../utils/quill";
+import TextField from "@mui/material/TextField";
 
-const CreateBlog = ({ router }) => {
+const MuiCreateBlog = ({ router }) => {
   const blogFromLS = () => {
     if (typeof window === "undefined") {
       return false;
@@ -188,10 +189,11 @@ const CreateBlog = ({ router }) => {
   const createBlogForm = () => {
     return (
       <form onSubmit={publishBlog}>
-        <label className="text-muted">Title</label>
-        <input
-          type="text"
-          className="form-control"
+        <TextField
+          id="outlined-multiline-flexible"
+          label="Title"
+          maxRows={4}
+          fullWidth
           value={title}
           onChange={handleChange("title")}
         />
@@ -243,7 +245,7 @@ const CreateBlog = ({ router }) => {
             </div>
           </div>
           <div>
-            <h5>Categories</h5>
+            <h5>Categoriesasfdsfd</h5>
             <hr />
 
             <ul style={{ maxHeight: "200px", overflowY: "scroll" }}>
@@ -263,33 +265,4 @@ const CreateBlog = ({ router }) => {
   );
 };
 
-CreateBlog.modules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { header: [3, 4, 5, 6] }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link", "image", "video"],
-    ["clean"],
-    ["code-block"],
-  ],
-};
-
-CreateBlog.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "video",
-  "code-block",
-];
-
-export default withRouter(CreateBlog);
+export default withRouter(MuiCreateBlog);
