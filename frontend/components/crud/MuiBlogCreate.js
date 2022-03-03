@@ -11,6 +11,12 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "../../node_modules/react-quill/dist/quill.snow.css";
 import { QuillFormats, QuillModules } from "../../utils/quill";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Typography from '@mui/material/Typography';
 
 const MuiCreateBlog = ({ router }) => {
   const blogFromLS = () => {
@@ -192,10 +198,10 @@ const MuiCreateBlog = ({ router }) => {
         <TextField
           id="outlined-multiline-flexible"
           label="Title"
-          maxRows={4}
           fullWidth
           value={title}
           onChange={handleChange("title")}
+          margin="dense"
         />
 
         <ReactQuill
@@ -206,52 +212,41 @@ const MuiCreateBlog = ({ router }) => {
           onChange={handleBody}
         />
 
-        <div>
-          <button type="submit" className="btn btn-primary">
-            Publish
-          </button>
-        </div>
+        <Button sx={{ mt: 2 }} variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
     );
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-8">
+    <Container maxWidth="lg">
+      <Grid container spacing={4}>
+        <Grid item xs={8}>
           {createBlogForm()}
-          <div className="pt-3">
+          <Box component="div" sx={{ mt: 2, p: 1 }}>
             {showError()}
             {showSuccess()}
-          </div>
-        </div>
+          </Box>
+        </Grid>
 
-        <div className="col-md-4">
-          <div>
-            <div className="form-group pb-2">
-              <h5>Featured image</h5>
-              <hr />
-
-              <small className="text-muted">Max size: 1mb</small>
-              <label className="btn btn-outline-info">
-                Upload featured image
-                <input
-                  onChange={handleChange("photo")}
-                  type="file"
-                  accept="image/*"
-                  hidden
-                />
-              </label>
-            </div>
-          </div>
-          <div>
-            <h5>Categoriesasfdsfd</h5>
-            <hr />
+        <Grid item xs={4}>
+          <Box componenet="div" sx={{mb:2}}>
+            <Typography>Featured image</Typography>
+            <Divider />
+            <Button sx={{mt:2}} variant="contained" component="label">
+              Upload
+              <input type="file" hidden />
+            </Button>
+          </Box>
+          <Box componenet="div">
+            <Typography>Categories</Typography>
+            <Divider />
 
             <ul style={{ maxHeight: "200px", overflowY: "scroll" }}>
               {showCategories()}
             </ul>
-          </div>
+          </Box>
           <div>
             <h5>Tags</h5>
             <hr />
@@ -259,9 +254,9 @@ const MuiCreateBlog = ({ router }) => {
               {showTags()}
             </ul>
           </div>
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
