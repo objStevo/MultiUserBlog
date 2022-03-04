@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
-import Router from "next/router";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import { getCookie, isAuth } from "../../actions/auth";
@@ -16,7 +14,11 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Alert from "@mui/material/Alert";
 
 const MuiCreateBlog = ({ router }) => {
   const blogFromLS = () => {
@@ -146,14 +148,12 @@ const MuiCreateBlog = ({ router }) => {
     return (
       categories.data &&
       categories.data.map((c, i) => (
-        <li key={i} className="list-unstyled">
-          <input
-            onChange={handleToggle(c._id)}
-            type="checkbox"
-            className="mr-2"
-          />
-          <label className="form-check-label">{c.name}</label>
-        </li>
+        <FormControlLabel
+          sx={{ mb: 0, p: 0 }}
+          key={i}
+          control={<Checkbox size="small" onChange={handleToggle(c._id)} />}
+          label={c.name}
+        />
       ))
     );
   };
@@ -162,34 +162,26 @@ const MuiCreateBlog = ({ router }) => {
     return (
       tags.data &&
       tags.data.map((t, i) => (
-        <li key={i} className="list-unstyled">
-          <input
-            onChange={handleTagsToggle(t._id)}
-            type="checkbox"
-            className="mr-2"
-          />
-          <label className="form-check-label">{t.name}</label>
-        </li>
+        <FormControlLabel
+          sx={{ mb: 0, p: 0 }}
+          key={i}
+          control={<Checkbox size="small" onChange={handleTagsToggle(t._id)} />}
+          label={t.name}
+        />
       ))
     );
   };
 
   const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
+    <Alert sx={{ display: error ? "" : "none" }} severity="error">
       {error}
-    </div>
+    </Alert>
   );
 
   const showSuccess = () => (
-    <div
-      className="alert alert-success"
-      style={{ display: success ? "" : "none" }}
-    >
+    <Alert sx={{ display: success ? "" : "none" }} severity="success">
       {success}
-    </div>
+    </Alert>
   );
 
   const createBlogForm = () => {
@@ -220,40 +212,40 @@ const MuiCreateBlog = ({ router }) => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Grid container spacing={4}>
-        <Grid item xs={8}>
-          {createBlogForm()}
-          <Box component="div" sx={{ mt: 2, p: 1 }}>
-            {showError()}
-            {showSuccess()}
-          </Box>
-        </Grid>
-
-        <Grid item xs={4}>
-          <Box componenet="div" sx={{mb:2}}>
-            <Typography>Featured image</Typography>
+    <Container sx={{ mt: 5 }} maxWidth="lg">
+      <Typography variant="h4">Create Blog</Typography>
+      <Grid direction="row-reverse" container spacing={4}>
+        <Grid item xs={12} md={4}>
+          <Box componenet="div" sx={{ mb: 2 }}>
+            <Typography variant="h6">Featured image</Typography>
             <Divider />
-            <Button sx={{mt:2}} variant="contained" component="label">
+            <Button sx={{ mt: 2 }} variant="contained" component="label">
               Upload
-              <input type="file" hidden />
+              <input
+                accept="image/*"
+                onChange={handleChange("photo")}
+                type="file"
+                hidden
+              />
             </Button>
           </Box>
           <Box componenet="div">
-            <Typography>Categories</Typography>
+            <Typography variant="h6">Categories</Typography>
             <Divider />
-
-            <ul style={{ maxHeight: "200px", overflowY: "scroll" }}>
-              {showCategories()}
-            </ul>
+            <FormGroup>{showCategories()}</FormGroup>
           </Box>
-          <div>
-            <h5>Tags</h5>
-            <hr />
-            <ul style={{ maxHeight: "200px", overflowY: "scroll" }}>
-              {showTags()}
-            </ul>
-          </div>
+          <Box componenet="div">
+            <Typography variant="h6">Tags</Typography>
+            <Divider />
+            <FormGroup>{showTags()}</FormGroup>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Box component="div" sx={{ mt: 2 }}>
+            {showError()}
+            {showSuccess()}
+          </Box>
+          {createBlogForm()}
         </Grid>
       </Grid>
     </Container>
