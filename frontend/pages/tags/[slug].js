@@ -1,12 +1,9 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { singleTag } from '../../actions/tag';
-import { API, DOMAIN, APP_NAME } from '../../config';
-import parse from "html-react-parser"
-import moment from 'moment';
-import Card from '../../components/blog/Card';
+import { DOMAIN, APP_NAME } from '../../config';
 import React from 'react';
+import Post from '../../components/blog/Post';
 
 const Tag = ({ tag, blogs, query }) => {
     const head = () => (
@@ -38,7 +35,7 @@ const Tag = ({ tag, blogs, query }) => {
                                 <h1 className="display-4 font-weight-bold">{tag.name}</h1>
                                 {blogs.map((b, i) => (
                                     <div>
-                                        <Card key={i} blog={b} />
+                                        <Post key={i} blog={b} />
                                         <hr />
                                     </div>
                                 ))}
@@ -52,9 +49,7 @@ const Tag = ({ tag, blogs, query }) => {
 };
 
 Tag.getInitialProps = ({ query }) => {
-    return singleTag(query.slug).then(data => {
-    console.log("🚀 ~ file: [slug].js ~ line 37 ~ returnsingleTag ~ data", data)
-        
+    return singleTag(query.slug).then(data => {        
         if (data.error) {
             console.log(data.error);
         } else {

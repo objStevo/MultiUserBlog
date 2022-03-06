@@ -4,80 +4,16 @@ import { withRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-import { API, DOMAIN, APP_NAME } from "../../config";
+import { DOMAIN, APP_NAME } from "../../config";
 import React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { CardActionArea, Typography } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import moment from "moment";
-import parse from "html-react-parser";
-import Card from "@mui/material/Card"; 
 import Button from '@mui/material/Button';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  textAlign: "center",
-  padding: theme.spacing(1),
-  color: theme.palette.text.secondary,
-}));
-
-const Post = (props) => {
-  const { blog } = props;
-
-  return (
-    <Grid item xs={12}>
-      <Link href={`/blogs/${blog.slug}`}>
-        <CardActionArea>
-          <Card variant="" sx={{ display: "flex" }}>
-            <CardMedia
-              component="img"
-              sx={{ width: 160, display: { xs: "none", sm: "block" } }}
-              src={`${API}/api/blog/photo/${blog.slug}`}
-              alt={blog.title}
-            />
-            <CardContent sx={{ flex: 1 }}>
-              <Typography component="h2" variant="h5">
-                {blog.title}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                {`By ${blog.postedBy.username} · ${moment(
-                  blog.updatedAt
-                ).fromNow()}`}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {parse(blog.excerpt)}
-              </Typography>
-              {(blog.categories.length || blog.tags.length) && (
-                <Grid container spacing={1}>
-                  {blog.categories.map((category, i) => (
-                    <Grid item xs="auto">
-                      <Item>{category.name}</Item>
-                    </Grid>
-                  ))}
-                  {blog.tags.map((tag, i) => (
-                    <Grid item xs="auto">
-                      <Item>{tag.name}</Item>
-                    </Grid>
-                  ))}
-                </Grid>
-              )}
-            </CardContent>
-          </Card>
-        </CardActionArea>
-      </Link>
-    </Grid>
-  );
-};
+import Post from '../../components/blog/Post';
 
 const Blogs = ({
   blogs,
@@ -85,7 +21,6 @@ const Blogs = ({
   tags,
   totalBlogs,
   blogsLimit,
-  blogSkip,
   router,
 }) => {
   const head = () => (
