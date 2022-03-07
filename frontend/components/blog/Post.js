@@ -33,7 +33,7 @@ const Post = (props) => {
               alt={blog.title}
             />
             <CardContent sx={{ flex: 1 }}>
-              <Typography component="h2" variant="h5">
+              <Typography component="h5" variant="h5">
                 {blog.title}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary">

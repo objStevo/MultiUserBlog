@@ -14,6 +14,7 @@ import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
 import Post from '../../components/blog/Post';
+import { Typography } from "@mui/material";
 
 const Blogs = ({
   blogs,
