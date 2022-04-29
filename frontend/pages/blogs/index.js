@@ -4,9 +4,17 @@ import { withRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-import Card from "../../components/blog/Card";
-import { API, DOMAIN, APP_NAME } from "../../config";
+import { DOMAIN, APP_NAME } from "../../config";
 import React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+import Button from '@mui/material/Button';
+import Post from '../../components/blog/Post';
+import { Typography } from "@mui/material";
 
 const Blogs = ({
   blogs,
@@ -14,7 +22,6 @@ const Blogs = ({
   tags,
   totalBlogs,
   blogsLimit,
-  blogSkip,
   router,
 }) => {
   const head = () => (
@@ -72,46 +79,63 @@ const Blogs = ({
     return (
       size > 0 &&
       size >= limit && (
-        <button onClick={loadMore} className="btn btn-outline-primary btn-lg">
-          Load more
-        </button>
+        <Button onClick={loadMore} variant="text">
+          More
+        </Button>
       )
     );
   };
 
   const showAllBlogs = () => {
     return blogs.map((blog, i) => {
-      return (
-        <article key={i}>
-          <Card blog={blog} />
-          <hr />
-        </article>
-      );
+      return <Post key={i} blog={blog} />;
     });
   };
 
   const showAllCategories = () => {
-    return categories.map((c, i) => (
-      <Link href={`/categories/${c.slug}`} key={i}>
-        <a className="btn btn-primary mr-1 ml-1 mt-3">{c.name}</a>
-      </Link>
-    ));
+    return (
+      <Box sx={{ minWidth: 120, mr: 1 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Categories"
+          >
+            {categories.map((c, i) => (
+              <Link href={`/categories/${c.slug}`}>
+                <MenuItem>{c.name}</MenuItem>
+              </Link>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    );
   };
 
   const showAllTags = () => {
-    return tags.map((t, i) => (
-      <Link href={`/tags/${t.slug}`} key={i}>
-        <a className="btn btn-outline-primary mr-1 ml-1 mt-3">{t.name}</a>
-      </Link>
-    ));
+    return (
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Tags</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Categories"
+          >
+            {tags.map((t, i) => (
+              <Link href={`/tags/${t.slug}`}>
+                <MenuItem>{t.name}</MenuItem>
+              </Link>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    );
   };
 
   const showLoadedBlogs = () => {
-    return loadedBlogs.map((blog, i) => (
-      <article key={i}>
-        <Card blog={blog} />
-      </article>
-    ));
+    return loadedBlogs.map((blog, i) => <Post key={i} blog={blog} />);
   };
 
   return (
@@ -121,22 +145,18 @@ const Blogs = ({
         <main>
           <div className="container-fluid">
             <header>
-              <div className="col-md-12 pt-3">
-                <h1 className="display-4 font-weight-bold text-center">
-                  Programming blogs and tutorials
-                </h1>
-              </div>
-              <section>
-                <div className="pb-5 text-center">
-                  {showAllCategories()}
-                  <br />
-                  {showAllTags()}
-                </div>
-              </section>
+              <Box sx={{ display: "flex", mt: 2, mb: 2 }}>
+                {showAllCategories()}
+                {showAllTags()}
+              </Box>
             </header>
           </div>
-          <div className="container-fluid">{showAllBlogs()}</div>
-          <div className="container-fluid">{showLoadedBlogs()}</div>
+          <Grid container rowSpacing={1}>
+            {showAllBlogs()}
+          </Grid>
+          <Grid container rowSpacing={1}>
+            {showLoadedBlogs()}
+          </Grid>
           <div className="text-center pt-5 pb-5">{loadMoreButton()}</div>
         </main>
       </Layout>
