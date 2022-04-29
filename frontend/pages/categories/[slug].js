@@ -1,12 +1,11 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { singleCategory } from '../../actions/category';
-import { API, DOMAIN, APP_NAME} from '../../config';
-import parse from "html-react-parser"
-import moment from 'moment';
-import Card from '../../components/blog/Card';
+import { DOMAIN, APP_NAME} from '../../config';
 import React from 'react';
+import Post from "../../components/blog/Post";
+import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
 
 const Category = ({ category, blogs, query }) => {
     const head = () => (
@@ -30,25 +29,22 @@ const Category = ({ category, blogs, query }) => {
 
     return (
         <React.Fragment>
-            {head()}
-            <Layout>
-                <main>  
-                    <div className="container-fluid text-center">
-                        <header>
-                            <div className="col-md-12 pt-3">
-                                <h1 className="display-4 font-weight-bold">{category.name}</h1>
-                                {blogs.map((b, i) => (
-                                    <div>
-                                        <Card key={i} blog={b} />
-                                        <hr />
-                                    </div>
-                                ))}
-                            </div>
-                        </header>
-                    </div>
-                </main>
-            </Layout>
-        </React.Fragment>
+        {head()}
+        <Layout>
+          <main>
+            <header>
+              <Typography component="h5" variant="h5">
+                {category.name}
+              </Typography>
+              <Grid container rowSpacing={1}>
+                {blogs.map((b, i) => (
+                  <Post key={i} blog={b} />
+                ))}
+              </Grid>
+            </header>
+          </main>
+        </Layout>
+      </React.Fragment>
     );
 };
 
