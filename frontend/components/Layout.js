@@ -1,15 +1,13 @@
 import React from "react";
-import Header from "./Header";
 import Footer from "./Footer";
-import MUIHeader from "./MUIHeader"
+import Header from "./Header";
 
 const Layout = ({ children }) => {
   return (
     <React.Fragment>
-      {/* <Header /> */}
-      <MUIHeader/>
+      <Header />
       {children}
-      {/* <Footer /> */}
+      <Footer />
     </React.Fragment>
   );
 };

@@ -1,97 +1,299 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import { APP_NAME } from "../config";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import ArticleIcon from "@mui/icons-material/Article";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import CreateIcon from "@mui/icons-material/Create";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import DesktopWindowsIcon from "@mui/icons-material/DesktopWindows";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-import { isAuth, signout } from "../actions/auth";
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import Link from "next/link";
 import Router from "next/router";
-import NProgress from "nprogress";
-import ".././node_modules/nprogress/nprogress.css";
-import Search from "./blog/Search";
+import { Fragment, useState } from "react";
+import { isAuth, signout } from "../actions/auth";
+import { APP_NAME } from "../config";
+import Search from "./blog/MUISearch";
+import HeaderMenu from "./Header/HeaderMenu";
 
-const Header = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+Router.onRouteChangeStart = (url) => NProgress.start();
+Router.onRouteChangeComplete = (url) => NProgress.done();
+Router.onRouteChangeError = (url) => NProgress.done();
+
+const Header = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      PaperProps={{
+        sx: { bgcolor: "#3b3b44", color: "white" },
+      }}
+    >
+      {isAuth() && isAuth().role === 0 && (
+        <Link href="/user">
+          <MenuItem>
+            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
+            Dashboard
+          </MenuItem>
+        </Link>
+      )}
+      {isAuth() && isAuth().role === 1 && (
+        <Link href="/admin">
+          <MenuItem>
+            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
+            Dashboard
+          </MenuItem>
+        </Link>
+      )}
+      <Link href="/blogs">
+        <MenuItem>
+          <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Blogs
+        </MenuItem>
+      </Link>
+      <Link href="/contact">
+        <MenuItem>
+          <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Contact
+        </MenuItem>
+      </Link>
+      {!isAuth() && (
+        <Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem>
+              <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log In
+            </MenuItem>
+          </Link>
+        </Fragment>
+      )}
+      {isAuth() && (
+        <Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+              <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log Out
+            </MenuItem>
+          </Link>
+        </Fragment>
+      )}
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <Link href="/user/crud/blog">
+        <MenuItem>
+          <CreateIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Write
+        </MenuItem>
+      </Link>
+      <Link href="/blogs">
+        <MenuItem>
+          <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Blogs
+        </MenuItem>
+      </Link>
+      <Link href="/contact">
+        <MenuItem>
+          <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
+          Contact
+        </MenuItem>
+      </Link>
+      {!isAuth() && (
+        <Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem>
+              <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log In
+            </MenuItem>
+          </Link>
+        </Fragment>
+      )}
+      {isAuth() && (
+        <Fragment>
+          <Divider />
+          <Link href="/signin">
+            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+              <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
+              Log Out
+            </MenuItem>
+          </Link>
+        </Fragment>
+      )}
+    </Menu>
+  );
 
   return (
-    <React.Fragment>
-      <Navbar id="test" color="light" light expand="md">
-        <Link href="/">
-          <NavLink className="font-weight-bold" href="">
-            {APP_NAME}
-          </NavLink>
-        </Link>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <React.Fragment>
-              <NavItem>
-                <Link href="/blogs">
-                  <NavLink>Blogs</NavLink>
-                </Link>
-              </NavItem>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#26262c",
+          color: "white",
+        }}
+      >
+        <Toolbar variant="dense">
+          <Link href="/">
+            <IconButton
+              size="large"
+              edge="start"
+              aria-label="Desk"
+              sx={{ mr: 0, color: "#FA58B6" }}
+            >
+              <DesktopWindowsIcon />
 
-              <NavItem>
-                <Link href="/contact">
-                  <NavLink>Contact</NavLink>
-                </Link>
-              </NavItem>
-            </React.Fragment>
-            {!isAuth() && (
-              <React.Fragment>
-                <NavItem>
-                  <Link href="/signin">
-                    <NavLink>Signin</NavLink>
-                  </Link>
-                </NavItem>
-                <NavItem>
-                  <Link href="/signup">
-                    <NavLink>Signup</NavLink>
-                  </Link>
-                </NavItem>
-              </React.Fragment>
-            )}
-            {isAuth() && isAuth().role === 0 && (
-              <NavItem>
-                <Link href="/user">
-                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
-                </Link>
-              </NavItem>
-            )}
-            {isAuth() && isAuth().role === 1 && (
-              <NavItem>
-                <Link href="/admin">
-                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
-                </Link>
-              </NavItem>
-            )}
-            {isAuth() && (
-              <NavItem>
-                <NavLink
-                  onClick={() => signout(() => Router.replace(`/signin`))}
-                >
-                  Signout
-                </NavLink>
-              </NavItem>
-            )}
-            <NavItem>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ ml: 2, display: { xs: "none", md: "flex" } }}
+              >
+                {APP_NAME}
+              </Typography>
+            </IconButton>
+          </Link>
+          <Search />
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
+            >
               <Link href="/user/crud/blog">
-                <NavLink className="btn btn-primary text-light">
-                  Write a blog
-                </NavLink>
+                <CreateIcon />
               </Link>
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Navbar>
-      <Search />
-    </React.Fragment>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
+            >
+              <Link href="/blogs">
+                <ArticleIcon />
+              </Link>
+            </IconButton>
+            {!isAuth() && (
+              <Fragment>
+                <Button
+                  sx={{ pt: 1 / 2, pb: 1 / 2, mr: 1, bgcolor: "#53535f" }}
+                  size="small"
+                  variant="contained"
+                >
+                  <Link href="/signin">
+                    <Typography variant="string">Log In</Typography>
+                  </Link>
+                </Button>
+                <Button
+                  sx={{ pt: 1 / 2, pb: 1 / 2, bgcolor: "#FA58B6" }}
+                  color="inherit"
+                  size="small"
+                  variant="contained"
+                >
+                  <Link href="/signup">
+                    <Typography variant="string">Sign Up</Typography>
+                  </Link>
+                </Button>
+              </Fragment>
+            )}
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              sx={{ pt: 1 / 2, pb: 1 / 2 }}
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {/* {renderMobileMenu} */}
+      <HeaderMenu />
+    </Box>
   );
 };
+
 export default Header;
