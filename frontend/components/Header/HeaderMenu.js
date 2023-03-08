@@ -13,25 +13,17 @@ const HeaderMenu = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
 
-  const handleProfileMenuOpen = (event) => {
-    console.log("handle click ");
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    console.log("handle close");
-    setAnchorEl(null);
-  };
-
   return (
-    <Box>
+    <Box {...other}>
       <IconButton
         size="large"
         edge="end"
         aria-label="account of current user"
         aria-controls={menuId}
         aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
+        onClick={(event) => {
+          setAnchorEl(event.currentTarget);
+        }}
         color="inherit"
         sx={{ pt: 1 / 2, pb: 1 / 2 }}
       >
@@ -50,9 +42,11 @@ const HeaderMenu = (props) => {
           horizontal: "right",
         }}
         open={isMenuOpen}
-        onClose={handleMenuClose}
+        onClose={() => {
+          setAnchorEl(null);
+        }}
         PaperProps={{
-          sx: { bgcolor: "#3b3b44", color: "red" },
+          sx: { bgcolor: "#3b3b44", color: "primary.main" },
         }}
       >
         {isAuth() && isAuth().role === 0 && (

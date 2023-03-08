@@ -1,14 +1,17 @@
-import React from "react";
+import { Fragment } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { lightTheme } from "./theme";
 
 const Layout = ({ children }) => {
+  let theme = createTheme(lightTheme);
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <Header />
       {children}
       <Footer />
-    </React.Fragment>
+    </ThemeProvider>
   );
 };
 
