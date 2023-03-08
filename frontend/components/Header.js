@@ -35,98 +35,15 @@ const Header = () => {
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      PaperProps={{
-        sx: { bgcolor: "#3b3b44", color: "white" },
-      }}
-    >
-      {isAuth() && isAuth().role === 0 && (
-        <Link href="/user">
-          <MenuItem>
-            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
-            Dashboard
-          </MenuItem>
-        </Link>
-      )}
-      {isAuth() && isAuth().role === 1 && (
-        <Link href="/admin">
-          <MenuItem>
-            <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
-            Dashboard
-          </MenuItem>
-        </Link>
-      )}
-      <Link href="/blogs">
-        <MenuItem>
-          <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
-          Blogs
-        </MenuItem>
-      </Link>
-      <Link href="/contact">
-        <MenuItem>
-          <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
-          Contact
-        </MenuItem>
-      </Link>
-      {!isAuth() && (
-        <Fragment>
-          <Divider />
-          <Link href="/signin">
-            <MenuItem>
-              <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
-              Log In
-            </MenuItem>
-          </Link>
-        </Fragment>
-      )}
-      {isAuth() && (
-        <Fragment>
-          <Divider />
-          <Link href="/signin">
-            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
-              <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
-              Log Out
-            </MenuItem>
-          </Link>
-        </Fragment>
-      )}
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -263,18 +180,10 @@ const Header = () => {
                 </Button>
               </Fragment>
             )}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              sx={{ pt: 1 / 2, pb: 1 / 2 }}
-            >
+
+            <HeaderMenu>
               <AccountCircle />
-            </IconButton>
+            </HeaderMenu>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -291,7 +200,6 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       {/* {renderMobileMenu} */}
-      <HeaderMenu />
     </Box>
   );
 };
