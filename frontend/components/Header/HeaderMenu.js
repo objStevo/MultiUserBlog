@@ -1,8 +1,11 @@
-import ArticleIcon from "@mui/icons-material/Article";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
-import LoginIcon from "@mui/icons-material/Login";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography
+} from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import { isAuth, signout } from "../../actions/auth";
@@ -17,75 +20,140 @@ const HeaderMenu = (props) => {
     <Box {...other}>
       <IconButton
         size="large"
-        edge="end"
         aria-label="account of current user"
         aria-controls={menuId}
         aria-haspopup="true"
         onClick={(event) => {
           setAnchorEl(event.currentTarget);
         }}
+        onMouseOver={(event) => {
+          setAnchorEl(event.currentTarget);
+        }}
         color="inherit"
-        sx={{ pt: 1 / 2, pb: 1 / 2 }}
       >
         {children}
       </IconButton>
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
         id={menuId}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
         open={isMenuOpen}
         onClose={() => {
           setAnchorEl(null);
         }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
         PaperProps={{
-          sx: { bgcolor: "#3b3b44", color: "primary.main" },
+          sx: {
+            bgcolor: "background.default",
+            color: "primary.dark",
+            borderRadius: 0,
+            border: 1,
+            borderColor: "primary.gray",
+            mt: "1.5px",
+          },
+          variant: "outlined",
         }}
       >
         {isAuth() && isAuth().role === 0 && (
           <Link href="/user">
-            <MenuItem>
-              <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
-              Dashboard
-            </MenuItem>
+            <MenuItem>Dashboard</MenuItem>
           </Link>
         )}
         {isAuth() && isAuth().role === 1 && (
           <Link href="/admin">
-            <MenuItem>
-              <DashboardIcon sx={{ mr: 2, width: 1 / 5 }} />
-              Dashboard
-            </MenuItem>
+            <MenuItem>Dashboard</MenuItem>
           </Link>
         )}
-        <Link href="/blogs">
-          <MenuItem>
-            <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
-            Blogs
-          </MenuItem>
-        </Link>
-        <Link href="/contact">
-          <MenuItem>
-            <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
-            Contact
-          </MenuItem>
-        </Link>
+
+        <MenuItem>
+          <Link href="/blogs">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                textAlign: "center",
+                display: { xs: "none", md: "flex" },
+                px: 2,
+              }}
+            >
+              {"Blogs".toUpperCase()}
+            </Typography>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/user/crud/blog">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                textAlign: "center",
+                display: { xs: "none", md: "flex" },
+                px: 2,
+              }}
+            >
+              {"Write".toUpperCase()}
+            </Typography>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/contact">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                textAlign: "center",
+                display: { xs: "none", md: "flex" },
+                px: 2,
+              }}
+            >
+              {"Contact".toUpperCase()}
+            </Typography>
+          </Link>
+        </MenuItem>
         {!isAuth() && (
           <Box>
             <Divider />
-            <Link href="/signin">
-              <MenuItem>
-                <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
-                Log In
-              </MenuItem>
-            </Link>
+            <MenuItem>
+              <Link href="/signin">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    textAlign: "center",
+                    display: { xs: "none", md: "flex" },
+                    px: 2,
+                  }}
+                >
+                  {"Log In".toUpperCase()}
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/signup">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    textAlign: "center",
+                    display: { xs: "none", md: "flex" },
+                    px: 2,
+                  }}
+                >
+                  {"Sign Up".toUpperCase()}
+                </Typography>
+              </Link>
+            </MenuItem>
           </Box>
         )}
         {isAuth() && (
@@ -95,7 +163,6 @@ const HeaderMenu = (props) => {
               <MenuItem
                 onClick={() => signout(() => Router.replace(`/signin`))}
               >
-                <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
                 Log Out
               </MenuItem>
             </Link>

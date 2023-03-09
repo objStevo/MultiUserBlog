@@ -3,13 +3,13 @@ export const lightTheme = {
     type: "light",
     primary: {
       main: "#01BAEF",
-      gray: "#bdbdbd",
+      gray: "#e0e0e0",
       border: "#d2dae1",
       light: "#FFFFFF",
-      dark: "#00112C",
+      dark: "#555",
     },
     secondary: {
-      main: "#FF8B13", //"previously #E07A5F"
+      main: "#FA58B6", //"previously #E07A5F"
       gray: "#F2F6F9",
       light: "#f3f6f9",
       dark: "#011627",
@@ -48,14 +48,14 @@ export const lightTheme = {
       color: "#00112c",
     },
     h5: {
-      fontWeight: 600,
-      fontSize: "1rem",
+      fontWeight: 400,
+      fontSize: "1.1rem",
       fontFamily: "Poppins, sans-serif",
       color: "#00112c",
     },
     h6: {
-      fontWeight: 500,
-      fontSize: "0.83rem",
+      fontWeight: 300,
+      fontSize: "0.78rem",
       fontFamily: "sans-serif",
     },
     caption: {

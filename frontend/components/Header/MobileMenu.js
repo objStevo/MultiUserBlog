@@ -10,8 +10,7 @@ import { isAuth, signout } from "../../actions/auth";
 
 const MobileMenu = (props) => {
   const { children, ...other } = props;
-  const [anchorEl, setAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(false);
   const menuId = "primary-search-account-menu-mobile";
 
   return (
@@ -22,28 +21,14 @@ const MobileMenu = (props) => {
         aria-controls={menuId}
         aria-haspopup="true"
         onClick={(event) => {
-          setAnchorEl(event.currentTarget);
+          setAnchorEl(!anchorEl);
         }}
         color="inherit"
       >
         {children}
       </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={isMenuOpen}
-        onClose={() => {
-          setAnchorEl(null);
-        }}
+      <Box
+        sx={{ display: `${anchorEl ? "block" : "none"}` }}
       >
         <Link href="/user/crud/blog">
           <MenuItem>
@@ -87,7 +72,7 @@ const MobileMenu = (props) => {
             </Link>
           </Box>
         )}
-      </Menu>
+      </Box>
     </Box>
   );
 };
