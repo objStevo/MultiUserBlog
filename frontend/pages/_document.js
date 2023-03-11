@@ -10,11 +10,16 @@ class MyDocument extends Document {
             content="width=device-width, initial-scale=1.0"
           />
           <meta charset="UTF-8" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin="true"
           />
-          <link rel="stylesheet" href="/static/css/styles.css" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Major+Mono+Display&family=Poppins:wght@100;200;300;500;600;700&family=Roboto:wght@300;500&family=Yomogi&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

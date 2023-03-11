@@ -1,79 +1,17 @@
-import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import { listSearch } from "../../actions/blog";
+import ArticleIcon from "@mui/icons-material/Article";
 import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import InputBase from "@mui/material/InputBase";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 import Popover from "@mui/material/Popover";
+import { alpha, styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import ArticleIcon from "@mui/icons-material/Article";
-
-const MUISearch = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const MUISearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const MUIStyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "white",
-  ".Mui-focused": {
-    border: "10px",
-    borderColor: "red",
-  },
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
-const MUIStyledPopover = styled(Popover)(({ theme }) => ({
-  ".MuiTypography-root": {
-    fontSize: "0.9rem",
-  },
-  "& .MuiPopover-paper": {
-    backgroundColor: "#3b3b44", 
-    color: "white",
-    padding: 0,
-    width: "74%",
-    [theme.breakpoints.between("sm", "md")]: {
-      width: "22.5ch",
-    },
-    [theme.breakpoints.up("md")]: {
-      width: "23.5ch",
-    },
-  },
-}));
+import Link from "next/link";
+import React, { useState } from "react";
+import { listSearch } from "../../actions/blog";
 
 const Search = () => {
   const [values, setValues] = useState({
@@ -118,7 +56,7 @@ const Search = () => {
 
   const searchResults = (results = []) => {
     return (
-      <MUIStyledPopover
+      <Popover
         open={searched}
         anchorEl={anchorEl}
         onClose={handleOverlayClose}
@@ -161,14 +99,14 @@ const Search = () => {
             )}
           </Box>
         </Typography>
-      </MUIStyledPopover>
+      </Popover>
     );
   };
 
-  const searchForm = () => {
+  const SearchForm = () => {
     return (
       <form onSubmit={searchSubmit}>
-        <MUIStyledInputBase
+        <InputBase
           placeholder="Search Articles…"
           inputProps={{ "aria-label": "search" }}
           onChange={handleFormChange}
@@ -179,13 +117,13 @@ const Search = () => {
   };
 
   return (
-    <MUISearch>
-      <MUISearchIconWrapper>
-        <SearchIcon sx={{ color: "white" }} />
-      </MUISearchIconWrapper>
-      {searchForm()}
+    <Box>
+      <Box>
+        <SearchIcon />
+      </Box>
+      <SearchForm />
       {searchResults(results)}
-    </MUISearch>
+    </Box>
   );
 };
 

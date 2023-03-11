@@ -1,10 +1,14 @@
-import MoreIcon from "@mui/icons-material/MoreVert";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import { AppBar, Box, Grid, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import Router from "next/router";
 import NProgress from "nprogress";
-import { APP_SUBTOPIC, APP_TOPIC } from "../config";
+import { APP_NAME, APP_SUBTOPIC, APP_TOPIC } from "../config";
+import Search from "./Blog/Search";
 import HeaderMenu from "./Header/HeaderMenu";
 import MobileMenu from "./Header/MobileMenu";
 
@@ -20,8 +24,49 @@ const Header = () => {
     { title: `${APP_SUBTOPIC}`, href: "/blogs" },
     { title: "Contact", href: "/contact" },
   ];
+
+  const socialLinks = [
+    { title: "Facebook", href: "/", icon: <FacebookIcon /> },
+    { title: "Twitter", href: "/", icon: <TwitterIcon /> },
+    { title: "Instagram", href: "/", icon: <InstagramIcon /> },
+    { title: "Pinterest", href: "/", icon: <PinterestIcon /> },
+  ];
+
   return (
     <Box>
+      <Box sx={{ textAlign: "center" }}>
+        <img src="/logo.png" width={"50px"} />
+      </Box>
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="flex-end"
+        sx={{
+          color: "secondary.main",
+        }}
+      >
+        <Grid md={2} item sx={{ display: { xs: "none", md: "inline-block" } }}>
+          {socialLinks.map((link, i) => {
+            const { href, icon } = link;
+            return (
+              <Box key={i} component="span" sx={{ mr: 0.5 }}>
+                <Link href={href} key={i}>
+                  {icon}
+                </Link>
+              </Box>
+            );
+          })}
+        </Grid>
+        <Grid xs={12} md={8} item sx={{ textAlign: "center" }}>
+          <Typography variant="h3" sx={{ color: "primary.main" }}>
+            {APP_NAME}
+          </Typography>
+        </Grid>
+        <Grid md={2} item sx={{ display: { xs: "none", md: "inline-block" } }}>
+          <Search />
+        </Grid>
+      </Grid>
       <AppBar
         elevation={0}
         position="static"
@@ -44,6 +89,7 @@ const Header = () => {
             gap: "7%",
           }}
           variant="dense"
+          disableGutters={true}
         >
           {pages?.map((page, i) => (
             <Link key={i} href={page.href}>
@@ -54,6 +100,7 @@ const Header = () => {
                 sx={{
                   textAlign: "center",
                   display: { xs: "none", md: "flex" },
+                  cursor: "pointer",
                 }}
               >
                 {page?.title?.toUpperCase()}
@@ -69,6 +116,7 @@ const Header = () => {
                 sx={{
                   textAlign: "center",
                   display: { xs: "none", md: "flex" },
+                  cursor: "pointer",
                 }}
               >
                 ADMIN
@@ -76,9 +124,12 @@ const Header = () => {
             </HeaderMenu>
           </Box>
           <Box
-            sx={{ display: { xs: "flex", md: "none", textAlign: "center" } }}
+            sx={{
+              width: "100%",
+              display: { xs: "flex", md: "none", textAlign: "center" },
+            }}
           >
-            <MobileMenu>
+            <MobileMenu sx={{ width: "100%" }}>
               <MenuIcon />
             </MobileMenu>
           </Box>

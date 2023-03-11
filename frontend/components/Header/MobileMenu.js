@@ -12,6 +12,7 @@ const MobileMenu = (props) => {
   const { children, ...other } = props;
   const [anchorEl, setAnchorEl] = useState(false);
   const menuId = "primary-search-account-menu-mobile";
+  const isMenuOpen = Boolean(anchorEl);
 
   return (
     <Box {...other}>
@@ -27,50 +28,53 @@ const MobileMenu = (props) => {
       >
         {children}
       </IconButton>
-      <Box
-        sx={{ display: `${anchorEl ? "block" : "none"}` }}
-      >
+      <Box sx={{ width: "100%", display: `${isMenuOpen ? "block" : "none"}` }}>
         <Link href="/user/crud/blog">
           <MenuItem>
-            <CreateIcon sx={{ mr: 2, width: 1 / 5 }} />
+            <CreateIcon
+              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+            />
             Write
           </MenuItem>
         </Link>
+        <Divider />
         <Link href="/blogs">
           <MenuItem>
-            <ArticleIcon sx={{ mr: 2, width: 1 / 5 }} />
+            <ArticleIcon
+              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+            />
             Blogs
           </MenuItem>
         </Link>
+        <Divider />
         <Link href="/contact">
           <MenuItem>
-            <ContactMailIcon sx={{ mr: 2, width: 1 / 5 }} />
+            <ContactMailIcon
+              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+            />
             Contact
           </MenuItem>
         </Link>
+        <Divider />
         {!isAuth() && (
-          <Box>
-            <Divider />
-            <Link href="/signin">
-              <MenuItem>
-                <LoginIcon sx={{ mr: 2, width: 1 / 5 }} />
-                Log In
-              </MenuItem>
-            </Link>
-          </Box>
+          <Link href="/signin">
+            <MenuItem sx={{ mb: 1 }}>
+              <LoginIcon
+                sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+              />
+              Log In
+            </MenuItem>
+          </Link>
         )}
         {isAuth() && (
-          <Box>
-            <Divider />
-            <Link href="/signin">
-              <MenuItem
-                onClick={() => signout(() => Router.replace(`/signin`))}
-              >
-                <LogoutIcon sx={{ mr: 2, width: 1 / 5 }} />
-                Log Out
-              </MenuItem>
-            </Link>
-          </Box>
+          <Link href="/signin">
+            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
+              <LogoutIcon
+                sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+              />
+              Log Out
+            </MenuItem>
+          </Link>
         )}
       </Box>
     </Box>
