@@ -51,14 +51,14 @@ const Post = (props) => {
             <Grid container spacing={1}>
               {blog.categories.map((category, i) => (
                 <Grid item xs="auto">
-                  <Typography sx={{ fontSize: ".5rem", color: "red" }}>
+                  <Typography sx={{ fontSize: ".5rem", fontSize: ".6rem", color: "red" }}>
                     <Item>{category.name}</Item>
                   </Typography>
                 </Grid>
               ))}
               {blog.tags.map((tag, i) => (
                 <Grid item xs="auto">
-                  <Typography sx={{ bgcolor: "red" }}>
+                  <Typography sx={{ ze: ".5rem", fontSize: ".6rem"  }}>
                     <Item>{tag.name}</Item>
                   </Typography>
                 </Grid>
