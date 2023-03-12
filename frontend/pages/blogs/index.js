@@ -1,30 +1,25 @@
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Box,
+  Typography,
+} from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
 import { withRouter } from "next/router";
-import Layout from "../../components/Layout";
-import { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
-import { DOMAIN, APP_NAME } from "../../config";
-import React from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Grid from "@mui/material/Grid";
-import Button from '@mui/material/Button';
-import Post from '../../components/blog/Post';
-import { Typography } from "@mui/material";
+import Post from "../../components/blog/Post";
+import Layout from "../../components/Layout";
+import { APP_NAME, DOMAIN } from "../../config";
 
-const Blogs = ({
-  blogs,
-  categories,
-  tags,
-  totalBlogs,
-  blogsLimit,
-  router,
-}) => {
-  const head = () => (
+const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
+  const BlogHead = () => (
     <Head>
       <title>Programming blogs | {APP_NAME}</title>
       <meta
@@ -53,7 +48,6 @@ const Blogs = ({
         ccontent={`${DOMAIN}/static/images/nature.jpg`}
       />
       <meta property="og:image:type" content="image/jpg" />
-      {/* <meta property="fb:app_id" content={`${FB_APP_ID}`} /> */}
     </Head>
   );
 
@@ -79,28 +73,84 @@ const Blogs = ({
     return (
       size > 0 &&
       size >= limit && (
-        <Button onClick={loadMore} variant="text">
-          More
-        </Button>
+        <Box sx={{ textAlign: "center", mt: "10%" }}>
+          <Button onClick={loadMore} variant="outlined" sx={{ px: "5%" }}>
+            More
+          </Button>
+        </Box>
       )
     );
   };
 
   const showAllBlogs = () => {
-    return blogs.map((blog, i) => {
-      return <Post key={i} blog={blog} />;
-    });
+    return (
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="stretch"
+        spacing={4}
+      >
+        {blogs?.map((blog, i) => {
+          return (
+            <Grid item xs={12} md={6} key={i} sx={{ px: 0 }}>
+              <Post blog={blog} />
+            </Grid>
+          );
+        })}
+      </Grid>
+    );
   };
 
   const showAllCategories = () => {
     return (
-      <Box sx={{ minWidth: 120, mr: 1 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+      <Box sx={{ minWidth: 120, pt: "8%", pb: "3%" }}>
+        <Box sx={{ textAlign: "center", pb: "2%" }}>
+          <Box
+            noWrap
+            sx={{
+              width: "20%",
+              borderTop: "1.5px",
+              borderTopStyle: "dotted",
+              borderTopColor: "primary.gray",
+              display: "inline-block",
+              height: "5px",
+            }}
+          ></Box>
+          <Typography component="span" variant="h6">
+            CATEGORIES
+          </Typography>
+          <Box
+            sx={{
+              width: "20%",
+              borderTop: "1.5px",
+              borderTopStyle: "dotted",
+              borderTopColor: "primary.gray",
+              display: "inline-block",
+              height: "5px",
+            }}
+          ></Box>
+        </Box>
+        <FormControl fullWidth size="small">
+          <InputLabel>
+            <Typography
+              sx={{
+                fontSize: ".8rem",
+                fontWeight: 400,
+                fontFamily: "sans-serif",
+                color: "secondary.main",
+              }}
+            >
+              Select Category
+            </Typography>
+          </InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
             label="Categories"
+            sx={{
+              borderRadius: "5px",
+              borderColor: "secondary.main",
+            }}
+            elevation={0}
           >
             {categories.map((c, i) => (
               <Link href={`/categories/${c.slug}`}>
@@ -115,9 +165,46 @@ const Blogs = ({
 
   const showAllTags = () => {
     return (
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Tags</InputLabel>
+      <Box sx={{ minWidth: 120, pb: "5%" }}>
+        <Box sx={{ textAlign: "center", pb: "2%" }}>
+          <Box
+            noWrap
+            sx={{
+              width: "20%",
+              borderTop: "1.5px",
+              borderTopStyle: "dotted",
+              borderTopColor: "primary.gray",
+              display: "inline-block",
+              height: "5px",
+            }}
+          ></Box>
+          <Typography component="span" variant="h6">
+            TAGS
+          </Typography>
+          <Box
+            sx={{
+              width: "20%",
+              borderTop: "1.5px",
+              borderTopStyle: "dotted",
+              borderTopColor: "primary.gray",
+              display: "inline-block",
+              height: "5px",
+            }}
+          ></Box>
+        </Box>
+        <FormControl fullWidth size="small">
+          <InputLabel>
+            <Typography
+              sx={{
+                fontSize: ".8rem",
+                fontWeight: 400,
+                fontFamily: "sans-serif",
+                color: "secondary.main",
+              }}
+            >
+              Select Tag
+            </Typography>
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -139,34 +226,33 @@ const Blogs = ({
   };
 
   return (
-    <React.Fragment>
-      {head()}
+    <Fragment>
+      <BlogHead />
       <Layout>
-        <main>
-          <div className="container-fluid">
-            <header>
-              <Box sx={{ display: "flex", mt: 2, mb: 2 }}>
-                {showAllCategories()}
-                {showAllTags()}
-              </Box>
-            </header>
-          </div>
-          <Grid container rowSpacing={1}>
-            {showAllBlogs()}
-          </Grid>
+        <Box component="main" sx={{ px: 5 }}>
+          <Container
+            disableGutters={true}
+            sx={{ display: "flex", mt: 2, mb: 2 }}
+          >
+            <Box component="header" sx={{ width: "100%" }}>
+              {showAllCategories()}
+              {showAllTags()}
+            </Box>
+          </Container>
+          <Box>{showAllBlogs()}</Box>
           <Grid container rowSpacing={1}>
             {showLoadedBlogs()}
           </Grid>
           <div className="text-center pt-5 pb-5">{loadMoreButton()}</div>
-        </main>
+        </Box>
       </Layout>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 Blogs.getInitialProps = () => {
   let skip = 0;
-  let limit = 2;
+  let limit = 6;
   return listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
     if (data.error) {
       console.log(data.error);

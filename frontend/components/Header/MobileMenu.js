@@ -3,7 +3,16 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CreateIcon from "@mui/icons-material/Create";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Collapse,
+} from "@mui/material";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { isAuth, signout } from "../../actions/auth";
@@ -26,57 +35,63 @@ const MobileMenu = (props) => {
         }}
         color="inherit"
       >
-        {children}
+        {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
       </IconButton>
-      <Box sx={{ width: "100%", display: `${isMenuOpen ? "block" : "none"}` }}>
-        <Link href="/user/crud/blog">
-          <MenuItem>
-            <CreateIcon
-              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
-            />
-            Write
-          </MenuItem>
-        </Link>
-        <Divider />
-        <Link href="/blogs">
-          <MenuItem>
-            <ArticleIcon
-              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
-            />
-            Blogs
-          </MenuItem>
-        </Link>
-        <Divider />
-        <Link href="/contact">
-          <MenuItem>
-            <ContactMailIcon
-              sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
-            />
-            Contact
-          </MenuItem>
-        </Link>
-        <Divider />
-        {!isAuth() && (
-          <Link href="/signin">
-            <MenuItem sx={{ mb: 1 }}>
-              <LoginIcon
+      <Collapse in={isMenuOpen}>
+        <Box
+          sx={{ width: "100%", display: `${isMenuOpen ? "block" : "none"}` }}
+        >
+          <Link href="/user/crud/blog">
+            <MenuItem>
+              <CreateIcon
                 sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
               />
-              Log In
+              Write
             </MenuItem>
           </Link>
-        )}
-        {isAuth() && (
-          <Link href="/signin">
-            <MenuItem onClick={() => signout(() => Router.replace(`/signin`))}>
-              <LogoutIcon
+          <Divider />
+          <Link href="/blogs">
+            <MenuItem>
+              <ArticleIcon
                 sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
               />
-              Log Out
+              Blogs
             </MenuItem>
           </Link>
-        )}
-      </Box>
+          <Divider />
+          <Link href="/contact">
+            <MenuItem>
+              <ContactMailIcon
+                sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+              />
+              Contact
+            </MenuItem>
+          </Link>
+          <Divider />
+          {!isAuth() && (
+            <Link href="/signin">
+              <MenuItem sx={{ mb: 1 }}>
+                <LoginIcon
+                  sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+                />
+                Log In
+              </MenuItem>
+            </Link>
+          )}
+          {isAuth() && (
+            <Link href="/signin">
+              <MenuItem
+                onClick={() => signout(() => Router.replace(`/signin`))}
+              >
+                <LogoutIcon
+                  sx={{ mr: 2, color: "secondary.main", fontSize: "1.1rem" }}
+                />
+                Log Out
+              </MenuItem>
+            </Link>
+          )}
+        </Box>
+      </Collapse>
     </Box>
   );
 };

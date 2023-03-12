@@ -10,7 +10,7 @@ export const lightTheme = {
     },
     secondary: {
       main: "#FA58B6", //"previously #E07A5F"
-      gray: "#F2F6F9",
+      gray: "#808080",
       light: "#f3f6f9",
       dark: "#011627",
     },
@@ -40,20 +40,19 @@ export const lightTheme = {
       fontFamily: "Major Mono Display, monospace",
     },
     h4: {
-      fontWeight: 600,
       fontSize: "1.1rem",
       fontFamily: "Poppins, sans-serif",
       color: "#00112c",
     },
     h5: {
-      fontWeight: 400,
-      fontSize: "1.1rem",
-      fontFamily: "Poppins, sans-serif",
+      fontWeight: 500,
+      fontFamily: "sans-serif",
       color: "#00112c",
+      fontSize: "1.2rem",
     },
     h6: {
       fontWeight: 300,
-      fontSize: "0.78rem",
+      fontSize: "0.8rem",
       fontFamily: "sans-serif",
     },
     caption: {

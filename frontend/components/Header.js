@@ -26,10 +26,10 @@ const Header = () => {
   ];
 
   const socialLinks = [
-    { title: "Facebook", href: "/", icon: <FacebookIcon /> },
-    { title: "Twitter", href: "/", icon: <TwitterIcon /> },
-    { title: "Instagram", href: "/", icon: <InstagramIcon /> },
-    { title: "Pinterest", href: "/", icon: <PinterestIcon /> },
+    { title: "Facebook", href: "https://www.facebook.com/", icon: <FacebookIcon /> },
+    { title: "Twitter", href: "https://twitter.com/", icon: <TwitterIcon /> },
+    { title: "Instagram", href: "https://www.instagram.com/", icon: <InstagramIcon /> },
+    { title: "Pinterest", href: "https://www.pinterest.com/", icon: <PinterestIcon /> },
   ];
 
   return (
@@ -50,7 +50,7 @@ const Header = () => {
           {socialLinks.map((link, i) => {
             const { href, icon } = link;
             return (
-              <Box key={i} component="span" sx={{ mr: 0.5 }}>
+              <Box key={i} component="span" sx={{ mr: 0.5, cursor: "pointer" }}>
                 <Link href={href} key={i}>
                   {icon}
                 </Link>
@@ -59,11 +59,17 @@ const Header = () => {
           })}
         </Grid>
         <Grid xs={12} md={8} item sx={{ textAlign: "center" }}>
-          <Typography variant="h3" sx={{ color: "primary.main" }}>
+          <Typography
+            variant="h3"
+            sx={{
+              color: "primary.main",
+              fontSize: { xs: "2.3rem", md: "h3.fontSize" },
+            }}
+          >
             {APP_NAME}
           </Typography>
         </Grid>
-        <Grid md={2} item sx={{ display: { xs: "none", md: "inline-block" } }}>
+        <Grid md={2} item sx={{ display: { xs: "none", md: "flex" } }}>
           <Search />
         </Grid>
       </Grid>
@@ -129,9 +135,7 @@ const Header = () => {
               display: { xs: "flex", md: "none", textAlign: "center" },
             }}
           >
-            <MobileMenu sx={{ width: "100%" }}>
-              <MenuIcon />
-            </MobileMenu>
+            <MobileMenu sx={{ width: "100%" }} />
           </Box>
         </Toolbar>
       </AppBar>
