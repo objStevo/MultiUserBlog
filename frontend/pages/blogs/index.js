@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Container,
   FormControl,
@@ -6,8 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Box,
-  Typography,
+  Typography
 } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
@@ -82,7 +82,8 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
     );
   };
 
-  const showAllBlogs = () => {
+  const ShowAllPosts = (props) => {
+    const { posts, ...other } = props;
     return (
       <Grid
         container
@@ -90,11 +91,12 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
         justifyContent="space-between"
         alignItems="stretch"
         spacing={4}
+        {...other}
       >
-        {blogs?.map((blog, i) => {
+        {posts?.map((post, i) => {
           return (
             <Grid item xs={12} md={6} key={i} sx={{ px: 0 }}>
-              <Post blog={blog} />
+              <Post blog={post} />
             </Grid>
           );
         })}
@@ -102,9 +104,10 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
     );
   };
 
-  const showAllCategories = () => {
+  const DropDownSelect = (props) => {
+    const { categories, title, ...other } = props;
     return (
-      <Box sx={{ minWidth: 120, pt: "8%", pb: "3%" }}>
+      <Box {...other}>
         <Box sx={{ textAlign: "center", pb: "2%" }}>
           <Box
             noWrap
@@ -118,7 +121,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
             }}
           ></Box>
           <Typography component="span" variant="h6">
-            CATEGORIES
+            {title?.toUpperCase()}
           </Typography>
           <Box
             sx={{
@@ -141,7 +144,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
                 color: "secondary.main",
               }}
             >
-              Select Category
+              {`Select ${title}`}
             </Typography>
           </InputLabel>
           <Select
@@ -154,65 +157,16 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
           >
             {categories.map((c, i) => (
               <Link href={`/categories/${c.slug}`}>
-                <MenuItem>{c.name}</MenuItem>
-              </Link>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-    );
-  };
-
-  const showAllTags = () => {
-    return (
-      <Box sx={{ minWidth: 120, pb: "5%" }}>
-        <Box sx={{ textAlign: "center", pb: "2%" }}>
-          <Box
-            noWrap
-            sx={{
-              width: "20%",
-              borderTop: "1.5px",
-              borderTopStyle: "dotted",
-              borderTopColor: "primary.gray",
-              display: "inline-block",
-              height: "5px",
-            }}
-          ></Box>
-          <Typography component="span" variant="h6">
-            TAGS
-          </Typography>
-          <Box
-            sx={{
-              width: "20%",
-              borderTop: "1.5px",
-              borderTopStyle: "dotted",
-              borderTopColor: "primary.gray",
-              display: "inline-block",
-              height: "5px",
-            }}
-          ></Box>
-        </Box>
-        <FormControl fullWidth size="small">
-          <InputLabel>
-            <Typography
-              sx={{
-                fontSize: ".8rem",
-                fontWeight: 400,
-                fontFamily: "sans-serif",
-                color: "secondary.main",
-              }}
-            >
-              Select Tag
-            </Typography>
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Categories"
-          >
-            {tags.map((t, i) => (
-              <Link href={`/tags/${t.slug}`}>
-                <MenuItem>{t.name}</MenuItem>
+                <MenuItem
+                  sx={{
+                    fontSize: ".8rem",
+                    fontWeight: 400,
+                    fontFamily: "sans-serif",
+                    color: "primary.dark",
+                  }}
+                >
+                  {c.name}
+                </MenuItem>
               </Link>
             ))}
           </Select>
@@ -229,17 +183,27 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
     <Fragment>
       <BlogHead />
       <Layout>
-        <Box component="main" sx={{ px: 5 }}>
+        <Box component="main" sx={{ px: { xs: 0, md: 5 } }}>
           <Container
             disableGutters={true}
             sx={{ display: "flex", mt: 2, mb: 2 }}
           >
-            <Box component="header" sx={{ width: "100%" }}>
-              {showAllCategories()}
-              {showAllTags()}
+            <Box component="header" sx={{ width: "100%", pt: "8%" }}>
+              <DropDownSelect
+                categories={categories}
+                title={"categories"}
+                sx={{ minWidth: 120, pb: "3%" }}
+              />
+              <DropDownSelect
+                categories={tags}
+                title={"tags"}
+                sx={{ minWidth: 120 }}
+              />
             </Box>
           </Container>
-          <Box>{showAllBlogs()}</Box>
+          <Box>
+            <ShowAllPosts posts={blogs} />
+          </Box>
           <Grid container rowSpacing={1}>
             {showLoadedBlogs()}
           </Grid>
@@ -255,7 +219,7 @@ Blogs.getInitialProps = () => {
   let limit = 6;
   return listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
     if (data.error) {
-      console.log(data.error);
+      console.error(data.error);
     } else {
       return {
         blogs: data.blogs,

@@ -6,6 +6,7 @@ import {
   Grid,
   Paper,
   Typography,
+  Box,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import parse from "html-react-parser";
@@ -31,40 +32,49 @@ const Post = (props) => {
           sx={{
             width: "100%",
             height: "370px",
-            display: { xs: "none", sm: "block" },
             borderRadius: "5px",
           }}
           src={`${API}/api/blog/photo/${blog.slug}`}
           alt={blog.title}
         />
-        <CardContent sx={{ height: "200px", pt: 2, px: 0 }}>
+        <CardContent sx={{ pt: 2, px: 0 }}>
           <Typography variant="h5">{blog.title}</Typography>
           <Typography variant="h6" color="secondary.gray">
             {`By ${blog.postedBy.username} · ${moment(
               blog.updatedAt
             ).fromNow()}`}
           </Typography>
-          <Typography variant="h6" paragraph>
+          <Typography sx={{ minHeight: "150px" }} variant="h6" paragraph>
             {parse(blog.excerpt)}
           </Typography>
-          {(blog.categories.length || blog.tags.length) && (
-            <Grid container spacing={1}>
-              {blog.categories.map((category, i) => (
-                <Grid item xs="auto">
-                  <Typography sx={{ fontSize: ".5rem", fontSize: ".6rem", color: "red" }}>
-                    <Item>{category.name}</Item>
-                  </Typography>
-                </Grid>
-              ))}
-              {blog.tags.map((tag, i) => (
-                <Grid item xs="auto">
-                  <Typography sx={{ ze: ".5rem", fontSize: ".6rem"  }}>
-                    <Item>{tag.name}</Item>
-                  </Typography>
-                </Grid>
-              ))}
-            </Grid>
-          )}
+          <Box>
+            {(blog.categories.length || blog.tags.length) && (
+              <Grid container spacing={1}>
+                {blog.categories.map((category, i) => (
+                  <Grid item xs="auto">
+                    <Item>
+                      <Typography
+                        sx={{
+                          fontSize: ".7rem",
+                        }}
+                      >
+                        {category.name}
+                      </Typography>
+                    </Item>
+                  </Grid>
+                ))}
+                {blog.tags.map((tag, i) => (
+                  <Grid item xs="auto">
+                    <Item>
+                      <Typography sx={{ fontSize: ".7rem" }}>
+                        {tag.name}
+                      </Typography>
+                    </Item>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </Box>
         </CardContent>
       </CardActionArea>
     </Card>
