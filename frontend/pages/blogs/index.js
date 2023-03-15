@@ -7,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Typography
+  Typography,
 } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
@@ -69,7 +69,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
     });
   };
 
-  const loadMoreButton = () => {
+  const LoadMoreButton = () => {
     return (
       size > 0 &&
       size >= limit && (
@@ -90,12 +90,11 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
         direction="row"
         justifyContent="space-between"
         alignItems="stretch"
-        spacing={4}
         {...other}
       >
         {posts?.map((post, i) => {
           return (
-            <Grid item xs={12} md={6} key={i} sx={{ px: 0 }}>
+            <Grid item xs={12} md={6} key={i} sx={{ px: 2 }}>
               <Post blog={post} />
             </Grid>
           );
@@ -175,10 +174,6 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
     );
   };
 
-  const showLoadedBlogs = () => {
-    return loadedBlogs.map((blog, i) => <Post key={i} blog={blog} />);
-  };
-
   return (
     <Fragment>
       <BlogHead />
@@ -204,10 +199,12 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
           <Box>
             <ShowAllPosts posts={blogs} />
           </Box>
-          <Grid container rowSpacing={1}>
-            {showLoadedBlogs()}
-          </Grid>
-          <div className="text-center pt-5 pb-5">{loadMoreButton()}</div>
+          <Box>
+            <ShowAllPosts posts={loadedBlogs} />
+          </Box>
+          <Box sx={{ textAlign: "center" }}>
+            <LoadMoreButton />
+          </Box>
         </Box>
       </Layout>
     </Fragment>
@@ -216,7 +213,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, router }) => {
 
 Blogs.getInitialProps = () => {
   let skip = 0;
-  let limit = 6;
+  let limit = 2;
   return listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
     if (data.error) {
       console.error(data.error);
