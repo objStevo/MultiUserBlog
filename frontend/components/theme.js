@@ -9,7 +9,7 @@ export const lightTheme = {
       dark: "#555",
     },
     secondary: {
-      main: "#FA58B6", //"previously #E07A5F"
+      main: "#FA58B6",
       gray: "#808080",
       light: "#f3f6f9",
       dark: "#011627",

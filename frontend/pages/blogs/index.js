@@ -7,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Typography,
+  Typography
 } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";

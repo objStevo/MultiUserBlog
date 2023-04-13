@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider, Box, Grid } from "@mui/material";
+import { Box, createTheme, Grid, ThemeProvider } from "@mui/material";
 import Footer from "./Footer";
 import Header from "./Header";
 import { lightTheme } from "./theme";
