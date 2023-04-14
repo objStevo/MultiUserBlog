@@ -1,30 +1,29 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 
-const Footer = () => {
+const Footer = (props) => {
+  const { ...other } = props;
   return (
-    <Box>
-      <nav className="navbar navbar-expand-lg">
-        <div className="collapse navbar-collapse" id="navbarText">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Test <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Features
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Pricing
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <Box {...other}>
+      {/* <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={1} sx={{ textAlign: "center" }}>
+          Test
+        </Grid>
+        <Grid item xs={1} sx={{ textAlign: "center" }}>
+          Test
+        </Grid>
+        <Grid item xs={1} sx={{ textAlign: "center" }}>
+          Test
+        </Grid>
+      </Grid> */}
+      <Box>Test</Box>
+      <Box>Test</Box>
+      <Box>Test</Box>
     </Box>
   );
 };

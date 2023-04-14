@@ -13,9 +13,15 @@ const Layout = ({ children }) => {
           <Grid item xs={12} md={9}>
             {children}
           </Grid>
-          <Grid item xs={12} md={3}>Test</Grid>
+          <Grid item xs={12} md={3} sx={{ border: 2 }}>
+            Test
+          </Grid>
         </Grid>
-        <Footer />
+        <Grid container>
+          <Grid item xs={9}>
+            <Footer sx={{ position: "absolute", bottom: "50px" }} />
+          </Grid>
+        </Grid>
       </Box>
     </ThemeProvider>
   );
