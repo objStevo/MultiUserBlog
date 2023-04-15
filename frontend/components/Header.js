@@ -1,6 +1,5 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import MenuIcon from "@mui/icons-material/Menu";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { AppBar, Box, Grid, Toolbar, Typography } from "@mui/material";
@@ -26,10 +25,22 @@ const Header = () => {
   ];
 
   const socialLinks = [
-    { title: "Facebook", href: "https://www.facebook.com/", icon: <FacebookIcon /> },
+    {
+      title: "Facebook",
+      href: "https://www.facebook.com/",
+      icon: <FacebookIcon />,
+    },
     { title: "Twitter", href: "https://twitter.com/", icon: <TwitterIcon /> },
-    { title: "Instagram", href: "https://www.instagram.com/", icon: <InstagramIcon /> },
-    { title: "Pinterest", href: "https://www.pinterest.com/", icon: <PinterestIcon /> },
+    {
+      title: "Instagram",
+      href: "https://www.instagram.com/",
+      icon: <InstagramIcon />,
+    },
+    {
+      title: "Pinterest",
+      href: "https://www.pinterest.com/",
+      icon: <PinterestIcon />,
+    },
   ];
 
   return (
@@ -78,7 +89,6 @@ const Header = () => {
         position="static"
         sx={{
           backgroundColor: "background.default",
-          color: "primary.main",
           borderTop: "1.5px",
           borderTopStyle: "dotted",
           borderTopColor: "primary.gray",
@@ -86,6 +96,7 @@ const Header = () => {
           borderBottomStyle: "dotted",
           borderBottomColor: "primary.gray",
           color: "primary.dark",
+          mb: "15px",
         }}
       >
         <Toolbar

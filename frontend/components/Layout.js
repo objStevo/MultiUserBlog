@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ px: "12%", pt: 5 }}>
-        <Header />
+        <Header sx={{ my: "15px" }} />
         <Grid container>
           <Grid item xs={12} md={9}>
             {children}
@@ -17,12 +17,8 @@ const Layout = ({ children }) => {
             Test
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={9}>
-            <Footer sx={{ position: "absolute", bottom: "50px" }} />
-          </Grid>
-        </Grid>
       </Box>
+      <Footer />
     </ThemeProvider>
   );
 };
