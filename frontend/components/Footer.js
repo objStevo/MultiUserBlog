@@ -1,26 +1,19 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
 import Link from "next/link";
+import React from "react";
 
 const Footer = (props) => {
   const { ...other } = props;
   const footerLinks = [
     { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" },
-    { title: "Contact", href: "/contact" },
+    { title: "Privacy Policy", href: "/privacypolicy" },
   ];
   return (
     <Box
       sx={{
-        borderTop: "1.5px",
-        borderTopStyle: "dotted",
-        borderTopColor: "primary.gray",
-        borderBottom: "1.5px",
-        borderBottomStyle: "dotted",
-        borderBottomColor: "primary.gray",
         mx: "12%",
-        my: "15px",
-        py: 2,
+        mt: "15px",
         color: "primary.dark",
       }}
       {...other}
@@ -30,11 +23,20 @@ const Footer = (props) => {
         direction="row"
         justifyContent="center"
         alignItems="center"
+        sx={{
+          borderTop: "1.5px",
+          borderTopStyle: "dotted",
+          borderTopColor: "primary.gray",
+          borderBottom: "1.5px",
+          borderBottomStyle: "dotted",
+          borderBottomColor: "primary.gray",
+          py: 2,
+        }}
       >
         {footerLinks.map((link, i) => {
           return (
             <Grid item xs={1} key={i}>
-              <Link href={"again.com"}>
+              <Link href={link?.href}>
                 <Typography
                   variant="h6"
                   noWrap
@@ -51,6 +53,12 @@ const Footer = (props) => {
           );
         })}
       </Grid>
+      <Typography
+        variant="h6"
+        sx={{ fontSize: "0.7rem", textAlign: "center", pt: 1 }}
+      >
+        COPYRIGHT © 2023
+      </Typography>
     </Box>
   );
 };
