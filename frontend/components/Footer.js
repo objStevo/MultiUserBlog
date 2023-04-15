@@ -5,25 +5,24 @@ const Footer = (props) => {
   const { ...other } = props;
   return (
     <Box {...other}>
-      {/* <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={1} sx={{ textAlign: "center" }}>
-          Test
+      <Box>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs={1} sx={{ textAlign: "center" }}>
+            Test
+          </Grid>
+          <Grid item xs={1} sx={{ textAlign: "center" }}>
+            Test
+          </Grid>
+          <Grid item xs={1} sx={{ textAlign: "center" }}>
+            Test
+          </Grid>
         </Grid>
-        <Grid item xs={1} sx={{ textAlign: "center" }}>
-          Test
-        </Grid>
-        <Grid item xs={1} sx={{ textAlign: "center" }}>
-          Test
-        </Grid>
-      </Grid> */}
-      <Box>Test</Box>
-      <Box>Test</Box>
-      <Box>Test</Box>
+      </Box>
     </Box>
   );
 };
