@@ -1,38 +1,21 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import MuiLink from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState, useEffect } from "react";
-import { authenticate, isAuth, signin } from "../../actions/auth";
-import Router from "next/router";
+import {
+  Alert,
+  AlertTitle,
+  Avatar,
+  Box,
+  Button,
+  Container, Grid,
+  TextField,
+  Typography
+} from "@mui/material/";
+import MuiLink from "@mui/material/Link";
+import { createTheme } from "@mui/material/styles";
 import Link from "next/link";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { authenticate, isAuth, signin } from "../../actions/auth";
 import LoginGoogle from "./LoginGoogle";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <MuiLink color="inherit">Hernan Tech</MuiLink> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const theme = createTheme({
   palette: {
@@ -125,82 +108,72 @@ export default function MuiSigninComponent() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "primary.light", color: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {showLoading()}
+          {showMessage()}
+          {showError()}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={handleChange("email")}
+            type="email"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={handleChange("password")}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 1 }}
           >
-            {showLoading()}
-            {showMessage()}
-            {showError()}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleChange("email")}
-              type="email"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange("password")}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 1 }}
-            >
-              Sign In
-            </Button>
-            <LoginGoogle />
-            <Grid container>
-              <Grid item xs>
-                <Link href="/auth/password/forgot">
-                  <MuiLink variant="body2">{"Forgot password?"}</MuiLink>
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signup">
-                  <MuiLink variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </MuiLink>
-                </Link>
-              </Grid>
+            Sign In
+          </Button>
+          <LoginGoogle />
+          <Grid container>
+            <Grid item xs>
+              <Link href="/auth/password/forgot">
+                <MuiLink variant="body2">{"Forgot password?"}</MuiLink>
+              </Link>
             </Grid>
-          </Box>
+            <Grid item>
+              <Link href="/signup">
+                <MuiLink variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </MuiLink>
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+    </Container>
   );
 }

@@ -35,14 +35,13 @@ const Footer = (props) => {
       >
         {footerLinks.map((link, i) => {
           return (
-            <Grid item xs={1} key={i}>
+            <Grid item xs={3} md={2} lg={1} key={i}>
               <Link href={link?.href}>
                 <Typography
                   variant="h6"
                   noWrap
                   sx={{
                     textAlign: "center",
-                    display: { xs: "none", md: "flex" },
                     cursor: "pointer",
                   }}
                 >

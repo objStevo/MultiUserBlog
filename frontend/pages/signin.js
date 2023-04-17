@@ -1,12 +1,12 @@
-import Layout from "../components/Layout";
-import SigninComponent from "../components/auth/SigninComponent";
-import MuiSigninComponent from "../components/auth/MuiSigninComponent";
+import { Alert, Box, Container } from "@mui/material";
 import { withRouter } from "next/router";
+import MuiSigninComponent from "../components/auth/MuiSigninComponent";
+import Layout from "../components/Layout";
 
 const Signin = ({ router }) => {
   const showRedirectMessage = () => {
     if (router.query.message) {
-      return <div className="alert alert-danger">{router.query.message}</div>;
+      return <Alert severity="info">{router.query.message}</Alert>;
     } else {
       return;
     }
@@ -14,19 +14,10 @@ const Signin = ({ router }) => {
 
   return (
     <Layout>
-      <div className="container-fluid">
-
-        <div className="row">
-          <div className="col-md-6 offset-md-3">{showRedirectMessage()}</div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-6 offset-md-3">
-            {/* <SigninComponent /> */}
-            <MuiSigninComponent />
-          </div>
-        </div>
-      </div>
+      <Container disableGutters={true}>
+        <Box sx={{ p: 2 }}>{showRedirectMessage()}</Box>
+        <MuiSigninComponent />
+      </Container>
     </Layout>
   );
 };

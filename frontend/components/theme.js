@@ -42,13 +42,11 @@ export const lightTheme = {
     h4: {
       fontSize: "1.1rem",
       fontFamily: "Poppins, sans-serif",
-      color: "#00112c",
     },
     h5: {
       fontWeight: 500,
       fontFamily: "sans-serif",
-      color: "#00112c",
-      fontSize: "1.2rem",
+      fontSize: "1 rem",
     },
     h6: {
       fontWeight: 300,
