@@ -15,7 +15,7 @@ const Signin = ({ router }) => {
   return (
     <Layout>
       <Container disableGutters={true}>
-        <Box sx={{ p: 2 }}>{showRedirectMessage()}</Box>
+        <Box sx={{ p: 1 }}>{showRedirectMessage()}</Box>
         <MuiSigninComponent />
       </Container>
     </Layout>

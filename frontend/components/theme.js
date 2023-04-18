@@ -45,13 +45,13 @@ export const lightTheme = {
     },
     h5: {
       fontWeight: 500,
-      fontFamily: "sans-serif",
-      fontSize: "1 rem",
+      fontFamily: "Poppins, sans-serif",
+      fontSize: "1rem",
     },
     h6: {
       fontWeight: 300,
-      fontSize: "0.8rem",
-      fontFamily: "sans-serif",
+      fontSize: "0.9rem",
+      fontFamily: "Poppins, sans-serif",
     },
     caption: {
       color: "primary.light",

@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { Button, Box } from "@mui/material";
 import Router from "next/router";
 import GoogleLogin from "react-google-login";
-import { loginWithGoogle, authenticate, isAuth } from "../../actions/auth";
+import { authenticate, isAuth, loginWithGoogle } from "../../actions/auth";
 import { GOOGLE_CLIENT_ID } from "../../config";
-import Button from "@mui/material/Button";
 
-const LoginGoogle = () => {
+const LoginGoogle = (props) => {
+  const { ...other } = props;
+
   const handleGooglesError = (err) => {
     console.log("Google error");
     console.error(err);
@@ -32,7 +32,7 @@ const LoginGoogle = () => {
   };
 
   return (
-    <div className="pb-3">
+    <Box {...other}>
       <GoogleLogin
         clientId={`${GOOGLE_CLIENT_ID}`}
         buttonText="Sign In with Google"
@@ -45,14 +45,16 @@ const LoginGoogle = () => {
             disabled={renderProps.disabled}
             type="submit"
             fullWidth
-            variant="contained"
-            sx={{mb: 2, bgcolor:"white", color: "#1f253d" }}
+            variant="outlined"
+            sx={{
+              mb: 2,
+            }}
           >
             Sign In with Google
           </Button>
         )}
       />
-    </div>
+    </Box>
   );
 };
 

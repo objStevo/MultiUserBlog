@@ -5,30 +5,17 @@ import {
   Avatar,
   Box,
   Button,
-  Container, Grid,
+  Container,
+  Grid,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material/";
 import MuiLink from "@mui/material/Link";
-import { createTheme } from "@mui/material/styles";
 import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { authenticate, isAuth, signin } from "../../actions/auth";
 import LoginGoogle from "./LoginGoogle";
-
-const theme = createTheme({
-  palette: {
-    type: "dark",
-    primary: {
-      main: "#1f253d",
-      dark: "#142a8a",
-    },
-    secondary: {
-      main: "#f50057",
-    },
-  },
-});
 
 export default function MuiSigninComponent() {
   const [values, setValues] = useState({
@@ -41,7 +28,7 @@ export default function MuiSigninComponent() {
     showForm: true,
   });
 
-  const { email, password, error, loading, message, showForm } = values;
+  const { email, password, error, loading, message } = values;
 
   useEffect(() => {
     isAuth() && Router.push("/");
@@ -116,13 +103,18 @@ export default function MuiSigninComponent() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "primary.light", color: "secondary.main" }}>
+        <Box
+          sx={{
+            m: 1,
+            bgcolor: "primary.light",
+            color: "secondary.main",
+            textAlign: "center",
+          }}
+        >
           <LockOutlinedIcon />
-        </Avatar>
-        <Typography variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Typography variant="h6">SIGN IN</Typography>
+        </Box>
+        <Box component="form" onSubmit={handleSubmit} noValidate>
           {showLoading()}
           {showMessage()}
           {showError()}
@@ -149,25 +141,41 @@ export default function MuiSigninComponent() {
             autoComplete="current-password"
             onChange={handleChange("password")}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 1 }}
+          <Box sx={{ mt: 3, textAlign: "center" }}>
+            <Button type="submit" variant="contained" sx={{ width: "100%" }}>
+              Sign In
+            </Button>
+            <LoginGoogle
+              sx={{ mt: 1, width: "100%", display: "inline-block" }}
+            />
+          </Box>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
           >
-            Sign In
-          </Button>
-          <LoginGoogle />
-          <Grid container>
-            <Grid item xs>
+            <Grid item xs={5}>
               <Link href="/auth/password/forgot">
-                <MuiLink variant="body2">{"Forgot password?"}</MuiLink>
+                <MuiLink variant="body2">
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: "0.8rem", textAlign: "center", pt: 1 }}
+                  >
+                    Forgot password
+                  </Typography>
+                </MuiLink>
               </Link>
             </Grid>
-            <Grid item>
+            <Grid item xs={5}>
               <Link href="/signup">
                 <MuiLink variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: "0.8rem", textAlign: "center", pt: 1 }}
+                  >
+                    Signup
+                  </Typography>
                 </MuiLink>
               </Link>
             </Grid>
