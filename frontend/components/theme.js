@@ -40,11 +40,12 @@ export const lightTheme = {
       fontFamily: "Major Mono Display, monospace",
     },
     h4: {
-      fontSize: "1.1rem",
+      fontSize: "1.2rem",
       fontFamily: "Poppins, sans-serif",
+      fontWeight: 300,
     },
     h5: {
-      fontWeight: 500,
+      fontWeight: 300,
       fontFamily: "Poppins, sans-serif",
       fontSize: "1rem",
     },
