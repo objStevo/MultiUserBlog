@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { emailContactForm } from "../../actions/form";
 import React from "react";
+import { Grid, FormControl, FormLabel, TextField, Box } from "@mui/material";
 
 const ContactForm = ({ authorEmail }) => {
   const [values, setValues] = useState({
@@ -60,7 +61,7 @@ const ContactForm = ({ authorEmail }) => {
     </div>
   );
 
-  const contactForm = () => {
+  const contact = () => {
     return (
       <form onSubmit={clickSubmit} className="pb-5">
         <div className="form-group">
@@ -104,12 +105,56 @@ const ContactForm = ({ authorEmail }) => {
     );
   };
 
+  const contactForm = (props) => {
+    const { ...other } = props;
+
+    return (
+      <form onSubmit={clickSubmit}>
+        <Grid container spacing={2}>
+          <Grid item xs={4} md={10}>
+            <TextField
+              id="contact-name"
+              label="Name"
+              variant="outlined"
+              size="small"
+              required
+              sx={{ width: "50%" }}
+            />
+          </Grid>
+          <Grid item xs={4} md={10}>
+            <TextField
+              id="contact-email"
+              label="email"
+              variant="outlined"
+              size="small"
+              required
+              fullWidth
+              sx={{ width: "50%" }}
+            />
+          </Grid>
+          <Grid item xs={10}>
+            <TextField
+              id="contact-message"
+              label="Message"
+              variant="outlined"
+              size="small"
+              required
+              fullWidth
+              multiline
+              rows={6}
+            />
+          </Grid>
+        </Grid>
+      </form>
+    );
+  };
+
   return (
-    <React.Fragment>
+    <Box sx={{ pt: 3 }}>
       {showSuccessMessage()}
       {showErrorMessage()}
       {contactForm()}
-    </React.Fragment>
+    </Box>
   );
 };
 
