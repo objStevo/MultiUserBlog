@@ -1,8 +1,6 @@
-import { useState } from "react";
-import Link from "next/link";
+import { Alert, Box, Button, Grid, TextField } from "@mui/material";
+import React, { useState } from "react";
 import { emailContactForm } from "../../actions/form";
-import React from "react";
-import { Grid, FormControl, FormLabel, TextField, Box } from "@mui/material";
 
 const ContactForm = ({ authorEmail }) => {
   const [values, setValues] = useState({
@@ -18,6 +16,7 @@ const ContactForm = ({ authorEmail }) => {
   const { message, name, email, sent, buttonText, success, error } = values;
 
   const clickSubmit = (e) => {
+    console.log({ authorEmail, name, email, message });
     e.preventDefault();
     setValues({ ...values, buttonText: "Sending..." });
     emailContactForm({ authorEmail, name, email, message }).then((data) => {
@@ -48,69 +47,19 @@ const ContactForm = ({ authorEmail }) => {
   };
 
   const showSuccessMessage = () =>
-    success && (
-      <div className="alert alert-info">Thank you for contacting us.</div>
-    );
+    success && <Alert severity="success">Thank you for contacting us.</Alert>;
 
-  const showErrorMessage = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
-      {error}
-    </div>
-  );
+  const showErrorMessage = () =>
+    error && <Alert severity="warning">{error}</Alert>;
 
-  const contact = () => {
-    return (
-      <form onSubmit={clickSubmit} className="pb-5">
-        <div className="form-group">
-          <label className="lead">Message</label>
-          <textarea
-            onChange={handleChange("message")}
-            type="text"
-            className="form-control"
-            value={message}
-            required
-            rows="10"
-          ></textarea>
-        </div>
-
-        <div className="form-group">
-          <label className="lead">Name</label>
-          <input
-            type="text"
-            onChange={handleChange("name")}
-            className="form-control"
-            value={name}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="lead">Email</label>
-          <input
-            type="email"
-            onChange={handleChange("email")}
-            className="form-control"
-            value={email}
-            required
-          />
-        </div>
-
-        <div>
-          <button className="btn btn-primary">{buttonText}</button>
-        </div>
-      </form>
-    );
-  };
-
-  const contactForm = (props) => {
-    const { ...other } = props;
-
-    return (
+  return (
+    <Box sx={{ pt: 3 }}>
       <form onSubmit={clickSubmit}>
-        <Grid container spacing={2}>
+        <Grid container rowSpacing={2}>
+          <Grid item xs={4} md={10}>
+            {showSuccessMessage()}
+            {showErrorMessage()}
+          </Grid>
           <Grid item xs={4} md={10}>
             <TextField
               id="contact-name"
@@ -119,17 +68,21 @@ const ContactForm = ({ authorEmail }) => {
               size="small"
               required
               sx={{ width: "50%" }}
+              onChange={handleChange("name")}
+              value={name}
             />
           </Grid>
           <Grid item xs={4} md={10}>
             <TextField
               id="contact-email"
-              label="email"
+              label="Email"
               variant="outlined"
               size="small"
               required
               fullWidth
               sx={{ width: "50%" }}
+              onChange={handleChange("email")}
+              value={email}
             />
           </Grid>
           <Grid item xs={10}>
@@ -138,22 +91,26 @@ const ContactForm = ({ authorEmail }) => {
               label="Message"
               variant="outlined"
               size="small"
-              required
               fullWidth
               multiline
               rows={6}
+              onChange={handleChange("message")}
+              value={message}
             />
+          </Grid>
+          <Grid item xs={10}>
+            <Button
+              variant="outlined"
+              type="submit"
+              sx={{
+                "&:hover": { bgcolor: "primary.main", color: "primary.light" },
+              }}
+            >
+              {buttonText}
+            </Button>
           </Grid>
         </Grid>
       </form>
-    );
-  };
-
-  return (
-    <Box sx={{ pt: 3 }}>
-      {showSuccessMessage()}
-      {showErrorMessage()}
-      {contactForm()}
     </Box>
   );
 };
