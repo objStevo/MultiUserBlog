@@ -6,7 +6,7 @@ import { Typography, Box, Divider } from "@mui/material";
 const Contact = () => {
   return (
     <Layout>
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", pt: 3 }}>
         <Box component="span">
           <Typography
             variant="h4"
@@ -14,7 +14,6 @@ const Contact = () => {
               mx: "auto",
               display: "inline-block",
               color: "primary.dark",
-              pt: "50px",
             }}
           >
             Contact Me

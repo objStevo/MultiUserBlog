@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Grid, TextField } from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { emailContactForm } from "../../actions/form";
 
@@ -53,26 +53,34 @@ const ContactForm = ({ authorEmail }) => {
     error && <Alert severity="warning">{error}</Alert>;
 
   return (
-    <Box sx={{ pt: 3 }}>
+    <Box sx={{ p: { md: 3 } }}>
       <form onSubmit={clickSubmit}>
         <Grid container rowSpacing={2}>
-          <Grid item xs={4} md={10}>
+          <Grid item xs={12}>
+            <Typography variant="h6">
+              Due to the high volume of emails I receive, I am unable to respond
+              to every message. Please know that I do read each message, and
+              respond to as many as possible. I genuinely appreciate your
+              feedback, support and understanding!
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
             {showSuccessMessage()}
             {showErrorMessage()}
           </Grid>
-          <Grid item xs={4} md={10}>
+          <Grid item xs={12}>
             <TextField
               id="contact-name"
               label="Name"
               variant="outlined"
               size="small"
               required
-              sx={{ width: "50%" }}
+              sx={{ width: { xs: "100%", md: "50%" } }}
               onChange={handleChange("name")}
               value={name}
             />
           </Grid>
-          <Grid item xs={4} md={10}>
+          <Grid item xs={12}>
             <TextField
               id="contact-email"
               label="Email"
@@ -80,12 +88,12 @@ const ContactForm = ({ authorEmail }) => {
               size="small"
               required
               fullWidth
-              sx={{ width: "50%" }}
+              sx={{ width: { xs: "100%", md: "50%" } }}
               onChange={handleChange("email")}
               value={email}
             />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <TextField
               id="contact-message"
               label="Message"

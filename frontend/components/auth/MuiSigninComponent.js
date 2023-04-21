@@ -1,14 +1,12 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Alert,
-  AlertTitle,
-  Avatar,
-  Box,
+  AlertTitle, Box,
   Button,
   Container,
   Grid,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material/";
 import MuiLink from "@mui/material/Link";
 import Link from "next/link";
@@ -114,7 +112,7 @@ export default function MuiSigninComponent() {
           <LockOutlinedIcon />
           <Typography variant="h6">SIGN IN</Typography>
         </Box>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box component="form" onSubmit={handleSubmit}>
           {showLoading()}
           {showMessage()}
           {showError()}

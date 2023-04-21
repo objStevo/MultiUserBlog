@@ -117,9 +117,7 @@ const SignupComponent = () => {
               </div>
 
               <div>
-                <button className="btn btn-primary btn-block">
-                  Signup
-                </button>
+                <button className="btn btn-primary btn-block">Signup</button>
               </div>
             </form>
           </div>
@@ -128,14 +126,16 @@ const SignupComponent = () => {
     );
   };
 
-  return (
-    <React.Fragment>
-      {showError()}
-      {showLoading()}
-      {showMessage()}
-      {signupForm()}
-    </React.Fragment>
-  );
+  // return (
+  //   <React.Fragment>
+  //     {showError()}
+  //     {showLoading()}
+  //     {showMessage()}
+  //     {signupForm()}
+  //   </React.Fragment>
+  // );
+
+  return <Container>test</Container>;
 };
 
 export default SignupComponent;
