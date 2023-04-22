@@ -1,12 +1,13 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Alert,
-  AlertTitle, Box,
+  AlertTitle,
+  Box,
   Button,
   Container,
   Grid,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material/";
 import MuiLink from "@mui/material/Link";
 import Link from "next/link";
@@ -96,89 +97,84 @@ export default function MuiSigninComponent() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          m: 1,
+          bgcolor: "primary.light",
+          color: "secondary.main",
+          textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            m: 1,
-            bgcolor: "primary.light",
-            color: "secondary.main",
-            textAlign: "center",
-          }}
-        >
-          <LockOutlinedIcon />
-          <Typography variant="h6">SIGN IN</Typography>
-        </Box>
-        <Box component="form" onSubmit={handleSubmit}>
-          {showLoading()}
-          {showMessage()}
-          {showError()}
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={handleChange("email")}
-            type="email"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange("password")}
-          />
-          <Box sx={{ mt: 3, textAlign: "center" }}>
-            <Button type="submit" variant="contained" sx={{ width: "100%" }}>
+        <LockOutlinedIcon />
+        <Typography variant="h6">SIGN IN</Typography>
+      </Box>
+      <Box component="form" onSubmit={handleSubmit}>
+        {showLoading()}
+        {showMessage()}
+        {showError()}
+        <Grid container justifyContent="space-between" rowSpacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleChange("email")}
+              type="email"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange("password")}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "100%", mt: 2 }}
+            >
               Sign In
             </Button>
-            <LoginGoogle
-              sx={{ mt: 1, width: "100%", display: "inline-block" }}
-            />
-          </Box>
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs={5}>
-              <Link href="/auth/password/forgot">
-                <MuiLink variant="body2">
-                  <Typography
-                    variant="h6"
-                    sx={{ fontSize: "0.8rem", textAlign: "center", pt: 1 }}
-                  >
-                    Forgot password
-                  </Typography>
-                </MuiLink>
-              </Link>
-            </Grid>
-            <Grid item xs={5}>
-              <Link href="/signup">
-                <MuiLink variant="body2">
-                  <Typography
-                    variant="h6"
-                    sx={{ fontSize: "0.8rem", textAlign: "center", pt: 1 }}
-                  >
-                    Signup
-                  </Typography>
-                </MuiLink>
-              </Link>
-            </Grid>
           </Grid>
-        </Box>
+          <Grid item xs={12}>
+            <LoginGoogle
+              sx={{ width: "100%", display: "inline-block", mt: 0 }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Link href="/auth/password/forgot">
+              <MuiLink variant="body2">
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: "0.8rem", textAlign: "center" }}
+                >
+                  Forgot password
+                </Typography>
+              </MuiLink>
+            </Link>
+          </Grid>
+          <Grid item xs={6}>
+            <Link href="/signup">
+              <MuiLink variant="body2">
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: "0.8rem", textAlign: "center" }}
+                >
+                  Signup
+                </Typography>
+              </MuiLink>
+            </Link>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
