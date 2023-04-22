@@ -19,7 +19,7 @@ import LoginGoogle from "./LoginGoogle";
 const SigninComponent = () => {
   const [values, setValues] = useState({
     name: "",
-    email: "",
+    email: "hschalco@gmail.com",
     password: "",
     error: "",
     loading: false,
@@ -94,22 +94,28 @@ const SigninComponent = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ mt: { xs: 1, sm: 3, md: 11 } }}
+    >
       <Box
         sx={{
-          m: 1,
           bgcolor: "primary.light",
           color: "secondary.main",
           textAlign: "center",
+          display: { xs: "none", md: "block" },
         }}
       >
         <LockOutlinedIcon />
         <Typography variant="h6">SIGN IN</Typography>
       </Box>
       <Box component="form" onSubmit={handleSubmit}>
-        {showLoading()}
-        {showMessage()}
-        {showError()}
+        <Box sx={{ mb: 1 }}>
+          {showLoading()}
+          {showMessage()}
+          {showError()}
+        </Box>
         <Grid container justifyContent="space-between" rowSpacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -122,6 +128,7 @@ const SigninComponent = () => {
               autoFocus
               onChange={handleChange("email")}
               type="email"
+              value={email}
             />
           </Grid>
           <Grid item xs={12}>

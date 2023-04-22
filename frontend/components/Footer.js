@@ -12,7 +12,6 @@ const Footer = (props) => {
   return (
     <Box
       sx={{
-        mx: "12%",
         mt: "15px",
         color: "primary.dark",
       }}

@@ -9,7 +9,10 @@ const Layout = ({ children }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ px: "12%", pt: 5 }}>
         <Header sx={{ my: "15px" }} />
-        <Grid container>
+        <Grid
+          container
+          sx={{ minHeight: { sm: "60vh", md: "65vh", lg: "70vh" } }}
+        >
           <Grid item xs={12} md={9}>
             {children}
           </Grid>
@@ -17,8 +20,8 @@ const Layout = ({ children }) => {
             Test
           </Grid>
         </Grid>
+        <Footer />
       </Box>
-      <Footer />
     </ThemeProvider>
   );
 };
