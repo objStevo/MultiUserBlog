@@ -1,13 +1,12 @@
-import Layout from '../components/Layout'
-import SignupComponent from '../components/auth/SignupComponent'
-import MuiSignupComponent from '../components/auth/MuiSignupComponent'
+import SignupComponent from "../components/auth/SignupComponent";
+import Layout from "../components/Layout";
 
 const Signup = () => {
-    return (
-        <Layout>
-            <MuiSignupComponent/>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <SignupComponent />
+    </Layout>
+  );
 };
 
 export default Signup;

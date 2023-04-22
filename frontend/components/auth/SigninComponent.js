@@ -1,13 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { authenticate, isAuth, signin } from "../../actions/auth";
-import Router from "next/router";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material/";
+import MuiLink from "@mui/material/Link";
 import Link from "next/link";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { authenticate, isAuth, signin } from "../../actions/auth";
 import LoginGoogle from "./LoginGoogle";
 
 const SigninComponent = () => {
   const [values, setValues] = useState({
-    name: "Ryan",
-    email: "hschalco@gmail.com",
+    name: "",
+    email: "",
     password: "",
     error: "",
     loading: false,
@@ -15,25 +27,23 @@ const SigninComponent = () => {
     showForm: true,
   });
 
-  const { email, password, error, loading, message, showForm } = values;
+  const { email, password, error, loading, message } = values;
 
   useEffect(() => {
     isAuth() && Router.push("/");
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
 
     signin(user).then((data) => {
       if (data.error) {
-        console.log(data.error);
+        console.log("There was an error with signin api:", data.error);
+        console.log("values: ", values);
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        // Save user token to cookie
-        // Save user info to localStorage
-        // authenticate user
         authenticate(data, () => {
           if (isAuth() && isAuth().role === 1) {
             Router.push("/admin");
@@ -46,7 +56,6 @@ const SigninComponent = () => {
   };
 
   const handleChange = (name) => (e) => {
-    //Below brackets is ES2015 computed property name that gives the property the name of the string value in the parameter
     setValues({
       ...values,
       error: false,
@@ -54,62 +63,120 @@ const SigninComponent = () => {
     });
   };
 
-  const showLoading = () =>
-    loading ? <div className="alert alert-info">Loading...</div> : "";
-  const showError = () =>
-    error ? <div className="alert alert-danger">{error}</div> : "";
-  const showMessage = () =>
-    message ? <div className="alert alert-info">{message}</div> : "";
+  const showLoading = () => {
+    if (loading) {
+      return (
+        <Alert fullWidth severity="info">
+          <AlertTitle>Loading...</AlertTitle>
+        </Alert>
+      );
+    }
+  };
 
-  const signupForm = () => {
-    return (
-      <React.Fragment>
-        <div className="container">
-          <div className="row justify-content-center">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <input
-                  value={email}
-                  onChange={handleChange("email")}
-                  type="email"
-                  className="form-control"
-                  placeholder="Type your email"
-                />
-              </div>
+  const showError = () => {
+    if (error) {
+      return (
+        <Alert fullWidth severity="error">
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      );
+    }
+  };
 
-              <div className="form-group">
-                <input
-                  value={password}
-                  onChange={handleChange("password")}
-                  type="password"
-                  className="form-control"
-                  placeholder="Type your password"
-                />
-              </div>
-
-              <div>
-                <button className="btn btn-primary btn-block">Signin</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </React.Fragment>
-    );
+  const showMessage = () => {
+    if (message) {
+      return (
+        <Alert fullWidth severity="warning">
+          <AlertTitle>{message}</AlertTitle>
+        </Alert>
+      );
+    }
   };
 
   return (
-    <React.Fragment>
-      {showError()}
-      {showLoading()}
-      {showMessage()}
-      {signupForm()}
-      <LoginGoogle />
-      <br />
-      <Link href="/auth/password/forgot">
-        <a className="btn btn-outline-danger btn-sm">Forgot password</a>
-      </Link>
-    </React.Fragment>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          m: 1,
+          bgcolor: "primary.light",
+          color: "secondary.main",
+          textAlign: "center",
+        }}
+      >
+        <LockOutlinedIcon />
+        <Typography variant="h6">SIGN IN</Typography>
+      </Box>
+      <Box component="form" onSubmit={handleSubmit}>
+        {showLoading()}
+        {showMessage()}
+        {showError()}
+        <Grid container justifyContent="space-between" rowSpacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleChange("email")}
+              type="email"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange("password")}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "100%", mt: 2 }}
+            >
+              Sign In
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <LoginGoogle
+              sx={{ width: "100%", display: "inline-block", mt: 0 }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Link href="/auth/password/forgot">
+              <MuiLink variant="body2">
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: "0.8rem", textAlign: "center" }}
+                >
+                  Forgot password
+                </Typography>
+              </MuiLink>
+            </Link>
+          </Grid>
+          <Grid item xs={6}>
+            <Link href="/signup">
+              <MuiLink variant="body2">
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: "0.8rem", textAlign: "center" }}
+                >
+                  Signup
+                </Typography>
+              </MuiLink>
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
-
 export default SigninComponent;

@@ -1,13 +1,25 @@
-import React from "react";
-import { signup, isAuth, preSignup } from "../../actions/auth";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {
+  TextField,
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import MuiLink from "@mui/material/Link";
+import Link from "next/link";
 import Router from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { isAuth, preSignup } from "../../actions/auth";
 
 const SignupComponent = () => {
   const [values, setValues] = useState({
-    name: "Ryan",
-    email: "ryan@gmail.com",
-    password: "rrrrrr",
+    name: "",
+    email: "",
+    password: "",
     error: "",
     loading: false,
     message: "",
@@ -22,12 +34,9 @@ const SignupComponent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.table({ name, email, password, error, loading,message, showForm});
     setValues({ ...values, loading: true, error: false });
     const user = { name, email, password };
-    // When we are ready to handle the email functionality, we change this to preSignup(user).then((data)=>{...
     preSignup(user).then((data) => {
-      console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -53,89 +62,113 @@ const SignupComponent = () => {
     });
   };
 
-  const showLoading = () =>
-    loading ? <div className="alert alert-info">Loading...</div> : "";
-  const showError = () =>
-    loading ? <div className="alert alert-danger">{error}</div> : "";
-  const showMessage = () =>
-    loading ? <div className="alert alert-info">{message}</div> : "";
-
-  const signupForm = () => {
-    return (
-      <React.Fragment>
-        <div className="container">
-          <div className="row justify-content-center">
-            <form onSubmit={handleSubmit}>
-              <div className="row justify-content-start icon-row">
-                <div className="col-1">
-                  {" "}
-                  <img src="./userp32.png" alt="account image"></img>
-                </div>
-                <div className="col-6">
-                  <h4>Create Account</h4>
-                </div>
-              </div>
-              <div className="form-group row">
-                <div className="col">
-                  <input
-                    value={name}
-                    onChange={handleChange("name")}
-                    type="text"
-                    className="form-control"
-                    placeholder="First name"
-                  />
-                </div>
-                <div className="col">
-                  <input
-                    value={name}
-                    onChange={handleChange("name")}
-                    type="text"
-                    className="form-control"
-                    placeholder="Last name"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <input
-                  value={email}
-                  onChange={handleChange("email")}
-                  type="email"
-                  className="form-control"
-                  placeholder="Type your email"
-                />
-              </div>
-
-              <div className="form-group">
-                <input
-                  value={password}
-                  onChange={handleChange("password")}
-                  type="password"
-                  className="form-control"
-                  placeholder="Type your password"
-                />
-              </div>
-
-              <div>
-                <button className="btn btn-primary btn-block">Signup</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </React.Fragment>
-    );
+  const showLoading = () => {
+    if (loading) {
+      return (
+        <Alert fullWidth severity="info">
+          <AlertTitle>Loading...</AlertTitle>
+        </Alert>
+      );
+    }
   };
 
-  // return (
-  //   <React.Fragment>
-  //     {showError()}
-  //     {showLoading()}
-  //     {showMessage()}
-  //     {signupForm()}
-  //   </React.Fragment>
-  // );
+  const showError = () => {
+    if (error) {
+      return (
+        <Alert fullWidth severity="error">
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      );
+    }
+  };
 
-  return <Container>test</Container>;
+  const showMessage = () => {
+    if (message) {
+      return (
+        <Alert fullWidth severity="warning">
+          <AlertTitle>{message}</AlertTitle>
+        </Alert>
+      );
+    }
+  };
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          m: 1,
+          bgcolor: "primary.light",
+          color: "secondary.main",
+          textAlign: "center",
+        }}
+      >
+        <LockOutlinedIcon />
+        <Typography variant="h6">SIGN UP</Typography>
+      </Box>
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+        {showLoading()}
+        {showMessage()}
+        {showError()}
+        <Grid container justifyContent="space-between" rowSpacing={2}>
+          <Grid item xs={12} sm={6} sx={{ pr: 1 }}>
+            <TextField
+              autoComplete="given-name"
+              name="firstName"
+              required
+              id="firstName"
+              label="First Name"
+              autoFocus
+              onChange={handleChange("name")}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} sx={{ pl: 1 }}>
+            <TextField
+              required
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoComplete="family-name"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={handleChange("email")}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              onChange={handleChange("password")}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
+              Sign Up
+            </Button>
+          </Grid>
+          <Grid item xs={12} sx={{ textAlign: "center" }}>
+            <Link href="/signin" variant="body2" sx={{ textAlign: "center" }}>
+              <MuiLink variant="body2">
+                {"Already have an account? Sign in"}
+              </MuiLink>
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
+  );
 };
 
 export default SignupComponent;

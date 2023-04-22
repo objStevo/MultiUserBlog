@@ -1,6 +1,6 @@
 import { Alert, Box, Container } from "@mui/material";
 import { withRouter } from "next/router";
-import MuiSigninComponent from "../components/auth/MuiSigninComponent";
+import SigninComponent from "../components/auth/SigninComponent";
 import Layout from "../components/Layout";
 
 const Signin = ({ router }) => {
@@ -16,7 +16,7 @@ const Signin = ({ router }) => {
     <Layout>
       <Container disableGutters={true}>
         <Box sx={{ p: 1 }}>{showRedirectMessage()}</Box>
-        <MuiSigninComponent />
+        <SigninComponent />
       </Container>
     </Layout>
   );
