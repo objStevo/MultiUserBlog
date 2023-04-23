@@ -103,22 +103,6 @@ const HeaderMenu = (props) => {
             </Typography>
           </Link>
         </MenuItem>
-        <MenuItem>
-          <Link href="/contact">
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                textAlign: "center",
-                display: { xs: "none", md: "flex" },
-                px: 2,
-              }}
-            >
-              {"Contact".toUpperCase()}
-            </Typography>
-          </Link>
-        </MenuItem>
         {!isAuth() && (
           <Box>
             <Divider />
@@ -134,7 +118,7 @@ const HeaderMenu = (props) => {
                     px: 2,
                   }}
                 >
-                  {"Log In".toUpperCase()}
+                  {"Sign In".toUpperCase()}
                 </Typography>
               </Link>
             </MenuItem>

@@ -94,28 +94,29 @@ const SigninComponent = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
-      <Box
-        sx={{
-          bgcolor: "primary.light",
-          color: "secondary.main",
-          textAlign: "center",
-          display: { xs: "none", md: "block" },
-        }}
-      >
-        <LockOutlinedIcon />
-        <Typography variant="h6">SIGN IN</Typography>
-      </Box>
+    <Container component="main" maxWidth="xs" sx={{ mt: "10%" }}>
       <Box component="form" onSubmit={handleSubmit}>
-        <Box sx={{ mb: 1 }}>
-          {showLoading()}
-          {showMessage()}
-          {showError()}
-        </Box>
         <Grid container justifyContent="space-between" rowSpacing={2}>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                bgcolor: "primary.light",
+                color: "secondary.main",
+                textAlign: "center",
+                display: { xs: "none", md: "block" },
+              }}
+            >
+              <LockOutlinedIcon />
+              <Typography variant="h6">SIGN IN</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              {showLoading()}
+              {showMessage()}
+              {showError()}
+            </Box>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               required

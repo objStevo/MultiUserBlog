@@ -1,12 +1,12 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-  TextField,
   Alert,
   AlertTitle,
   Box,
   Button,
   Container,
   Grid,
+  TextField,
   Typography,
 } from "@mui/material";
 import MuiLink from "@mui/material/Link";
@@ -26,7 +26,7 @@ const SignupComponent = () => {
     showForm: true,
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const { name, email, password, error, loading, message } = values;
 
   useEffect(() => {
     isAuth() && Router.push(`/`);
@@ -93,23 +93,29 @@ const SignupComponent = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          m: 1,
-          bgcolor: "primary.light",
-          color: "secondary.main",
-          textAlign: "center",
-        }}
-      >
-        <LockOutlinedIcon />
-        <Typography variant="h6">SIGN UP</Typography>
-      </Box>
-      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-        {showLoading()}
-        {showMessage()}
-        {showError()}
+    <Container component="main" maxWidth="xs" sx={{ pt: "10%" }}>
+      <Box component="form" onSubmit={handleSubmit}>
         <Grid container justifyContent="space-between" rowSpacing={2}>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                bgcolor: "primary.light",
+                color: "secondary.main",
+                textAlign: "center",
+                display: { xs: "none", md: "block" },
+              }}
+            >
+              <LockOutlinedIcon />
+              <Typography variant="h6">SIGN UP</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              {showLoading()}
+              {showMessage()}
+              {showError()}
+            </Box>
+          </Grid>
           <Grid item xs={12} sm={6} sx={{ pr: 1 }}>
             <TextField
               autoComplete="given-name"
