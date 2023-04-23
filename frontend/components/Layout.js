@@ -7,20 +7,18 @@ const Layout = ({ children }) => {
   let theme = createTheme(lightTheme);
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ px: "12%", pt: 5 }}>
-        <Header sx={{ my: "15px" }} />
-        <Grid
-          container
-          sx={{ minHeight: { sm: "60vh", md: "65vh", lg: "70vh" } }}
+      <Box sx={{ px: { xs: 8, sm: 12, md: 16, lg: 20 } }}>
+        <Box>
+          <Header />
+        </Box>
+        <Box
+          sx={{ minHeight: { xs: "40vh", sm: "50vh", md: "60vh", lg: "70vh", xl: "75vh" } }}
         >
-          <Grid item xs={12} md={9}>
-            {children}
-          </Grid>
-          <Grid item xs={12} md={3} sx={{ border: 2 }}>
-            Test
-          </Grid>
-        </Grid>
-        <Footer />
+          {children}
+        </Box>
+        <Box>
+          <Footer />
+        </Box>
       </Box>
     </ThemeProvider>
   );

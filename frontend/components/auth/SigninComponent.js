@@ -97,7 +97,6 @@ const SigninComponent = () => {
     <Container
       component="main"
       maxWidth="xs"
-      sx={{ mt: { xs: 1, sm: 3, md: 11 } }}
     >
       <Box
         sx={{
