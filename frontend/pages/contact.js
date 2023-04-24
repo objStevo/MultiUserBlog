@@ -16,7 +16,7 @@ const Contact = () => {
               color: "primary.dark",
             }}
           >
-            Contact Me
+            Contact
           </Typography>
           <Divider
             sx={{

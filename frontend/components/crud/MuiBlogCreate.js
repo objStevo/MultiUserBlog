@@ -1,24 +1,31 @@
-import { useState, useEffect } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  FormControl,
+  FormGroup,
+  Grid,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
-import { getCookie, isAuth } from "../../actions/auth";
+import { useEffect, useState } from "react";
+import { getCookie } from "../../actions/auth";
+import { createBlog } from "../../actions/blog";
 import { getCategories } from "../../actions/category";
 import { getTags } from "../../actions/tag";
-import { createBlog } from "../../actions/blog";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "../../node_modules/react-quill/dist/quill.snow.css";
 import { QuillFormats, QuillModules } from "../../utils/quill";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Alert from "@mui/material/Alert";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const MuiCreateBlog = ({ router }) => {
   const blogFromLS = () => {
@@ -145,41 +152,90 @@ const MuiCreateBlog = ({ router }) => {
   };
 
   const showCategories = () => {
+    const checkedNames = categories?.data
+      ? categories.data
+          .filter((ele, i) => {
+            return checked.indexOf(ele._id) > -1;
+          })
+          .map((ele, i) => {
+            return ele.name;
+          })
+      : [];
     return (
-      categories.data &&
-      categories.data.map((c, i) => (
-        <FormControlLabel
-          sx={{ mb: 0, p: 0 }}
-          key={i}
-          control={<Checkbox size="small" onChange={handleToggle(c._id)} />}
-          label={c.name}
-        />
-      ))
+      <Box>
+        <FormControl sx={{ width: "100%" }}>
+          <InputLabel id="categories">Categories</InputLabel>
+          <Select
+            labelId="select-category"
+            id="categories"
+            multiple
+            value={checkedNames}
+            onChange={handleToggle}
+            renderValue={(selected) => selected.join(", ")}
+            input={<OutlinedInput label="Category" />}
+          >
+            {categories?.data &&
+              categories.data.map((c, i) => (
+                <MenuItem key={i} value={c._id} onClick={handleToggle(c._id)}>
+                  <Checkbox checked={checked.indexOf(c._id) > -1} />
+                  <ListItemText primary={c.name} />
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      </Box>
     );
   };
 
   const showTags = () => {
+    const checkedTagsNames = tags?.data
+      ? tags.data
+          .filter((ele, i) => {
+            return checkedTag.indexOf(ele._id) > -1;
+          })
+          .map((ele, i) => {
+            return ele.name;
+          })
+      : [];
+
     return (
-      tags.data &&
-      tags.data.map((t, i) => (
-        <FormControlLabel
-          sx={{ mb: 0, p: 0 }}
-          key={i}
-          control={<Checkbox size="small" onChange={handleTagsToggle(t._id)} />}
-          label={t.name}
-        />
-      ))
+      <Box>
+        <FormControl sx={{ width: "100%" }}>
+          <InputLabel id="tags">Tags</InputLabel>
+          <Select
+            labelId="select-tag"
+            id="tags"
+            multiple
+            value={checkedTagsNames}
+            onChange={handleTagsToggle}
+            renderValue={(selected) => selected.join(", ")}
+            input={<OutlinedInput label="Tags" />}
+          >
+            {tags?.data &&
+              tags.data.map((c, i) => (
+                <MenuItem
+                  key={i}
+                  value={c._id}
+                  onClick={handleTagsToggle(c._id)}
+                >
+                  <Checkbox checked={checkedTag.indexOf(c._id) > -1} />
+                  <ListItemText primary={c.name} />
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      </Box>
     );
   };
 
   const showError = () => (
-    <Alert sx={{ display: error ? "" : "none" }} severity="error">
+    <Alert sx={{ display: error ? "" : "none", mb: 2 }} severity="error">
       {error}
     </Alert>
   );
 
   const showSuccess = () => (
-    <Alert sx={{ display: success ? "" : "none" }} severity="success">
+    <Alert sx={{ display: success ? "" : "none", mb: 2 }} severity="success">
       {success}
     </Alert>
   );
@@ -187,65 +243,107 @@ const MuiCreateBlog = ({ router }) => {
   const createBlogForm = () => {
     return (
       <form onSubmit={publishBlog}>
-        <TextField
-          id="outlined-multiline-flexible"
-          label="Title"
-          fullWidth
-          value={title}
-          onChange={handleChange("title")}
-          margin="dense"
-        />
-
-        <ReactQuill
-          modules={QuillModules}
-          formats={QuillFormats}
-          value={body}
-          placeholder="Write something amazing..."
-          onChange={handleBody}
-        />
-
-        <Button sx={{ mt: 2 }} variant="contained" type="submit">
-          Submit
-        </Button>
+        <Grid container>
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Title"
+              fullWidth
+              value={title}
+              onChange={handleChange("title")}
+              size="small"
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              ".quill .ql-toolbar": {
+                borderTop: 0,
+                borderLeft: 0,
+                borderRight: 0,
+                borderBottom: 1,
+                borderColor: "primary.gray",
+              },
+              ".quill .ql-container": { border: 0, minHeight: "200px" },
+              ".quill": {
+                borderRadius: 1,
+                border: 1,
+                borderColor: "primary.gray",
+              },
+            }}
+          >
+            <ReactQuill
+              modules={QuillModules}
+              formats={QuillFormats}
+              value={body}
+              placeholder="Write something amazing..."
+              onChange={handleBody}
+            />
+          </Grid>
+          <Grid item xs={12} sx={{ mt: 1 }}>
+            <Button
+              variant="outlined"
+              type="submit"
+              sx={{
+                "&:hover": { bgcolor: "primary.main", color: "primary.light" },
+              }}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     );
   };
 
   return (
-    <Container sx={{ mt: 5 }} maxWidth="lg">
-      <Typography variant="h4">Create Blog</Typography>
-      <Grid direction="row-reverse" container spacing={4}>
+    <Container
+      maxWidth={false}
+      disableGutters={true}
+      sx={{ mt: 5, mx: 0, width: "100%" }}
+    >
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="stretch"
+      >
+        <Grid item xs={12} md={7}>
+          {showError()}
+          {showSuccess()}
+          {createBlogForm()}
+        </Grid>
         <Grid item xs={12} md={4}>
-          <Box componenet="div" sx={{ mb: 2 }}>
-            <Typography variant="h6">Featured image</Typography>
-            <Divider />
-            <Button sx={{ mt: 2 }} variant="contained" component="label">
-              Upload
-              <input
-                accept="image/*"
-                onChange={handleChange("photo")}
-                type="file"
-                hidden
-              />
-            </Button>
-          </Box>
           <Box componenet="div">
-            <Typography variant="h6">Categories</Typography>
-            <Divider />
             <FormGroup>{showCategories()}</FormGroup>
           </Box>
-          <Box componenet="div">
-            <Typography variant="h6">Tags</Typography>
-            <Divider />
+          <Box componenet="div" sx={{ mt: 2 }}>
             <FormGroup>{showTags()}</FormGroup>
           </Box>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Box component="div" sx={{ mt: 2 }}>
-            {showError()}
-            {showSuccess()}
+          <Box componenet="div" sx={{ mt: 3 }}>
+            <Typography variant="h6">Featured image</Typography>
+            <Divider />
+            <Box sx={{ textAlign: "end" }}>
+              <Button
+                sx={{
+                  mt: 2,
+                  color: "primary.light",
+                  "&:hover": { bgcolor: "primary.main" },
+                }}
+                variant="contained"
+                component="label"
+              >
+                Upload
+                <input
+                  accept="image/*"
+                  onChange={handleChange("photo")}
+                  type="file"
+                  hidden
+                />
+              </Button>
+            </Box>
           </Box>
-          {createBlogForm()}
         </Grid>
       </Grid>
     </Container>
