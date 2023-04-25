@@ -4,11 +4,12 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Typography
+  Typography,
 } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import { isAuth, signout } from "../../actions/auth";
+import Router from "next/router";
 
 const HeaderMenu = (props) => {
   const { children, ...other } = props;
@@ -61,16 +62,41 @@ const HeaderMenu = (props) => {
         }}
       >
         {isAuth() && isAuth().role === 0 && (
-          <Link href="/user">
-            <MenuItem>Dashboard</MenuItem>
-          </Link>
+          <MenuItem>
+            <Link href="/user">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  textAlign: "center",
+                  display: { xs: "none", md: "flex" },
+                  px: 2,
+                }}
+              >
+                {"Dashboard".toUpperCase()}
+              </Typography>
+            </Link>
+          </MenuItem>
         )}
         {isAuth() && isAuth().role === 1 && (
-          <Link href="/admin">
-            <MenuItem>Dashboard</MenuItem>
-          </Link>
+          <MenuItem>
+            <Link href="/admin">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  textAlign: "center",
+                  display: { xs: "none", md: "flex" },
+                  px: 2,
+                }}
+              >
+                {"Dashboard".toUpperCase()}
+              </Typography>
+            </Link>
+          </MenuItem>
         )}
-
         <MenuItem>
           <Link href="/blogs">
             <Typography
@@ -143,13 +169,22 @@ const HeaderMenu = (props) => {
         {isAuth() && (
           <Box>
             <Divider />
-            <Link href="/signin">
-              <MenuItem
-                onClick={() => signout(() => Router.replace(`/signin`))}
-              >
-                Log Out
-              </MenuItem>
-            </Link>
+            <MenuItem>
+              <Link href="/signin">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    textAlign: "center",
+                    display: { xs: "none", md: "flex" },
+                    px: 2,
+                  }}
+                >
+                  {"Sign Out".toUpperCase()}
+                </Typography>
+              </Link>
+            </MenuItem>
           </Box>
         )}
       </Menu>

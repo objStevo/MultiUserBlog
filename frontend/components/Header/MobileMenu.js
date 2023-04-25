@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { isAuth, signout } from "../../actions/auth";
+import Router from "next/router";
 
 const MobileMenu = (props) => {
   const { children, ...other } = props;
