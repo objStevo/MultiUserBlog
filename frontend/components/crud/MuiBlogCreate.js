@@ -163,7 +163,7 @@ const MuiCreateBlog = ({ router }) => {
       : [];
     return (
       <Box>
-        <FormControl sx={{ width: "100%" }}>
+        <FormControl sx={{ width: "100%" }} size="small">
           <InputLabel id="categories">Categories</InputLabel>
           <Select
             labelId="select-category"
@@ -200,7 +200,7 @@ const MuiCreateBlog = ({ router }) => {
 
     return (
       <Box>
-        <FormControl sx={{ width: "100%" }}>
+        <FormControl sx={{ width: "100%" }} size="small">
           <InputLabel id="tags">Tags</InputLabel>
           <Select
             labelId="select-tag"
