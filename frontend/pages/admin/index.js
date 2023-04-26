@@ -1,9 +1,17 @@
 import Layout from "../../components/Layout";
 import Link from "next/link";
 import Admin from "../../components/auth/Admin";
-import { Typography, Box, Divider } from "@mui/material";
+import { Typography, Box, Divider, Grid } from "@mui/material";
 
 const AdminIndex = () => {
+  const adminLinks = [
+    { label: "Create Category", path: "/admin/crud/category-tag" },
+    { label: "Create Tag", path: "/admin/crud/category-tag" },
+    { label: "Create Blog", path: "/admin/crud/blog" },
+    { label: "Update/Delete Blog", path: "/admin/crud/blogs" },
+    { label: "Update/Delete Category", path: "/admin/crud/category-tag" },
+    { label: "Update/Delete Tag", path: "/admin/crud/category-tag" },
+  ];
   return (
     <Layout>
       <Admin>
@@ -28,6 +36,26 @@ const AdminIndex = () => {
               }}
             />
           </Box>
+          <Grid container>
+            {adminLinks.map((link, i) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+                <Link href={link.path}>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "flex" },
+                      px: 2,
+                    }}
+                  >
+                    {link.label.toUpperCase()}
+                  </Typography>
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       </Admin>
     </Layout>
