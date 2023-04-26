@@ -88,7 +88,6 @@ const HeaderMenu = (props) => {
                 component="div"
                 sx={{
                   textAlign: "center",
-                  display: { xs: "none", md: "flex" },
                   px: 2,
                 }}
               >
@@ -169,7 +168,7 @@ const HeaderMenu = (props) => {
         {isAuth() && (
           <Box>
             <Divider />
-            <MenuItem>
+            <MenuItem  onClick={() => signout(() => Router.replace(`/signin`))}>
               <Link href="/signin">
                 <Typography
                   variant="h6"
