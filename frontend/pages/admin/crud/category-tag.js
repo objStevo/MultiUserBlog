@@ -1,26 +1,25 @@
-import Layout from "../../../components/Layout";
-import Link from "next/link";
+import { Container, Grid } from "@mui/material";
 import Admin from "../../../components/auth/Admin";
 import Category from "../../../components/crud/Category";
 import Tag from "../../../components/crud/Tag";
+import Layout from "../../../components/Layout";
+import Title from "../../../components/Title";
 
 const CategoryTag = () => {
   return (
     <Layout>
       <Admin>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-12 pt-5 pb-5">
-              <h2>Manage Categories and Tags</h2>
-            </div>
-            <div className="col-md-6">
+        <Title title={"Create Tags & Categories"} />
+        <Container>
+          <Grid container>
+            <Grid item xs={12} sm={6}>
               <Category />
-            </div>
-            <div className="col-md-6">
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Tag />
-            </div>
-          </div>
-        </div>
+            </Grid>
+          </Grid>
+        </Container>
       </Admin>
     </Layout>
   );
