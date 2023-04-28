@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { getCookie } from "../../actions/auth";
 import { create, getTags, removeTag } from "../../actions/tag";
 
@@ -47,9 +48,7 @@ const Tag = () => {
 
   const deleteConfirm = (slug) => {
     console.log("The slug is ", slug);
-    let answer = window.confirm(
-      "Are you sure you want to delete this Tag"
-    );
+    let answer = window.confirm("Are you sure you want to delete this Tag");
     if (answer) {
       deleteTag(slug);
     }
@@ -95,7 +94,7 @@ const Tag = () => {
       ...values,
       name: e.target.value,
       error: false,
-      success: false
+      success: false,
     });
   };
 
@@ -117,9 +116,9 @@ const Tag = () => {
     }
   };
 
-  const mouseMoveHandler = e => {
-    setValues({...values, error: false, success: false, removed: false})
-  }
+  const mouseMoveHandler = (e) => {
+    setValues({ ...values, error: false, success: false, removed: false });
+  };
 
   const newTagForm = () => (
     <form onSubmit={clickSubmit}>
@@ -142,7 +141,7 @@ const Tag = () => {
   );
 
   return (
-    <React.Fragment>
+    <Box>
       {showSuccess()}
       {showError()}
       {showRemoved()}
@@ -150,7 +149,7 @@ const Tag = () => {
         {newTagForm()}
         {showTags()}
       </div>
-    </React.Fragment>
+    </Box>
   );
 };
 
