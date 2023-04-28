@@ -47,7 +47,7 @@ const AdminIndex = () => {
                     sx={{
                       display: "inline-block",
                       px: 2,
-                      "&:hover": { curser: "pointer" },
+                      "&:hover": { cursor: "pointer" },
                     }}
                   >
                     {link.label.toUpperCase()}
