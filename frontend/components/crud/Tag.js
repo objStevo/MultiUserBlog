@@ -122,7 +122,7 @@ const Tag = () => {
 
   const newTagForm = () => (
     <form onSubmit={clickSubmit}>
-      <div className="form-group">
+      <Box component="div">
         <label className="text-muted">Tag Name</label>
         <input
           type="text"
@@ -131,7 +131,7 @@ const Tag = () => {
           value={name}
           required
         />
-      </div>
+      </Box>
       <div>
         <button className="btn btn-primary" type="submit">
           Create
