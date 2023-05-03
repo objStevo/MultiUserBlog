@@ -1,5 +1,5 @@
 import Private from "../../../components/auth/Private";
-import MuiBlogCreate from "../../../components/crud/MuiBlogCreate";
+import UserBlogCreate from "../../../components/crud/UserBlogCreate";
 import Layout from "../../../components/Layout";
 import { Typography, Box, Divider } from "@mui/material";
 
@@ -29,7 +29,7 @@ const CreateBlog = () => {
             />
           </Box>
         </Box>
-        <MuiBlogCreate />
+        <UserBlogCreate />
       </Private>
     </Layout>
   );

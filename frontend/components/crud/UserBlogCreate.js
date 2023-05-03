@@ -14,7 +14,7 @@ import {
   OutlinedInput,
   Select,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
@@ -27,7 +27,7 @@ import "../../node_modules/react-quill/dist/quill.snow.css";
 import { QuillFormats, QuillModules } from "../../utils/quill";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const MuiCreateBlog = ({ router }) => {
+const UserBlogCreate = ({ router }) => {
   const blogFromLS = () => {
     if (typeof window === "undefined") {
       return false;
@@ -350,4 +350,4 @@ const MuiCreateBlog = ({ router }) => {
   );
 };
 
-export default withRouter(MuiCreateBlog);
+export default withRouter(UserBlogCreate);
