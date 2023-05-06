@@ -48,7 +48,6 @@ class DisqusThread extends React.Component {
       window.disqus_title = title;
       window.disqus_url = WEBSITE_URL + path;
     }
-
     return <div {...other} id="disqus_thread" />;
   }
 }
